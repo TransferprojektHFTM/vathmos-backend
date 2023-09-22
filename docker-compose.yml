@@ -1,15 +1,26 @@
-version: "3.7"
+version: "3"
 services:
-
-  # MySQL database
-  db:
-    image: mysql:8.0.19
-    container_name: backend-vathmos-db
-    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_0900_ai_ci
-    restart: always
-    ports:
-      - 3306:3306
+  database:
+    container_name: vathmos_mysql_container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: mysql:8.0.34
+    restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_PASSWORD: root
-      MYSQL_DATABASE: vathmos
+      MYSQL_ROOT_PASSWORD: noten1bis6
+      MYSQL_DATABASE: db_vathmos
+      MYSQL_USER: vathmos
+      MYSQL_PASSWORD: NotenAPIVathmos2023+
+    ports:
+      - "3306:3306"
+  phpmyadmin:
+    container_name: vathmos_phpmyadmin_container
+    image: phpmyadmin/phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: vathmos_mysql_container
+    depends_on:
+      - database
+    ports:
+      - "8080:80"
