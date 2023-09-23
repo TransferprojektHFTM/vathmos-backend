@@ -26,6 +26,15 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+## Docker Container starten
+```bash
+docker-compose up -d
+```
+
+## URLs
+- http://localhost:3000
+- http://localhost:8080 => phpMyAdmin
+
 ## Installation
 
 ```bash
