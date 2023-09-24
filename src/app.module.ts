@@ -2,6 +2,14 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { PersonModule } from './person/person.module';
+import { CurriculumModule } from './curriculum/curriculum.module';
+import { CourseModule } from './course/course.module';
+import { HftmClassModule } from './hftm-class/hftm-class.module';
+import { HftmModuleModule } from './hftm-module/hftm-module.module';
+import { HftmModulePartModule } from './hftm-module-part/hftm-module-part.module';
+import { ExamModule } from './exam/exam.module';
+import { EvaluationModule } from './evaluation/evaluation.module';
 
 @Module({
   imports: [
@@ -12,9 +20,17 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       username: 'vathmos',
       password: 'NotenAPIVathmos2023+',
       database: 'db_vathmos',
-      entities: [],
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
+    PersonModule,
+    CurriculumModule,
+    CourseModule,
+    HftmClassModule,
+    HftmModuleModule,
+    HftmModulePartModule,
+    ExamModule,
+    EvaluationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
