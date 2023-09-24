@@ -1,12 +1,16 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
-import { Config } from './config/config';
 import * as fs from 'fs';
+import { Config } from './config/config';
+import { join } from 'path';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  await app.listen(3000);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  app.useStaticAssets(join(__dirname, '../public'));
+  app.setGlobalPrefix(Config.GlobalRoutePrefix);
 
   app.enableCors({
     origin: ['http://localhost:4200'],
@@ -23,10 +27,19 @@ async function bootstrap() {
   SwaggerModule.setup(Config.DocsRoute, app, document, {
     swaggerOptions: {
       docExpansion: 'none',
-    },
+      path: './api/swagger2.json'
+    }
   });
   //Generate .json API Documentation (easly import to Restlet Studio etc...)
   generateSwaggerJSONFile(document);
+
+  await app.listen(process.env.PORT || 3000, () => {
+    console.log(
+      '[VATHMOS-BACKEND] -> ',
+      'Server is listening on port',
+      Config.Port
+    );
+  });
 }
 bootstrap();
 async function generateSwaggerJSONFile(swaggerDocument: OpenAPIObject) {

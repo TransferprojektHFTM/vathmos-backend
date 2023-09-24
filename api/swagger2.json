@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.0",
     "paths": {
-        "/": {
+        "/api/v1": {
             "get": {
                 "operationId": "AppController_getHello",
                 "parameters": [],
@@ -12,7 +12,7 @@
                 }
             }
         },
-        "/person": {
+        "/api/v1/person": {
             "post": {
                 "operationId": "PersonController_create",
                 "parameters": [],
@@ -42,7 +42,7 @@
                 }
             }
         },
-        "/person/{id}": {
+        "/api/v1/person/{id}": {
             "get": {
                 "operationId": "PersonController_findOne",
                 "parameters": [
@@ -108,7 +108,7 @@
                 }
             }
         },
-        "/curriculum": {
+        "/api/v1/curriculum": {
             "post": {
                 "operationId": "CurriculumController_create",
                 "parameters": [],
@@ -138,7 +138,7 @@
                 }
             }
         },
-        "/curriculum/{id}": {
+        "/api/v1/curriculum/{id}": {
             "get": {
                 "operationId": "CurriculumController_findOne",
                 "parameters": [
@@ -204,7 +204,7 @@
                 }
             }
         },
-        "/course": {
+        "/api/v1/course": {
             "post": {
                 "operationId": "CourseController_create",
                 "parameters": [],
@@ -234,7 +234,7 @@
                 }
             }
         },
-        "/course/{id}": {
+        "/api/v1/course/{id}": {
             "get": {
                 "operationId": "CourseController_findOne",
                 "parameters": [
@@ -300,7 +300,7 @@
                 }
             }
         },
-        "/hftm-class": {
+        "/api/v1/hftm-class": {
             "post": {
                 "operationId": "HftmClassController_create",
                 "parameters": [],
@@ -330,7 +330,7 @@
                 }
             }
         },
-        "/hftm-class/{id}": {
+        "/api/v1/hftm-class/{id}": {
             "get": {
                 "operationId": "HftmClassController_findOne",
                 "parameters": [
@@ -396,7 +396,7 @@
                 }
             }
         },
-        "/hftm-module": {
+        "/api/v1/hftm-module": {
             "post": {
                 "operationId": "HftmModuleController_create",
                 "parameters": [],
@@ -426,7 +426,7 @@
                 }
             }
         },
-        "/hftm-module/{id}": {
+        "/api/v1/hftm-module/{id}": {
             "get": {
                 "operationId": "HftmModuleController_findOne",
                 "parameters": [
@@ -492,7 +492,7 @@
                 }
             }
         },
-        "/hftm-module-part": {
+        "/api/v1/hftm-module-part": {
             "post": {
                 "operationId": "HftmModulePartController_create",
                 "parameters": [],
@@ -522,7 +522,7 @@
                 }
             }
         },
-        "/hftm-module-part/{id}": {
+        "/api/v1/hftm-module-part/{id}": {
             "get": {
                 "operationId": "HftmModulePartController_findOne",
                 "parameters": [
@@ -588,7 +588,7 @@
                 }
             }
         },
-        "/exam": {
+        "/api/v1/exam": {
             "post": {
                 "operationId": "ExamController_create",
                 "parameters": [],
@@ -618,7 +618,7 @@
                 }
             }
         },
-        "/exam/{id}": {
+        "/api/v1/exam/{id}": {
             "get": {
                 "operationId": "ExamController_findOne",
                 "parameters": [
@@ -684,7 +684,7 @@
                 }
             }
         },
-        "/evaluation": {
+        "/api/v1/evaluation": {
             "post": {
                 "operationId": "EvaluationController_create",
                 "parameters": [],
@@ -714,7 +714,7 @@
                 }
             }
         },
-        "/evaluation/{id}": {
+        "/api/v1/evaluation/{id}": {
             "get": {
                 "operationId": "EvaluationController_findOne",
                 "parameters": [
