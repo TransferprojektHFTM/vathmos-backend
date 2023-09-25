@@ -1,5 +1,6 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
 import { Person } from '../../person/entities/person.entity';
+import {Course} from "../../course/entities/course.entity";
 
 @Entity()
 export class HftmClass {
@@ -9,7 +10,9 @@ export class HftmClass {
   @Column()
   name: string;
 
-  @Column({ name: 'personId' })
   @ManyToMany(() => Person, (personEntity) => personEntity.id)
   person: number;
+
+  @ManyToOne(() => Course, (course) => course.hftmClass)
+  courses: Course;
 }

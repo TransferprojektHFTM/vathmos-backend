@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
+import {HftmModulePart} from "../../hftm-module-part/entities/hftm-module-part.entity";
 
 @Entity()
 export class Exam {
@@ -10,4 +11,7 @@ export class Exam {
 
   @Column()
   weighting: string;
+
+  @ManyToOne(() => HftmModulePart, (modulpart) => modulpart.exams)
+  modulpart: HftmModulePart;
 }

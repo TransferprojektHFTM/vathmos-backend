@@ -1,4 +1,5 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {HftmModule} from "../../hftm-module/entities/hftm-module.entity";
 
 @Entity()
 export class Curriculum {
@@ -7,8 +8,4 @@ export class Curriculum {
 
   @Column()
   name: string;
-
-  // Modul
-  // @Column()
-  // @ManyToOne(() => Curriculum, (curriculum) => curriculum.id)
 }

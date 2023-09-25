@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {Column, Entity, JoinTable, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
 import { HftmClass } from '../../hftm-class/entities/hftm-class.entity';
 
 @Entity()
@@ -9,9 +9,8 @@ export class Course {
   @Column()
   name: string;
 
-  @Column()
-  @OneToMany(() => HftmClass, (hftmClass) => hftmClass.id)
-  hftmClass: number;
+  @OneToMany(() => HftmClass, (hftmClass) => hftmClass.courses)
+  hftmClass: HftmClass[];
 
   @Column()
   startYear: Date;
