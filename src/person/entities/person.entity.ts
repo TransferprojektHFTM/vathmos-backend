@@ -5,7 +5,7 @@ export class Person {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({type: 'uuid', unique: true})
   oid: string;
 
   @Column()

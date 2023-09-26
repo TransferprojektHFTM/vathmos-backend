@@ -1,6 +1,6 @@
 import {
   Column,
-  Entity,
+  Entity, JoinTable,
   ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -25,7 +25,6 @@ export class HftmModulePart {
   @ManyToMany(() => HftmModule, (hftmModule) => hftmModule.id)
   hftModule: number;
 
-  @Column()
   @OneToMany(() => Exam, (exams) => exams.id)
-  exams?: number;
+  exams: Exam[] ;
 }
