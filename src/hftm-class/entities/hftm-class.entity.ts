@@ -10,9 +10,15 @@ export class HftmClass {
   @Column()
   name: string;
 
-  @ManyToMany(() => Person, (personEntity) => personEntity.id)
-  person: number;
+  @ManyToMany(() => Person)
+    @JoinTable({
+        name: 'hftm_class_person',
+        joinColumn: {name: 'hftm_class_id', referencedColumnName: 'id'},
+        inverseJoinColumn: {name: 'student_id', referencedColumnName: 'id'}
+    })
+  person: Person[];
 
   @ManyToOne(() => Course, (course) => course.hftmClass)
+  @JoinColumn({name: 'course_id'})
   courses: Course;
 }

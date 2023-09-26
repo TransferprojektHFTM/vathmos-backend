@@ -10,6 +10,7 @@ import { HftmModuleModule } from './hftm-module/hftm-module.module';
 import { HftmModulePartModule } from './hftm-module-part/hftm-module-part.module';
 import { ExamModule } from './exam/exam.module';
 import { EvaluationModule } from './evaluation/evaluation.module';
+import { ModulTypModule } from './modul-typ/modul-typ.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { EvaluationModule } from './evaluation/evaluation.module';
     HftmModulePartModule,
     ExamModule,
     EvaluationModule,
+    ModulTypModule,
   ],
   controllers: [AppController],
   providers: [AppService],

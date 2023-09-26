@@ -1,5 +1,6 @@
-import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
-import {Curriculum} from "../../curriculum/entities/curriculum.entity";
+import {Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToOne, PrimaryGeneratedColumn} from 'typeorm';
+import {ModulTyp} from "../../modul-typ/entities/modul-typ.entity";
+
 
 @Entity()
 export class HftmModule {
@@ -10,14 +11,8 @@ export class HftmModule {
   @Column()
   name: string;
 
-  @Column()
-  moduleType: string;
+  @OneToOne(() => ModulTyp)
+    @JoinColumn({name: 'modul_typ_id'})
+  moduleType: number;
 
-  @ManyToOne(() => Curriculum, (curriculum) => curriculum.id)
-  curriculum: number;
-
-  // fehlt noch many to many curriculum to hftm-module jointable
-  // https://blog.continium-labs.com/many-to-many-relations-with-typeorm-and-nestjs/
-  // @Column()
-  // @ManyToMany(() => HftmModule, (hftmModule) => hftmModule.id)
 }
