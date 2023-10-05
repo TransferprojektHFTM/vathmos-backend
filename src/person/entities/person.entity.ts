@@ -17,6 +17,9 @@ export class Person {
   @Column()
   email: string;
 
+  @Column("longtext")
+  picture: string;
+
   @Column()
   @UpdateDateColumn({
     type: 'timestamp',
