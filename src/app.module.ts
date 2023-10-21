@@ -9,19 +9,25 @@ import { ExamModule } from './models/exam/exam.module';
 import { EvaluationModule } from './models/evaluation/evaluation.module';
 import { ModulTypModule } from './models/modul-typ/modul-typ.module';
 import { JwtService } from '@nestjs/jwt';
-import {APP_GUARD} from "@nestjs/core";
-import {VathmosAuthGuard} from "./auth-guard/vathmos-auth-guard";
+import { APP_GUARD } from '@nestjs/core';
+import { VathmosAuthGuard } from './auth-guard/vathmos-auth-guard';
 import { ModulePlanModule } from './models/module-plan/module-plan.module';
+import { ConfigModule } from '@nestjs/config';
+
+const ENV = process.env.NODE_ENV;
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      envFilePath: !ENV ? '.env' : `.env.${ENV}`,
+    }),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'vathmos',
-      password: 'NotenAPIVathmos2023+',
-      database: 'db_vathmos',
+      host: process.env.MYSQL_HOST,
+      port: parseInt(process.env.MYSQL_PORT) || 3306,
+      username: process.env.MYSQL_USER,
+      password: process.env.MYSQL_PASSWORD,
+      database: process.env.MYSQL_DATABASE,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
@@ -37,7 +43,7 @@ import { ModulePlanModule } from './models/module-plan/module-plan.module';
   ],
   controllers: [],
   providers: [
-      JwtService,
+    JwtService,
     {
       provide: APP_GUARD,
       useClass: VathmosAuthGuard,

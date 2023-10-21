@@ -10,6 +10,7 @@ services:
       # mounts are relative to the first file in the list, which is a level up.
       - .:/workspace:cached
       - dev-extensions:/vscode/.vscode-server/extensions
+      - dev-node_modules:/workspace/node_modules
       
     # Overrides default command so things don't shut down after the process ends.
     command: /bin/sh -c "while sleep 1000; do :; done"
@@ -23,3 +24,4 @@ services:
 volumes:
   dev-extensions:
     driver: local
+  dev-node_modules:
