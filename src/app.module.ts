@@ -12,24 +12,28 @@ import { JwtService } from '@nestjs/jwt';
 import { APP_GUARD } from '@nestjs/core';
 import { VathmosAuthGuard } from './auth-guard/vathmos-auth-guard';
 import { ModulePlanModule } from './models/module-plan/module-plan.module';
-import { ConfigModule } from '@nestjs/config';
-
-const ENV = process.env.NODE_ENV;
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: !ENV ? '.env' : `.env.${ENV}`,
+      isGlobal: true,
     }),
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: process.env.MYSQL_HOST,
-      port: parseInt(process.env.MYSQL_PORT) || 3306,
-      username: process.env.MYSQL_USER,
-      password: process.env.MYSQL_PASSWORD,
-      database: process.env.MYSQL_DATABASE,
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true,
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        type: 'mysql',
+        host: configService.get<string>('MYSQL_HOST'),
+        port: configService.get<number>('MYSQL_PORT'),
+        username: configService.get<string>('MYSQL_USER'),
+        password: configService.get<string>('MYSQL_PASSWORD'),
+        database: configService.get<string>('MYSQL_DATABASE'),
+        entities: [`${__dirname}/**/*.entity{.ts,.js}`],
+        synchronize: true,
+        subscribers: [],
+        migrations: []
+      }),
+      inject: [ConfigService]
     }),
     PersonModule,
     CourseModule,
