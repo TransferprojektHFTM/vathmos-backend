@@ -7,8 +7,7 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
-import {AzureAdUser, JwtPayload} from "./models";
-
+import { AzureAdUser, JwtPayload } from './models';
 
 type Authheader = {
   authorization: string;
@@ -56,19 +55,19 @@ export class VathmosAuthGuard implements CanActivate {
     try {
       const payload = this.jwtService.decode(token) as JwtPayload;
 
-      console.log(payload)
+      console.log(payload);
       VathmosAuthGuard.user = new AzureAdUser(payload);
 
-      console.log(VathmosAuthGuard.user)
+      console.log(VathmosAuthGuard.user);
 
       const roles = this.reflector.get<string[]>('roles', context.getHandler());
-      console.log(context.getHandler())
+      console.log(context.getHandler());
       // if (user.roles) {
       //   return user;
       // }
       return true; // change to enable
     } catch (error) {
-        throw new UnauthorizedException();
+      throw new UnauthorizedException();
     }
   }
 
@@ -78,8 +77,8 @@ export class VathmosAuthGuard implements CanActivate {
       const [type, token] = requestHeader.authorization.split(' ');
       return type === 'Bearer' ? token : undefined;
     } catch (error) {
-      console.log("no token")
-        throw new UnauthorizedException();
+      console.log('no token');
+      throw new UnauthorizedException();
     }
   }
 }

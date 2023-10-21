@@ -1,8 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ModulePlanService } from './module-plan.service';
 import { CreateModulePlanDto } from './dto/create-module-plan.dto';
 import { UpdateModulePlanDto } from './dto/update-module-plan.dto';
-import {ApiTags} from "@nestjs/swagger";
+import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Module Plan')
 @Controller('module-plan')
@@ -25,7 +33,10 @@ export class ModulePlanController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateModulePlanDto: UpdateModulePlanDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateModulePlanDto: UpdateModulePlanDto,
+  ) {
     return this.modulePlanService.update(+id, updateModulePlanDto);
   }
 

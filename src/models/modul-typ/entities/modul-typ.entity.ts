@@ -1,11 +1,10 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class ModulTyp {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({length: 10, type: 'varchar'})
-    name: string;
-
+  @Column({ length: 10, type: 'varchar' })
+  name: string;
 }

@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { HftmModulePartService } from './hftm-module-part.service';
 import { CreateHftmModulePartDto } from './dto/create-hftm-module-part.dto';
 import { UpdateHftmModulePartDto } from './dto/update-hftm-module-part.dto';
@@ -26,7 +34,10 @@ export class HftmModulePartController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateHftmModulePartDto: UpdateHftmModulePartDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateHftmModulePartDto: UpdateHftmModulePartDto,
+  ) {
     return this.hftmModulePartService.update(+id, updateHftmModulePartDto);
   }
 
