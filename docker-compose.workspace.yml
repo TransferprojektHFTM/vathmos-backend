@@ -1,0 +1,25 @@
+version: '3'
+services:
+  dev:
+    container_name: dev_container
+    build:
+      context: .
+      dockerfile: .devcontainer/Dockerfile
+    volumes:
+      # Mounts the project folder to '/workspace'. While this file is in .devcontainer,
+      # mounts are relative to the first file in the list, which is a level up.
+      - .:/workspace:cached
+      - dev-extensions:/vscode/.vscode-server/extensions
+      
+    # Overrides default command so things don't shut down after the process ends.
+    command: /bin/sh -c "while sleep 1000; do :; done"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - database
+    networks:
+      - vathmos_backend
+
+volumes:
+  dev-extensions:
+    driver: local

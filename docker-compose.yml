@@ -2,9 +2,6 @@ version: "3"
 services:
   database:
     container_name: vathmos_mysql_container
-    build:
-      context: .
-      dockerfile: Dockerfile
     image: mysql:8.0.34
     restart: unless-stopped
     environment:
@@ -14,6 +11,8 @@ services:
       MYSQL_PASSWORD: NotenAPIVathmos2023+
     ports:
       - "3306:3306"
+    networks:
+      - vathmos_backend
   phpmyadmin:
     container_name: vathmos_phpmyadmin_container
     image: phpmyadmin/phpmyadmin
@@ -24,3 +23,7 @@ services:
       - database
     ports:
       - "8080:80"
+    networks:
+      - vathmos_backend
+networks:
+  vathmos_backend:
