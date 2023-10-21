@@ -1,7 +1,7 @@
 version: "3"
 services:
   database:
-    container_name: ${MYSQL_HOST}
+    container_name: ${MYSQL_CONTAINER_NAME}
     image: mysql:8.0.34
     restart: unless-stopped
     environment:
@@ -20,7 +20,7 @@ services:
     image: phpmyadmin/phpmyadmin
     restart: unless-stopped
     environment:
-      PMA_HOST: ${MYSQL_HOST}
+      PMA_HOST: ${MYSQL_CONTAINER_NAME}
     depends_on:
       - database
     ports:

@@ -27,9 +27,12 @@
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
 ## Docker Dev Container starten
+INFO: apparently, despite dev containers being a standard, [some versions of WebStorm might have issues running 'em](https://youtrack.jetbrains.com/issue/IDEA-326228/Dev-Containers-Support-Docker-Compose). 
+
+- ```$ cp example.env .env``` -> to make the env file ready
+HINT: You need to set `MYSQL_HOST` to the same value as `MYSQL_CONTAINER_NAME` 
 - For VS Code: Start VS Code, run the Dev Containers: Open Folder in Container... command from the Command Palette (F1) or quick actions Status bar item, and select the project folder you would like to set up the container for.
 - For WebStorm & co: Start WebStorm, right click on `.devcontainer/devcontainer.json` and select Dev Containers > Create Dev Container and Mount Sources...
-INFO: apparently, despite dev containers being a standard, [some versions of WebStorm might have issues running 'em](https://youtrack.jetbrains.com/issue/IDEA-326228/Dev-Containers-Support-Docker-Compose). 
 
 ## Docker Container starten
 In case you can't use dev containers like shown above, just run it as you would normally do:
