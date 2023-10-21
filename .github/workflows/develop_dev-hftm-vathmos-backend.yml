@@ -41,7 +41,7 @@ jobs:
     needs: build
     environment:
       name: 'Production'
-      url: $
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
       - name: Download artifact from build job
@@ -55,7 +55,7 @@ jobs:
         with:
           app-name: 'dev-hftm-vathmos-backend'
           slot-name: 'Production'
-          publish-profile: $
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8459B089676A4CF7BE741C8AF98E0C62 }}
           package: release.zip
 
       - name: 'Delete zip file'
