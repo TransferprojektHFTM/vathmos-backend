@@ -2,7 +2,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { ModulTypService } from './modul-typ.service';
 import { CreateModulTypDto } from './dto/create-modul-typ.dto';
 import { UpdateModulTypDto } from './dto/update-modul-typ.dto';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Modul Typ')
+@ApiBearerAuth()
 @Controller('modul-typ')
 export class ModulTypController {
   constructor(private readonly modulTypService: ModulTypService) {}

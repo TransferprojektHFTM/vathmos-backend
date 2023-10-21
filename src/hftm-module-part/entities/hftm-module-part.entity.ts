@@ -18,17 +18,10 @@ export class HftmModulePart {
   name: string;
 
   @ManyToMany(() => Person)
-    @JoinTable( {name: 'module_part_lecturer',
+    @JoinTable( {name: 'module_part_person',
     joinColumn: {name: 'module_part_id', referencedColumnName: 'id'},
     inverseJoinColumn: {name: 'lecturer_id', referencedColumnName: 'id'}})
   lecturer: Person[];
-
-
-  @ManyToMany(() => Person)
-  @JoinTable( {name: 'module_part_student',
-    joinColumn: {name: 'module_part_id', referencedColumnName: 'id'},
-    inverseJoinColumn: {name: 'student_id', referencedColumnName: 'id'}})
-  additional_student: Person[];
 
 
   @ManyToMany(() => HftmModule)

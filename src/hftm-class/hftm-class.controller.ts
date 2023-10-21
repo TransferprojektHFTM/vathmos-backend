@@ -2,7 +2,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { HftmClassService } from './hftm-class.service';
 import { CreateHftmClassDto } from './dto/create-hftm-class.dto';
 import { UpdateHftmClassDto } from './dto/update-hftm-class.dto';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('hftm Class')
+@ApiBearerAuth()
 @Controller('hftm-class')
 export class HftmClassController {
   constructor(private readonly hftmClassService: HftmClassService) {}

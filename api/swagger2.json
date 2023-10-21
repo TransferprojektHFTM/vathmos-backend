@@ -1,17 +1,6 @@
 {
     "openapi": "3.0.0",
     "paths": {
-        "/api/v1": {
-            "get": {
-                "operationId": "AppController_getHello",
-                "parameters": [],
-                "responses": {
-                    "200": {
-                        "description": ""
-                    }
-                }
-            }
-        },
         "/api/v1/person": {
             "post": {
                 "operationId": "PersonController_create",
@@ -30,7 +19,15 @@
                     "201": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "Person"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "get": {
                 "operationId": "PersonController_findAll",
@@ -39,7 +36,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "Person"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         },
         "/api/v1/person/{id}": {
@@ -59,7 +64,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "Person"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "patch": {
                 "operationId": "PersonController_update",
@@ -87,7 +100,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "Person"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "delete": {
                 "operationId": "PersonController_remove",
@@ -105,7 +126,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "Person"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         },
         "/api/v1/curriculum": {
@@ -126,7 +155,15 @@
                     "201": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "Curriculum"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "get": {
                 "operationId": "CurriculumController_findAll",
@@ -135,7 +172,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "Curriculum"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         },
         "/api/v1/curriculum/{id}": {
@@ -155,7 +200,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "Curriculum"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "patch": {
                 "operationId": "CurriculumController_update",
@@ -183,7 +236,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "Curriculum"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "delete": {
                 "operationId": "CurriculumController_remove",
@@ -201,7 +262,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "Curriculum"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         },
         "/api/v1/course": {
@@ -222,7 +291,15 @@
                     "201": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "Course"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "get": {
                 "operationId": "CourseController_findAll",
@@ -231,7 +308,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "Course"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         },
         "/api/v1/course/{id}": {
@@ -251,7 +336,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "Course"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "patch": {
                 "operationId": "CourseController_update",
@@ -279,7 +372,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "Course"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "delete": {
                 "operationId": "CourseController_remove",
@@ -297,7 +398,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "Course"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         },
         "/api/v1/hftm-class": {
@@ -318,7 +427,15 @@
                     "201": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "hftm Class"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "get": {
                 "operationId": "HftmClassController_findAll",
@@ -327,7 +444,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "hftm Class"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         },
         "/api/v1/hftm-class/{id}": {
@@ -347,7 +472,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "hftm Class"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "patch": {
                 "operationId": "HftmClassController_update",
@@ -375,7 +508,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "hftm Class"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "delete": {
                 "operationId": "HftmClassController_remove",
@@ -393,7 +534,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "hftm Class"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         },
         "/api/v1/hftm-module": {
@@ -414,7 +563,15 @@
                     "201": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "hftm Module"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "get": {
                 "operationId": "HftmModuleController_findAll",
@@ -423,7 +580,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "hftm Module"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         },
         "/api/v1/hftm-module/{id}": {
@@ -443,7 +608,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "hftm Module"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "patch": {
                 "operationId": "HftmModuleController_update",
@@ -471,7 +644,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "hftm Module"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "delete": {
                 "operationId": "HftmModuleController_remove",
@@ -489,7 +670,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "hftm Module"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         },
         "/api/v1/hftm-module-part": {
@@ -510,7 +699,15 @@
                     "201": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "hftm Module Part"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "get": {
                 "operationId": "HftmModulePartController_findAll",
@@ -519,7 +716,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "hftm Module Part"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         },
         "/api/v1/hftm-module-part/{id}": {
@@ -539,7 +744,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "hftm Module Part"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "patch": {
                 "operationId": "HftmModulePartController_update",
@@ -567,7 +780,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "hftm Module Part"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "delete": {
                 "operationId": "HftmModulePartController_remove",
@@ -585,7 +806,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "hftm Module Part"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         },
         "/api/v1/exam": {
@@ -606,7 +835,15 @@
                     "201": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "Exam"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "get": {
                 "operationId": "ExamController_findAll",
@@ -615,7 +852,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "Exam"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         },
         "/api/v1/exam/{id}": {
@@ -635,7 +880,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "Exam"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "patch": {
                 "operationId": "ExamController_update",
@@ -663,7 +916,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "Exam"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "delete": {
                 "operationId": "ExamController_remove",
@@ -681,7 +942,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "Exam"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         },
         "/api/v1/evaluation": {
@@ -702,7 +971,15 @@
                     "201": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "Evaluation"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "get": {
                 "operationId": "EvaluationController_findAll",
@@ -711,7 +988,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "Evaluation"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         },
         "/api/v1/evaluation/{id}": {
@@ -731,7 +1016,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "Evaluation"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "patch": {
                 "operationId": "EvaluationController_update",
@@ -759,7 +1052,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "Evaluation"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "delete": {
                 "operationId": "EvaluationController_remove",
@@ -777,7 +1078,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "Evaluation"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         },
         "/api/v1/modul-typ": {
@@ -798,7 +1107,15 @@
                     "201": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "Modul Typ"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "get": {
                 "operationId": "ModulTypController_findAll",
@@ -807,7 +1124,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "Modul Typ"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         },
         "/api/v1/modul-typ/{id}": {
@@ -827,7 +1152,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "Modul Typ"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "patch": {
                 "operationId": "ModulTypController_update",
@@ -855,7 +1188,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "Modul Typ"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "delete": {
                 "operationId": "ModulTypController_remove",
@@ -873,7 +1214,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "Modul Typ"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         }
     },
@@ -883,9 +1232,21 @@
         "version": "1.0",
         "contact": {}
     },
-    "tags": [],
+    "tags": [
+        {
+            "name": "Person",
+            "description": "Student and lecturer management"
+        }
+    ],
     "servers": [],
     "components": {
+        "securitySchemes": {
+            "bearer": {
+                "scheme": "bearer",
+                "bearerFormat": "JWT",
+                "type": "http"
+            }
+        },
         "schemas": {
             "CreatePersonDto": {
                 "type": "object",

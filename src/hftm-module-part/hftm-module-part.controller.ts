@@ -2,7 +2,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { HftmModulePartService } from './hftm-module-part.service';
 import { CreateHftmModulePartDto } from './dto/create-hftm-module-part.dto';
 import { UpdateHftmModulePartDto } from './dto/update-hftm-module-part.dto';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('hftm Module Part')
+@ApiBearerAuth()
 @Controller('hftm-module-part')
 export class HftmModulePartController {
   constructor(private readonly hftmModulePartService: HftmModulePartService) {}
