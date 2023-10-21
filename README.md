@@ -33,9 +33,8 @@ INFO: apparently, despite dev containers being a standard, [some versions of Web
 
 ## Docker Container starten
 In case you can't use dev containers like shown above, just run it as you would normally do:
-```bash
-docker-compose up -d
-```
+1) ```$ cp example.env .env``` -> to make the env file ready
+2) ```$ docker-compose up -d```
 
 ## URLs
 - http://localhost:3000
