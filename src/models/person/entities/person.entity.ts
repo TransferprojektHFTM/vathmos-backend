@@ -20,6 +20,12 @@ export class Person {
   @Column("longtext")
   picture: string;
 
+  @Column({default: 'Student'})
+  roles: string;
+
+  @Column({default: false})
+  isActivated: boolean;
+
   @Column()
   @UpdateDateColumn({
     type: 'timestamp',

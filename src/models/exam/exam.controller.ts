@@ -3,7 +3,7 @@ import { ExamService } from './exam.service';
 import { CreateExamDto } from './dto/create-exam.dto';
 import { UpdateExamDto } from './dto/update-exam.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import {VathmosAuthGuard} from "../auth-guard/vathmos-auth-guard";
+import {VathmosAuthGuard} from "../../auth-guard/vathmos-auth-guard";
 
 @ApiTags('Exam')
 @ApiBearerAuth()

@@ -137,142 +137,6 @@
                 ]
             }
         },
-        "/api/v1/curriculum": {
-            "post": {
-                "operationId": "CurriculumController_create",
-                "parameters": [],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/CreateCurriculumDto"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": ""
-                    }
-                },
-                "tags": [
-                    "Curriculum"
-                ],
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
-            },
-            "get": {
-                "operationId": "CurriculumController_findAll",
-                "parameters": [],
-                "responses": {
-                    "200": {
-                        "description": ""
-                    }
-                },
-                "tags": [
-                    "Curriculum"
-                ],
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
-            }
-        },
-        "/api/v1/curriculum/{id}": {
-            "get": {
-                "operationId": "CurriculumController_findOne",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "required": true,
-                        "in": "path",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": ""
-                    }
-                },
-                "tags": [
-                    "Curriculum"
-                ],
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
-            },
-            "patch": {
-                "operationId": "CurriculumController_update",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "required": true,
-                        "in": "path",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/UpdateCurriculumDto"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": ""
-                    }
-                },
-                "tags": [
-                    "Curriculum"
-                ],
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
-            },
-            "delete": {
-                "operationId": "CurriculumController_remove",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "required": true,
-                        "in": "path",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": ""
-                    }
-                },
-                "tags": [
-                    "Curriculum"
-                ],
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
-            }
-        },
         "/api/v1/course": {
             "post": {
                 "operationId": "CourseController_create",
@@ -1224,6 +1088,117 @@
                     }
                 ]
             }
+        },
+        "/api/v1/module-plan": {
+            "post": {
+                "operationId": "ModulePlanController_create",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateModulePlanDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "Module Plan"
+                ]
+            },
+            "get": {
+                "operationId": "ModulePlanController_findAll",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "Module Plan"
+                ]
+            }
+        },
+        "/api/v1/module-plan/{id}": {
+            "get": {
+                "operationId": "ModulePlanController_findOne",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "Module Plan"
+                ]
+            },
+            "patch": {
+                "operationId": "ModulePlanController_update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateModulePlanDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "Module Plan"
+                ]
+            },
+            "delete": {
+                "operationId": "ModulePlanController_remove",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "Module Plan"
+                ]
+            }
         }
     },
     "info": {
@@ -1253,14 +1228,6 @@
                 "properties": {}
             },
             "UpdatePersonDto": {
-                "type": "object",
-                "properties": {}
-            },
-            "CreateCurriculumDto": {
-                "type": "object",
-                "properties": {}
-            },
-            "UpdateCurriculumDto": {
                 "type": "object",
                 "properties": {}
             },
@@ -1317,6 +1284,14 @@
                 "properties": {}
             },
             "UpdateModulTypDto": {
+                "type": "object",
+                "properties": {}
+            },
+            "CreateModulePlanDto": {
+                "type": "object",
+                "properties": {}
+            },
+            "UpdateModulePlanDto": {
                 "type": "object",
                 "properties": {}
             }

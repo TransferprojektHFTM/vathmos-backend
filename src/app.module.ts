@@ -1,17 +1,17 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PersonModule } from './person/person.module';
-import { CurriculumModule } from './curriculum/curriculum.module';
-import { CourseModule } from './course/course.module';
-import { HftmClassModule } from './hftm-class/hftm-class.module';
-import { HftmModuleModule } from './hftm-module/hftm-module.module';
-import { HftmModulePartModule } from './hftm-module-part/hftm-module-part.module';
-import { ExamModule } from './exam/exam.module';
-import { EvaluationModule } from './evaluation/evaluation.module';
-import { ModulTypModule } from './modul-typ/modul-typ.module';
+import { PersonModule } from './models/person/person.module';
+import { CourseModule } from './models/course/course.module';
+import { HftmClassModule } from './models/hftm-class/hftm-class.module';
+import { HftmModuleModule } from './models/hftm-module/hftm-module.module';
+import { HftmModulePartModule } from './models/hftm-module-part/hftm-module-part.module';
+import { ExamModule } from './models/exam/exam.module';
+import { EvaluationModule } from './models/evaluation/evaluation.module';
+import { ModulTypModule } from './models/modul-typ/modul-typ.module';
 import { JwtService } from '@nestjs/jwt';
 import {APP_GUARD} from "@nestjs/core";
 import {VathmosAuthGuard} from "./auth-guard/vathmos-auth-guard";
+import { ModulePlanModule } from './models/module-plan/module-plan.module';
 
 @Module({
   imports: [
@@ -26,7 +26,6 @@ import {VathmosAuthGuard} from "./auth-guard/vathmos-auth-guard";
       synchronize: true,
     }),
     PersonModule,
-    CurriculumModule,
     CourseModule,
     HftmClassModule,
     HftmModuleModule,
@@ -34,6 +33,7 @@ import {VathmosAuthGuard} from "./auth-guard/vathmos-auth-guard";
     ExamModule,
     EvaluationModule,
     ModulTypModule,
+    ModulePlanModule,
   ],
   controllers: [],
   providers: [
