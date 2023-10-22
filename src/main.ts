@@ -41,10 +41,10 @@ async function bootstrap() {
   //Generate .json API Documentation (easly import to Restlet Studio etc...)
   generateSwaggerJSONFile(document);
 
-  await app.listen(configService.get<number>('APP_PORT') || 3000, () => {
+  await app.listen(configService.get<number>('PORT') || 3000, () => {
     logger.log(
       `[VATHMOS-BACKEND] -> Server is listening on port ${configService.get<number>(
-        'APP_PORT',
+        'PORT',
       )}`,
     );
   });
