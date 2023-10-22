@@ -19,6 +19,9 @@ export class HftmModulePart {
   @Column()
   name: string;
 
+  @Column()
+  shortName: string;
+
   @ManyToMany(() => Person)
   @JoinTable({
     name: 'module_part_person',

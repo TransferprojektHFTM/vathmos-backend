@@ -11,9 +11,11 @@ import { PersonService } from './person.service';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Roles } from '../../auth-guard/vathmos-auth-guard';
 
 @ApiTags('Person')
 @ApiBearerAuth()
+@Roles('Student', 'Dozent', 'KursAdmin')
 @Controller('person')
 export class PersonController {
   constructor(private readonly personService: PersonService) {}

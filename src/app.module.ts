@@ -13,6 +13,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { VathmosAuthGuard } from './auth-guard/vathmos-auth-guard';
 import { ModulePlanModule } from './models/module-plan/module-plan.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { AppCustomLogger } from './app.custom.logger';
 
 @Module({
   imports: [
@@ -48,6 +49,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
   controllers: [],
   providers: [
     JwtService,
+    AppCustomLogger,
     {
       provide: APP_GUARD,
       useClass: VathmosAuthGuard,

@@ -20,9 +20,7 @@ export class AzureAdUser {
     this.fullName = jwt.name ?? `ClientCredentialsToken|${jwt.appid ?? ''}`;
     this.id = jwt.oid;
     this.roles = jwt.roles;
-    this.audience = jwt.aud;
+    this.appId = jwt.aud;
     this.tenant = jwt.tid;
-    this.subject = jwt.sub;
-    this.appId = jwt.appid;
   }
 }

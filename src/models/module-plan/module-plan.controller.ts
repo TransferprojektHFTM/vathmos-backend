@@ -10,9 +10,10 @@ import {
 import { ModulePlanService } from './module-plan.service';
 import { CreateModulePlanDto } from './dto/create-module-plan.dto';
 import { UpdateModulePlanDto } from './dto/update-module-plan.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Module Plan')
+@ApiBearerAuth()
 @Controller('module-plan')
 export class ModulePlanController {
   constructor(private readonly modulePlanService: ModulePlanService) {}
