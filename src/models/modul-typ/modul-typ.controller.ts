@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ModulTypService } from './modul-typ.service';
 import { CreateModulTypDto } from './dto/create-modul-typ.dto';
 import { UpdateModulTypDto } from './dto/update-modul-typ.dto';
@@ -26,7 +34,10 @@ export class ModulTypController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateModulTypDto: UpdateModulTypDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateModulTypDto: UpdateModulTypDto,
+  ) {
     return this.modulTypService.update(+id, updateModulTypDto);
   }
 

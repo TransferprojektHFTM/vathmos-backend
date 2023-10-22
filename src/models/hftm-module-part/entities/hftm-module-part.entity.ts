@@ -1,6 +1,8 @@
 import {
   Column,
-  Entity, JoinColumn, JoinTable,
+  Entity,
+  JoinColumn,
+  JoinTable,
   ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -18,18 +20,21 @@ export class HftmModulePart {
   name: string;
 
   @ManyToMany(() => Person)
-    @JoinTable( {name: 'module_part_person',
-    joinColumn: {name: 'module_part_id', referencedColumnName: 'id'},
-    inverseJoinColumn: {name: 'lecturer_id', referencedColumnName: 'id'}})
+  @JoinTable({
+    name: 'module_part_person',
+    joinColumn: { name: 'module_part_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'lecturer_id', referencedColumnName: 'id' },
+  })
   lecturer: Person[];
 
-
   @ManyToMany(() => HftmModule)
-  @JoinTable( {name: 'module_part_module',
-    joinColumn: {name: 'module_part_id', referencedColumnName: 'id'},
-    inverseJoinColumn: {name: 'module_id', referencedColumnName: 'id'}})
+  @JoinTable({
+    name: 'module_part_module',
+    joinColumn: { name: 'module_part_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'module_id', referencedColumnName: 'id' },
+  })
   hftModule: HftmModule[];
 
   @OneToMany(() => Exam, (exams) => exams.id)
-  exams: Exam[] ;
+  exams: Exam[];
 }

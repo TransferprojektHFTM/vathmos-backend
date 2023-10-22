@@ -1,6 +1,7 @@
 import {
   Column,
-  Entity, JoinColumn,
+  Entity,
+  JoinColumn,
   ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -18,10 +19,10 @@ export class Evaluation {
 
   @Column()
   @ManyToOne(() => Exam, (exam) => exam.id)
-  @JoinColumn({ name: 'exam_id'})
+  @JoinColumn({ name: 'exam_id' })
   exam: number;
 
   @OneToOne(() => Person)
-  @JoinColumn({ name: 'student_id'})
+  @JoinColumn({ name: 'student_id' })
   student: number;
 }

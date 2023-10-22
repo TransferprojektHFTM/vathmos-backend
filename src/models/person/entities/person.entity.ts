@@ -1,11 +1,16 @@
-import { Column, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class Person {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({type: 'uuid', unique: true})
+  @Column({ type: 'uuid', unique: true })
   oid: string;
 
   @Column()
@@ -17,22 +22,20 @@ export class Person {
   @Column()
   email: string;
 
-  @Column("longtext")
+  @Column('longtext')
   picture: string;
 
-  @Column({default: 'Student'})
+  @Column({ default: 'Student' })
   roles: string;
 
-  @Column({default: false})
+  @Column({ default: false })
   isActivated: boolean;
 
   @Column()
   @UpdateDateColumn({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
-    onUpdate: 'CURRENT_TIMESTAMP(6)'
+    onUpdate: 'CURRENT_TIMESTAMP(6)',
   })
   lastLogin: Date;
-
-
 }

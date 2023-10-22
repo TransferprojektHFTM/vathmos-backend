@@ -15,7 +15,8 @@ export class AzureAdUser {
       jwt = {} as JwtPayload;
     }
 
-    this.email = jwt.preferred_username ?? `ClientCredentialsToken|${jwt.appid ?? ''}`;
+    this.email =
+      jwt.preferred_username ?? `ClientCredentialsToken|${jwt.appid ?? ''}`;
     this.fullName = jwt.name ?? `ClientCredentialsToken|${jwt.appid ?? ''}`;
     this.id = jwt.oid;
     this.roles = jwt.roles;

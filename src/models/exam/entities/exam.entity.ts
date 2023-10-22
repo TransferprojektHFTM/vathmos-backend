@@ -1,5 +1,11 @@
-import {Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
-import {HftmModulePart} from "../../hftm-module-part/entities/hftm-module-part.entity";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { HftmModulePart } from '../../hftm-module-part/entities/hftm-module-part.entity';
 
 @Entity()
 export class Exam {
@@ -13,6 +19,6 @@ export class Exam {
   weighting: string;
 
   @ManyToOne(() => HftmModulePart, (modulpart) => modulpart.exams)
-  @JoinColumn({ name: 'module_part_id'})
+  @JoinColumn({ name: 'module_part_id' })
   modulpart: HftmModulePart;
 }
