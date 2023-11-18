@@ -137,16 +137,16 @@
                 ]
             }
         },
-        "/api/v1/course": {
+        "/api/v1/cohort": {
             "post": {
-                "operationId": "CourseController_create",
+                "operationId": "CohortController_create",
                 "parameters": [],
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/CreateCourseDto"
+                                "$ref": "#/components/schemas/CreateCohortDto"
                             }
                         }
                     }
@@ -157,7 +157,7 @@
                     }
                 },
                 "tags": [
-                    "Course"
+                    "Cohort"
                 ],
                 "security": [
                     {
@@ -166,7 +166,7 @@
                 ]
             },
             "get": {
-                "operationId": "CourseController_findAll",
+                "operationId": "CohortController_findAll",
                 "parameters": [],
                 "responses": {
                     "200": {
@@ -174,7 +174,7 @@
                     }
                 },
                 "tags": [
-                    "Course"
+                    "Cohort"
                 ],
                 "security": [
                     {
@@ -183,9 +183,9 @@
                 ]
             }
         },
-        "/api/v1/course/{id}": {
+        "/api/v1/cohort/{id}": {
             "get": {
-                "operationId": "CourseController_findOne",
+                "operationId": "CohortController_findOne",
                 "parameters": [
                     {
                         "name": "id",
@@ -202,7 +202,7 @@
                     }
                 },
                 "tags": [
-                    "Course"
+                    "Cohort"
                 ],
                 "security": [
                     {
@@ -211,7 +211,7 @@
                 ]
             },
             "patch": {
-                "operationId": "CourseController_update",
+                "operationId": "CohortController_update",
                 "parameters": [
                     {
                         "name": "id",
@@ -227,7 +227,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/UpdateCourseDto"
+                                "$ref": "#/components/schemas/UpdateCohortDto"
                             }
                         }
                     }
@@ -238,7 +238,7 @@
                     }
                 },
                 "tags": [
-                    "Course"
+                    "Cohort"
                 ],
                 "security": [
                     {
@@ -247,7 +247,7 @@
                 ]
             },
             "delete": {
-                "operationId": "CourseController_remove",
+                "operationId": "CohortController_remove",
                 "parameters": [
                     {
                         "name": "id",
@@ -264,7 +264,7 @@
                     }
                 },
                 "tags": [
-                    "Course"
+                    "Cohort"
                 ],
                 "security": [
                     {
@@ -273,7 +273,7 @@
                 ]
             }
         },
-        "/api/v1/hftm-class": {
+        "/api/v1/student-class": {
             "post": {
                 "operationId": "HftmClassController_create",
                 "parameters": [],
@@ -293,7 +293,7 @@
                     }
                 },
                 "tags": [
-                    "hftm Class"
+                    "student class"
                 ],
                 "security": [
                     {
@@ -310,7 +310,7 @@
                     }
                 },
                 "tags": [
-                    "hftm Class"
+                    "student class"
                 ],
                 "security": [
                     {
@@ -319,7 +319,7 @@
                 ]
             }
         },
-        "/api/v1/hftm-class/{id}": {
+        "/api/v1/student-class/{id}": {
             "get": {
                 "operationId": "HftmClassController_findOne",
                 "parameters": [
@@ -338,7 +338,7 @@
                     }
                 },
                 "tags": [
-                    "hftm Class"
+                    "student class"
                 ],
                 "security": [
                     {
@@ -374,7 +374,7 @@
                     }
                 },
                 "tags": [
-                    "hftm Class"
+                    "student class"
                 ],
                 "security": [
                     {
@@ -400,7 +400,7 @@
                     }
                 },
                 "tags": [
-                    "hftm Class"
+                    "student class"
                 ],
                 "security": [
                     {
@@ -409,16 +409,16 @@
                 ]
             }
         },
-        "/api/v1/hftm-module": {
+        "/api/v1/core-module": {
             "post": {
-                "operationId": "HftmModuleController_create",
+                "operationId": "CoreModuleController_create",
                 "parameters": [],
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/CreateHftmModuleDto"
+                                "$ref": "#/components/schemas/CreateCoreModuleDto"
                             }
                         }
                     }
@@ -429,7 +429,7 @@
                     }
                 },
                 "tags": [
-                    "hftm Module"
+                    "core module"
                 ],
                 "security": [
                     {
@@ -438,7 +438,7 @@
                 ]
             },
             "get": {
-                "operationId": "HftmModuleController_findAll",
+                "operationId": "CoreModuleController_findAll",
                 "parameters": [],
                 "responses": {
                     "200": {
@@ -446,7 +446,7 @@
                     }
                 },
                 "tags": [
-                    "hftm Module"
+                    "core module"
                 ],
                 "security": [
                     {
@@ -455,9 +455,9 @@
                 ]
             }
         },
-        "/api/v1/hftm-module/{id}": {
+        "/api/v1/core-module/{id}": {
             "get": {
-                "operationId": "HftmModuleController_findOne",
+                "operationId": "CoreModuleController_findOne",
                 "parameters": [
                     {
                         "name": "id",
@@ -474,7 +474,7 @@
                     }
                 },
                 "tags": [
-                    "hftm Module"
+                    "core module"
                 ],
                 "security": [
                     {
@@ -483,7 +483,7 @@
                 ]
             },
             "patch": {
-                "operationId": "HftmModuleController_update",
+                "operationId": "CoreModuleController_update",
                 "parameters": [
                     {
                         "name": "id",
@@ -499,7 +499,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/UpdateHftmModuleDto"
+                                "$ref": "#/components/schemas/UpdateCoreModuleDto"
                             }
                         }
                     }
@@ -510,7 +510,7 @@
                     }
                 },
                 "tags": [
-                    "hftm Module"
+                    "core module"
                 ],
                 "security": [
                     {
@@ -519,7 +519,7 @@
                 ]
             },
             "delete": {
-                "operationId": "HftmModuleController_remove",
+                "operationId": "CoreModuleController_remove",
                 "parameters": [
                     {
                         "name": "id",
@@ -536,7 +536,7 @@
                     }
                 },
                 "tags": [
-                    "hftm Module"
+                    "core module"
                 ],
                 "security": [
                     {
@@ -545,16 +545,16 @@
                 ]
             }
         },
-        "/api/v1/hftm-module-part": {
+        "/api/v1/subject": {
             "post": {
-                "operationId": "HftmModulePartController_create",
+                "operationId": "SubjectController_create",
                 "parameters": [],
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/CreateHftmModulePartDto"
+                                "$ref": "#/components/schemas/CreateSubjectDto"
                             }
                         }
                     }
@@ -565,7 +565,7 @@
                     }
                 },
                 "tags": [
-                    "hftm Module Part"
+                    "subject"
                 ],
                 "security": [
                     {
@@ -574,7 +574,7 @@
                 ]
             },
             "get": {
-                "operationId": "HftmModulePartController_findAll",
+                "operationId": "SubjectController_findAll",
                 "parameters": [],
                 "responses": {
                     "200": {
@@ -582,7 +582,7 @@
                     }
                 },
                 "tags": [
-                    "hftm Module Part"
+                    "subject"
                 ],
                 "security": [
                     {
@@ -591,9 +591,9 @@
                 ]
             }
         },
-        "/api/v1/hftm-module-part/{id}": {
+        "/api/v1/subject/{id}": {
             "get": {
-                "operationId": "HftmModulePartController_findOne",
+                "operationId": "SubjectController_findOne",
                 "parameters": [
                     {
                         "name": "id",
@@ -610,7 +610,7 @@
                     }
                 },
                 "tags": [
-                    "hftm Module Part"
+                    "subject"
                 ],
                 "security": [
                     {
@@ -619,7 +619,7 @@
                 ]
             },
             "patch": {
-                "operationId": "HftmModulePartController_update",
+                "operationId": "SubjectController_update",
                 "parameters": [
                     {
                         "name": "id",
@@ -635,7 +635,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/UpdateHftmModulePartDto"
+                                "$ref": "#/components/schemas/UpdateSubjectDto"
                             }
                         }
                     }
@@ -646,7 +646,7 @@
                     }
                 },
                 "tags": [
-                    "hftm Module Part"
+                    "subject"
                 ],
                 "security": [
                     {
@@ -655,7 +655,7 @@
                 ]
             },
             "delete": {
-                "operationId": "HftmModulePartController_remove",
+                "operationId": "SubjectController_remove",
                 "parameters": [
                     {
                         "name": "id",
@@ -672,7 +672,7 @@
                     }
                 },
                 "tags": [
-                    "hftm Module Part"
+                    "subject"
                 ],
                 "security": [
                     {
@@ -953,16 +953,16 @@
                 ]
             }
         },
-        "/api/v1/modul-typ": {
+        "/api/v1/module-type": {
             "post": {
-                "operationId": "ModulTypController_create",
+                "operationId": "ModuleTypeController_create",
                 "parameters": [],
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/CreateModulTypDto"
+                                "$ref": "#/components/schemas/CreateModuleTypeDto"
                             }
                         }
                     }
@@ -973,7 +973,7 @@
                     }
                 },
                 "tags": [
-                    "Modul Typ"
+                    "Module Type"
                 ],
                 "security": [
                     {
@@ -982,7 +982,7 @@
                 ]
             },
             "get": {
-                "operationId": "ModulTypController_findAll",
+                "operationId": "ModuleTypeController_findAll",
                 "parameters": [],
                 "responses": {
                     "200": {
@@ -990,7 +990,7 @@
                     }
                 },
                 "tags": [
-                    "Modul Typ"
+                    "Module Type"
                 ],
                 "security": [
                     {
@@ -999,9 +999,9 @@
                 ]
             }
         },
-        "/api/v1/modul-typ/{id}": {
+        "/api/v1/module-type/{id}": {
             "get": {
-                "operationId": "ModulTypController_findOne",
+                "operationId": "ModuleTypeController_findOne",
                 "parameters": [
                     {
                         "name": "id",
@@ -1018,7 +1018,7 @@
                     }
                 },
                 "tags": [
-                    "Modul Typ"
+                    "Module Type"
                 ],
                 "security": [
                     {
@@ -1027,7 +1027,7 @@
                 ]
             },
             "patch": {
-                "operationId": "ModulTypController_update",
+                "operationId": "ModuleTypeController_update",
                 "parameters": [
                     {
                         "name": "id",
@@ -1043,7 +1043,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/UpdateModulTypDto"
+                                "$ref": "#/components/schemas/UpdateModuleTypeDto"
                             }
                         }
                     }
@@ -1054,7 +1054,7 @@
                     }
                 },
                 "tags": [
-                    "Modul Typ"
+                    "Module Type"
                 ],
                 "security": [
                     {
@@ -1063,7 +1063,7 @@
                 ]
             },
             "delete": {
-                "operationId": "ModulTypController_remove",
+                "operationId": "ModuleTypeController_remove",
                 "parameters": [
                     {
                         "name": "id",
@@ -1080,7 +1080,7 @@
                     }
                 },
                 "tags": [
-                    "Modul Typ"
+                    "Module Type"
                 ],
                 "security": [
                     {
@@ -1089,16 +1089,16 @@
                 ]
             }
         },
-        "/api/v1/module-plan": {
+        "/api/v1/degree": {
             "post": {
-                "operationId": "ModulePlanController_create",
+                "operationId": "DegreeController_create",
                 "parameters": [],
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/CreateModulePlanDto"
+                                "$ref": "#/components/schemas/CreateDegreeDto"
                             }
                         }
                     }
@@ -1109,7 +1109,7 @@
                     }
                 },
                 "tags": [
-                    "Module Plan"
+                    "degree"
                 ],
                 "security": [
                     {
@@ -1118,7 +1118,7 @@
                 ]
             },
             "get": {
-                "operationId": "ModulePlanController_findAll",
+                "operationId": "DegreeController_findAll",
                 "parameters": [],
                 "responses": {
                     "200": {
@@ -1126,7 +1126,7 @@
                     }
                 },
                 "tags": [
-                    "Module Plan"
+                    "degree"
                 ],
                 "security": [
                     {
@@ -1135,9 +1135,9 @@
                 ]
             }
         },
-        "/api/v1/module-plan/{id}": {
+        "/api/v1/degree/{id}": {
             "get": {
-                "operationId": "ModulePlanController_findOne",
+                "operationId": "DegreeController_findOne",
                 "parameters": [
                     {
                         "name": "id",
@@ -1154,7 +1154,7 @@
                     }
                 },
                 "tags": [
-                    "Module Plan"
+                    "degree"
                 ],
                 "security": [
                     {
@@ -1163,7 +1163,7 @@
                 ]
             },
             "patch": {
-                "operationId": "ModulePlanController_update",
+                "operationId": "DegreeController_update",
                 "parameters": [
                     {
                         "name": "id",
@@ -1179,7 +1179,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/UpdateModulePlanDto"
+                                "$ref": "#/components/schemas/UpdateDegreeDto"
                             }
                         }
                     }
@@ -1190,7 +1190,7 @@
                     }
                 },
                 "tags": [
-                    "Module Plan"
+                    "degree"
                 ],
                 "security": [
                     {
@@ -1199,7 +1199,7 @@
                 ]
             },
             "delete": {
-                "operationId": "ModulePlanController_remove",
+                "operationId": "DegreeController_remove",
                 "parameters": [
                     {
                         "name": "id",
@@ -1216,7 +1216,7 @@
                     }
                 },
                 "tags": [
-                    "Module Plan"
+                    "degree"
                 ],
                 "security": [
                     {
@@ -1256,11 +1256,11 @@
                 "type": "object",
                 "properties": {}
             },
-            "CreateCourseDto": {
+            "CreateCohortDto": {
                 "type": "object",
                 "properties": {}
             },
-            "UpdateCourseDto": {
+            "UpdateCohortDto": {
                 "type": "object",
                 "properties": {}
             },
@@ -1272,19 +1272,19 @@
                 "type": "object",
                 "properties": {}
             },
-            "CreateHftmModuleDto": {
+            "CreateCoreModuleDto": {
                 "type": "object",
                 "properties": {}
             },
-            "UpdateHftmModuleDto": {
+            "UpdateCoreModuleDto": {
                 "type": "object",
                 "properties": {}
             },
-            "CreateHftmModulePartDto": {
+            "CreateSubjectDto": {
                 "type": "object",
                 "properties": {}
             },
-            "UpdateHftmModulePartDto": {
+            "UpdateSubjectDto": {
                 "type": "object",
                 "properties": {}
             },
@@ -1304,19 +1304,19 @@
                 "type": "object",
                 "properties": {}
             },
-            "CreateModulTypDto": {
+            "CreateModuleTypeDto": {
                 "type": "object",
                 "properties": {}
             },
-            "UpdateModulTypDto": {
+            "UpdateModuleTypeDto": {
                 "type": "object",
                 "properties": {}
             },
-            "CreateModulePlanDto": {
+            "CreateDegreeDto": {
                 "type": "object",
                 "properties": {}
             },
-            "UpdateModulePlanDto": {
+            "UpdateDegreeDto": {
                 "type": "object",
                 "properties": {}
             }
