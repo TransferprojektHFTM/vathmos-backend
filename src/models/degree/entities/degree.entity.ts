@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 import { Cohort } from '../../cohort/entities/cohort.entity';
 import { CoreModule } from '../../core-module/entities/core-module.entity';
-import { Person } from 'src/models/person/entities/person.entity';
+import { Person } from '../../person/entities/person.entity';
 
 export enum Model {
   'TZ' = 'TZ',

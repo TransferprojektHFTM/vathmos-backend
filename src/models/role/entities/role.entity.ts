@@ -1,4 +1,4 @@
-import { Person } from 'src/models/person/entities/person.entity';
+import {Person} from '../../person/entities/person.entity';
 import {Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn} from 'typeorm';
 
 @Entity()
