@@ -5,7 +5,6 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Person } from '../../person/entities/person.entity';

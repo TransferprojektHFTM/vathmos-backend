@@ -44,7 +44,7 @@ export class Degree {
 
   @ManyToOne(() => Person)
   @JoinColumn({
-    referencedColumnName: 'person_in_charge',
+    name: 'person_in_charge_id',
     foreignKeyConstraintName: 'id',
   })
   personInCharge: Person;
