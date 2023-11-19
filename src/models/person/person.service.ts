@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 import { GraphApiService } from '../../providers/graph-api.service';
 import { AzureAdPersonDto } from './dto/azure-ad-person.dto';
 import { UserAccessService } from '../../providers/user-access.service';
+import {Role} from "../role/entities/role.entity";
 
 @Injectable()
 export class PersonService {
@@ -66,6 +67,7 @@ export class PersonService {
             newPerson.email = this.getUserEmail(person);
             newPerson.firstName = person.givenName;
             newPerson.surname = person.surname;
+            newPerson.roles = [];
             newPerson.oid = person.id;
             newPerson.lastLogin = new Date('2000-01-01');
             await this.create(newPerson);

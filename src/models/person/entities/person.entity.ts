@@ -1,9 +1,10 @@
 import {
   Column,
-  Entity,
+  Entity, JoinTable, ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import {Role} from "../../role/entities/role.entity";
 
 @Entity()
 export class Person {
@@ -27,6 +28,15 @@ export class Person {
 
   @Column({ default: false })
   isActivated: boolean;
+
+  @ManyToMany(() => Role)
+  @JoinTable({
+    name: 'person_role',
+    joinColumn: { name: 'person_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'role_id', referencedColumnName: 'id' },
+  })
+  roles: Role[];
+
 
   @Column()
   @UpdateDateColumn({

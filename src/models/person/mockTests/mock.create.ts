@@ -1,4 +1,3 @@
-import {Role} from "../../role/entities/role.entity";
 
 export const mockCreatePerson = {
   email: 'test@hftm.ch',
