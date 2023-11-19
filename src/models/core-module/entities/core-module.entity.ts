@@ -2,9 +2,8 @@ import {
   Column,
   Entity,
   JoinColumn,
-  JoinTable,
-  ManyToMany,
   ManyToOne,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -18,7 +17,7 @@ export class CoreModule {
   @Column()
   name: string;
 
-  @OneToOne(() => ModuleType)
+  @ManyToOne(() => ModuleType)
   @JoinColumn({ name: 'module_type_id' })
-  moduleType: number;
+  moduleType: ModuleType;
 }
