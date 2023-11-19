@@ -1,7 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
 
-export class CreatePersonDto {
+export class GetPersonDto {
+  @ApiProperty({ example: '256' })
+  @IsNotEmpty()
+  public id: number;
+
+  @ApiProperty({ example: 'dcd60435-dfff-4c73-b8aa-1e68d56fd1c6' })
+  @IsNotEmpty()
+  public oid: string;
+
   @IsNotEmpty()
   @ApiProperty({ example: 'Max' })
   public firstName: string;
@@ -20,4 +28,10 @@ export class CreatePersonDto {
   @IsNotEmpty()
   @ApiProperty({ example: 'Student' })
   public roles: string[];
+
+  @ApiProperty({ example: '2021-05-04T08:54:00.000Z' })
+  public lastLogin: Date;
+
+  @ApiProperty({ example: true })
+  public isActivated: boolean;
 }

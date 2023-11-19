@@ -11,21 +11,21 @@ import {
 @Entity()
 export class Person {
   @PrimaryGeneratedColumn()
-  id: number;
+  id?: number;
 
   @Column({ type: 'uuid', unique: true })
   oid: string;
 
-  @Column()
+  @Column({ default: null })
   firstName: string;
 
-  @Column()
-  givenName: string;
+  @Column({ default: null })
+  surname: string;
 
-  @Column()
+  @Column({ default: null })
   email: string;
 
-  @Column('longtext')
+  @Column({ type: 'longtext', default: null })
   picture: string;
 
   @ManyToMany(() => Role)

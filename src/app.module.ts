@@ -9,11 +9,12 @@ import { ExamModule } from './models/exam/exam.module';
 import { EvaluationModule } from './models/evaluation/evaluation.module';
 import { ModuleTypeModule } from './models/module-type/module-type.module';
 import { JwtService } from '@nestjs/jwt';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { VathmosAuthGuard } from './auth-guard/vathmos-auth-guard';
 import { DegreeModule } from './models/degree/degree.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppCustomLogger } from './app.custom.logger';
+import { NotFoundExceptionFilter } from './common/NotFoundExceptionFilter';
 
 @Module({
   imports: [
@@ -53,6 +54,10 @@ import { AppCustomLogger } from './app.custom.logger';
     {
       provide: APP_GUARD,
       useClass: VathmosAuthGuard,
+    },
+    {
+      provide: APP_FILTER,
+      useClass: NotFoundExceptionFilter,
     },
   ],
   exports: [],

@@ -2,39 +2,23 @@
     "openapi": "3.0.0",
     "paths": {
         "/api/v1/person": {
-            "post": {
-                "operationId": "PersonController_create",
-                "parameters": [],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/CreatePersonDto"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": ""
-                    }
-                },
-                "tags": [
-                    "Person"
-                ],
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
-            },
             "get": {
                 "operationId": "PersonController_findAll",
+                "summary": "Get a list of all persons",
                 "parameters": [],
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/GetPersonDto"
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -47,12 +31,13 @@
                 ]
             }
         },
-        "/api/v1/person/{id}": {
+        "/api/v1/person/{oid}": {
             "get": {
                 "operationId": "PersonController_findOne",
+                "summary": "Get person with oid",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "oid",
                         "required": true,
                         "in": "path",
                         "schema": {
@@ -62,7 +47,17 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/GetPersonDto"
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -78,7 +73,7 @@
                 "operationId": "PersonController_update",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "oid",
                         "required": true,
                         "in": "path",
                         "schema": {
@@ -109,9 +104,12 @@
                         "bearer": []
                     }
                 ]
-            },
+            }
+        },
+        "/api/v1/person/{id}": {
             "delete": {
                 "operationId": "PersonController_remove",
+                "summary": "Delete a person with id",
                 "parameters": [
                     {
                         "name": "id",
@@ -124,6 +122,26 @@
                 ],
                 "responses": {
                     "200": {
+                        "description": "Ok"
+                    }
+                },
+                "tags": [
+                    "Person"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/person/createPerson": {
+            "post": {
+                "operationId": "PersonController_createPersons",
+                "summary": "Create all persons into hftm, only \"KursAdmin\" can use this route",
+                "parameters": [],
+                "responses": {
+                    "201": {
                         "description": ""
                     }
                 },
@@ -1248,13 +1266,89 @@
             }
         },
         "schemas": {
-            "CreatePersonDto": {
+            "GetPersonDto": {
                 "type": "object",
-                "properties": {}
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "example": "256"
+                    },
+                    "oid": {
+                        "type": "string",
+                        "example": "dcd60435-dfff-4c73-b8aa-1e68d56fd1c6"
+                    },
+                    "firstName": {
+                        "type": "string",
+                        "example": "Max"
+                    },
+                    "surname": {
+                        "type": "string",
+                        "example": "Mustermann"
+                    },
+                    "mail": {
+                        "type": "string",
+                        "example": "max.mustermann@hftm.ch"
+                    },
+                    "picture": {
+                        "type": "string",
+                        "example": "data:image/png;base64,iVBORw0KGgoA........"
+                    },
+                    "roles": {
+                        "example": "Student",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "lastLogin": {
+                        "format": "date-time",
+                        "type": "string",
+                        "example": "2021-05-04T08:54:00.000Z"
+                    },
+                    "isActivated": {
+                        "type": "boolean",
+                        "example": true
+                    }
+                },
+                "required": [
+                    "id",
+                    "oid",
+                    "firstName",
+                    "surname",
+                    "mail",
+                    "picture",
+                    "roles",
+                    "lastLogin",
+                    "isActivated"
+                ]
             },
             "UpdatePersonDto": {
                 "type": "object",
-                "properties": {}
+                "properties": {
+                    "firstName": {
+                        "type": "string",
+                        "example": "Max"
+                    },
+                    "surname": {
+                        "type": "string",
+                        "example": "Mustermann"
+                    },
+                    "mail": {
+                        "type": "string",
+                        "example": "max.mustermann@hftm.ch"
+                    },
+                    "picture": {
+                        "type": "string",
+                        "example": "data:image/png;base64,iVBORw0KGgoA........"
+                    },
+                    "roles": {
+                        "example": "Student",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
             },
             "CreateCohortDto": {
                 "type": "object",
