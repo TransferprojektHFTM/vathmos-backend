@@ -1,13 +1,16 @@
 import {
   Column,
   Entity,
+  JoinColumn,
   JoinTable,
   ManyToMany,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Cohort } from '../../cohort/entities/cohort.entity';
 import { CoreModule } from '../../core-module/entities/core-module.entity';
+import { Person } from 'src/models/person/entities/person.entity';
 
 export enum Model {
   'TZ' = 'TZ',
@@ -37,5 +40,12 @@ export class Degree {
     joinColumn: { name: 'degree_id', referencedColumnName: 'id' },
     inverseJoinColumn: { name: 'module_id', referencedColumnName: 'id' },
   })
-  coreModule: CoreModule[];
+  coreModules: CoreModule[];
+
+  @ManyToOne(() => Person)
+  @JoinColumn({
+    referencedColumnName: 'person_in_charge',
+    foreignKeyConstraintName: 'id',
+  })
+  personInCharge: Person;
 }

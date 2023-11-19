@@ -1,1 +1,1 @@
-export class CreateHftmClassDto {}
+export class CreateStudentClassDto {}

@@ -7,20 +7,20 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { HftmClassService } from './student-class.service';
-import { CreateHftmClassDto } from './dto/create-student-class.dto';
-import { UpdateHftmClassDto } from './dto/update-student-class.dto';
+import { StudentClassService } from './student-class.service';
+import { CreateStudentClassDto } from './dto/create-student-class.dto';
+import { UpdateStudentClassDto } from './dto/update-student-class.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('student class')
 @ApiBearerAuth()
 @Controller('student-class')
-export class HftmClassController {
-  constructor(private readonly studentClassService: HftmClassService) {}
+export class StudentClassController {
+  constructor(private readonly studentClassService: StudentClassService) {}
 
   @Post()
-  create(@Body() createHftmClassDto: CreateHftmClassDto) {
-    return this.studentClassService.create(createHftmClassDto);
+  create(@Body() createStudentClassDto: CreateStudentClassDto) {
+    return this.studentClassService.create(createStudentClassDto);
   }
 
   @Get()
@@ -36,9 +36,9 @@ export class HftmClassController {
   @Patch(':id')
   update(
     @Param('id') id: string,
-    @Body() updateHftmClassDto: UpdateHftmClassDto,
+    @Body() updateStudentClassDto: UpdateStudentClassDto,
   ) {
-    return this.studentClassService.update(+id, updateHftmClassDto);
+    return this.studentClassService.update(+id, updateStudentClassDto);
   }
 
   @Delete(':id')

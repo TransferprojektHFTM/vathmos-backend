@@ -12,7 +12,7 @@ import { Person } from '../../person/entities/person.entity';
 import { Cohort } from '../../cohort/entities/cohort.entity';
 
 @Entity()
-export class HftmClass {
+export class StudentClass {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -25,9 +25,9 @@ export class HftmClass {
     joinColumn: { name: 'student_class_id', referencedColumnName: 'id' },
     inverseJoinColumn: { name: 'student_id', referencedColumnName: 'id' },
   })
-  person: Person[];
+  persons: Person[];
 
-  @ManyToOne(() => Cohort, (cohort) => cohort.studentClass)
+  @ManyToOne(() => Cohort, (cohort) => cohort.studentClasses)
   @JoinColumn({ name: 'cohort_id' })
   cohorts: Cohort;
 }

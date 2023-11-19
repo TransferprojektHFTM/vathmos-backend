@@ -27,7 +27,7 @@ export class Subject {
     joinColumn: { name: 'subject_id', referencedColumnName: 'id' },
     inverseJoinColumn: { name: 'lecturer_id', referencedColumnName: 'id' },
   })
-  lecturer: Person[];
+  lecturers: Person[];
 
   @ManyToMany(() => CoreModule)
   @JoinTable({
@@ -35,7 +35,7 @@ export class Subject {
     joinColumn: { name: 'subject_id', referencedColumnName: 'id' },
     inverseJoinColumn: { name: 'module_id', referencedColumnName: 'id' },
   })
-  hftModule: CoreModule[];
+  coreModules: CoreModule[];
 
   @OneToMany(() => Exam, (exams) => exams.id)
   exams: Exam[];

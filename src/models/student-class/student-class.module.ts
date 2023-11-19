@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { HftmClassService } from './student-class.service';
-import { HftmClassController } from './student-class.controller';
+import { StudentClassService } from './student-class.service';
+import { StudentClassController } from './student-class.controller';
 
 @Module({
-  controllers: [HftmClassController],
-  providers: [HftmClassService],
+  controllers: [StudentClassController],
+  providers: [StudentClassService],
 })
-export class HftmClassModule {}
+export class StudentClassModule {}

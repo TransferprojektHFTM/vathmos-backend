@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PersonModule } from './models/person/person.module';
 import { CohortModule } from './models/cohort/cohort.module';
-import { HftmClassModule } from './models/student-class/student-class.module';
+import { StudentClassModule } from './models/student-class/student-class.module';
 import { CoreModuleModule } from './models/core-module/core-module.module';
 import { SubjectModule } from './models/subject/subject.module';
 import { ExamModule } from './models/exam/exam.module';
@@ -38,7 +38,7 @@ import { AppCustomLogger } from './app.custom.logger';
     }),
     PersonModule,
     CohortModule,
-    HftmClassModule,
+    StudentClassModule,
     CoreModuleModule,
     SubjectModule,
     ExamModule,

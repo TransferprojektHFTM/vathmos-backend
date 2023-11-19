@@ -8,7 +8,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { HftmClass } from '../../student-class/entities/student-class.entity';
+import { StudentClass } from '../../student-class/entities/student-class.entity';
 import { Degree } from '../../degree/entities/degree.entity';
 
 @Entity()
@@ -19,8 +19,8 @@ export class Cohort {
   @Column()
   name: string;
 
-  @OneToMany(() => HftmClass, (studentClass) => studentClass.cohorts)
-  studentClass: HftmClass[];
+  @OneToMany(() => StudentClass, (studentClass) => studentClass.cohorts)
+  studentClasses: StudentClass[];
 
   @ManyToOne(() => Degree)
   @JoinColumn({ name: 'degree_id' })

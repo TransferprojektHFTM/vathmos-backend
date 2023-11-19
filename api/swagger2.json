@@ -275,14 +275,14 @@
         },
         "/api/v1/student-class": {
             "post": {
-                "operationId": "HftmClassController_create",
+                "operationId": "StudentClassController_create",
                 "parameters": [],
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/CreateHftmClassDto"
+                                "$ref": "#/components/schemas/CreateStudentClassDto"
                             }
                         }
                     }
@@ -302,7 +302,7 @@
                 ]
             },
             "get": {
-                "operationId": "HftmClassController_findAll",
+                "operationId": "StudentClassController_findAll",
                 "parameters": [],
                 "responses": {
                     "200": {
@@ -321,7 +321,7 @@
         },
         "/api/v1/student-class/{id}": {
             "get": {
-                "operationId": "HftmClassController_findOne",
+                "operationId": "StudentClassController_findOne",
                 "parameters": [
                     {
                         "name": "id",
@@ -347,7 +347,7 @@
                 ]
             },
             "patch": {
-                "operationId": "HftmClassController_update",
+                "operationId": "StudentClassController_update",
                 "parameters": [
                     {
                         "name": "id",
@@ -363,7 +363,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/UpdateHftmClassDto"
+                                "$ref": "#/components/schemas/UpdateStudentClassDto"
                             }
                         }
                     }
@@ -383,7 +383,7 @@
                 ]
             },
             "delete": {
-                "operationId": "HftmClassController_remove",
+                "operationId": "StudentClassController_remove",
                 "parameters": [
                     {
                         "name": "id",
@@ -1264,11 +1264,11 @@
                 "type": "object",
                 "properties": {}
             },
-            "CreateHftmClassDto": {
+            "CreateStudentClassDto": {
                 "type": "object",
                 "properties": {}
             },
-            "UpdateHftmClassDto": {
+            "UpdateStudentClassDto": {
                 "type": "object",
                 "properties": {}
             },
