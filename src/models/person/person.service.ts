@@ -66,7 +66,6 @@ export class PersonService {
             newPerson.email = this.getUserEmail(person);
             newPerson.firstName = person.givenName;
             newPerson.surname = person.surname;
-            newPerson.roles = this.getUserRoles(person);
             newPerson.oid = person.id;
             newPerson.lastLogin = new Date('2000-01-01');
             await this.create(newPerson);
@@ -87,7 +86,4 @@ export class PersonService {
     return person.email ? person.email : person.userPrincipalName;
   }
 
-  private getUserRoles(person: AzureAdPersonDto): string {
-    return person.jobTitle === 'Mitarbeiter' ? 'Dozent' : 'Student';
-  }
 }

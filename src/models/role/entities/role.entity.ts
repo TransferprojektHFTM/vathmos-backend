@@ -1,5 +1,5 @@
 import { Person } from 'src/models/person/entities/person.entity';
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn} from 'typeorm';
 
 @Entity()
 export class Role {
@@ -7,11 +7,17 @@ export class Role {
   id: number;
 
   @Column({ type: 'uuid', unique: true })
-  oid: string;
+  appRoleId: string;
 
   @Column()
   name: string;
 
-  @ManyToMany(() => Person, (person) => person.roles)
+  @ManyToMany(() => Person)
+  @JoinTable({
+    name: 'person_role',
+    joinColumn: { name: 'person_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'role_id', referencedColumnName: 'id' },
+  })
   persons: Person[];
+
 }

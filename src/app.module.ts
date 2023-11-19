@@ -15,6 +15,7 @@ import { DegreeModule } from './models/degree/degree.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppCustomLogger } from './app.custom.logger';
 import { NotFoundExceptionFilter } from './common/NotFoundExceptionFilter';
+import { RoleModule } from './models/role/role.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { NotFoundExceptionFilter } from './common/NotFoundExceptionFilter';
     EvaluationModule,
     ModuleTypeModule,
     DegreeModule,
+    RoleModule,
   ],
   controllers: [],
   providers: [
