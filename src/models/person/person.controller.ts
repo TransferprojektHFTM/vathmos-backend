@@ -71,6 +71,7 @@ export class PersonController {
     return this.personService.remove(+id);
   }
 
+  @ApiTags('Settings')
   @Post('createPerson')
   @ApiOperation({
     summary:

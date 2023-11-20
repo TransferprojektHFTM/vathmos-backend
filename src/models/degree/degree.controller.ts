@@ -12,7 +12,7 @@ import { CreateDegreeDto } from './dto/create-degree.dto';
 import { UpdateDegreeDto } from './dto/update-degree.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-@ApiTags('degree')
+@ApiTags('Degree')
 @ApiBearerAuth()
 @Controller('degree')
 export class DegreeController {

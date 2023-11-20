@@ -146,7 +146,8 @@
                     }
                 },
                 "tags": [
-                    "Person"
+                    "Person",
+                    "Settings"
                 ],
                 "security": [
                     {
@@ -311,7 +312,7 @@
                     }
                 },
                 "tags": [
-                    "student class"
+                    "Student class"
                 ],
                 "security": [
                     {
@@ -328,7 +329,7 @@
                     }
                 },
                 "tags": [
-                    "student class"
+                    "Student class"
                 ],
                 "security": [
                     {
@@ -356,7 +357,7 @@
                     }
                 },
                 "tags": [
-                    "student class"
+                    "Student class"
                 ],
                 "security": [
                     {
@@ -392,7 +393,7 @@
                     }
                 },
                 "tags": [
-                    "student class"
+                    "Student class"
                 ],
                 "security": [
                     {
@@ -418,7 +419,7 @@
                     }
                 },
                 "tags": [
-                    "student class"
+                    "Student class"
                 ],
                 "security": [
                     {
@@ -447,7 +448,7 @@
                     }
                 },
                 "tags": [
-                    "core module"
+                    "Core module"
                 ],
                 "security": [
                     {
@@ -464,7 +465,7 @@
                     }
                 },
                 "tags": [
-                    "core module"
+                    "Core module"
                 ],
                 "security": [
                     {
@@ -492,7 +493,7 @@
                     }
                 },
                 "tags": [
-                    "core module"
+                    "Core module"
                 ],
                 "security": [
                     {
@@ -528,7 +529,7 @@
                     }
                 },
                 "tags": [
-                    "core module"
+                    "Core module"
                 ],
                 "security": [
                     {
@@ -554,7 +555,7 @@
                     }
                 },
                 "tags": [
-                    "core module"
+                    "Core module"
                 ],
                 "security": [
                     {
@@ -583,7 +584,7 @@
                     }
                 },
                 "tags": [
-                    "subject"
+                    "Subject"
                 ],
                 "security": [
                     {
@@ -600,7 +601,7 @@
                     }
                 },
                 "tags": [
-                    "subject"
+                    "Subject"
                 ],
                 "security": [
                     {
@@ -628,7 +629,7 @@
                     }
                 },
                 "tags": [
-                    "subject"
+                    "Subject"
                 ],
                 "security": [
                     {
@@ -664,7 +665,7 @@
                     }
                 },
                 "tags": [
-                    "subject"
+                    "Subject"
                 ],
                 "security": [
                     {
@@ -690,7 +691,7 @@
                     }
                 },
                 "tags": [
-                    "subject"
+                    "Subject"
                 ],
                 "security": [
                     {
@@ -1127,7 +1128,7 @@
                     }
                 },
                 "tags": [
-                    "degree"
+                    "Degree"
                 ],
                 "security": [
                     {
@@ -1144,7 +1145,7 @@
                     }
                 },
                 "tags": [
-                    "degree"
+                    "Degree"
                 ],
                 "security": [
                     {
@@ -1172,7 +1173,7 @@
                     }
                 },
                 "tags": [
-                    "degree"
+                    "Degree"
                 ],
                 "security": [
                     {
@@ -1208,7 +1209,7 @@
                     }
                 },
                 "tags": [
-                    "degree"
+                    "Degree"
                 ],
                 "security": [
                     {
@@ -1234,7 +1235,7 @@
                     }
                 },
                 "tags": [
-                    "degree"
+                    "Degree"
                 ],
                 "security": [
                     {
@@ -1261,7 +1262,10 @@
                     "201": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "Role"
+                ]
             },
             "get": {
                 "operationId": "RoleController_findAll",
@@ -1270,7 +1274,10 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "Role"
+                ]
             }
         },
         "/api/v1/role/{id}": {
@@ -1290,7 +1297,10 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "Role"
+                ]
             },
             "patch": {
                 "operationId": "RoleController_update",
@@ -1318,7 +1328,10 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "Role"
+                ]
             },
             "delete": {
                 "operationId": "RoleController_remove",
@@ -1336,7 +1349,10 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "Role"
+                ]
             }
         }
     },
@@ -1350,6 +1366,10 @@
         {
             "name": "Person",
             "description": "Student and lecturer management"
+        },
+        {
+            "name": "Settings",
+            "description": "optional for course administrators"
         }
     ],
     "servers": [],

@@ -12,7 +12,7 @@ import { CreateCoreModuleDto } from './dto/create-core-module.dto';
 import { UpdateCoreModuleDto } from './dto/update-core-module.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-@ApiTags('core module')
+@ApiTags('Core module')
 @ApiBearerAuth()
 @Controller('core-module')
 export class CoreModuleController {

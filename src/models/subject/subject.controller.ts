@@ -12,7 +12,7 @@ import { CreateSubjectDto } from './dto/create-subject.dto';
 import { UpdateSubjectDto } from './dto/update-subject.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-@ApiTags('subject')
+@ApiTags('Subject')
 @ApiBearerAuth()
 @Controller('subject')
 export class SubjectController {
