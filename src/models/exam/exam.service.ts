@@ -1,12 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateExamDto } from './dto/create-exam.dto';
 import { UpdateExamDto } from './dto/update-exam.dto';
 import { Exam } from './entities/exam.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { AppCustomLogger } from '../../app.custom.logger';
 
 @Injectable()
 export class ExamService {
+  private readonly logger = new AppCustomLogger(ExamService.name);
+
 
   constructor(@InjectRepository(Exam) private readonly examRepository: Repository<Exam>) {
   }
@@ -18,8 +21,13 @@ export class ExamService {
     return this.examRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} exam`;
+  async findOne(id: number): Promise<Exam | undefined> {
+    const entity = await this.examRepository.findOne({where: {id}});
+    if(!entity) {
+      this.logger.warn(`Exam with id ${id} not found`);
+      throw new NotFoundException(`Entity with id ${id} not found`);
+    }
+    return entity;
   }
 
   update(id: number, updateExamDto: UpdateExamDto) {
