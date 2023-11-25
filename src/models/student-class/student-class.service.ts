@@ -23,19 +23,17 @@ export class StudentClassService {
   }
 
   findAll() {
+    //@TODO Join weit person
     return this.classRepository.find();
   }
 
   findOne(id: number) {
+    //@TODO Join weit person
     return this.classRepository.findOne({where: {id: id}});
   }
 
   update(id: number, updateStudentClassDto: UpdateStudentClassDto) {
     return this.classRepository.update(id, updateStudentClassDto);
-  }
-
-  remove(id: number) {
-    return this.classRepository.delete(id);
   }
 
   async createClasses() {

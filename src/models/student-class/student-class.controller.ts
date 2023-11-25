@@ -33,6 +33,8 @@ export class StudentClassController {
   findAll() {
     return this.studentClassService.findAll();
   }
+
+  @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Get classes with id' })
   @ApiResponse({
     status: HttpStatus.OK,
@@ -45,6 +47,13 @@ export class StudentClassController {
     return this.studentClassService.findOne(+id);
   }
 
+  @ApiOperation({ summary: '' })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Ok',
+    type: UpdateStudentClassDto,
+    isArray: true,
+  })
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -53,10 +62,6 @@ export class StudentClassController {
     return this.studentClassService.update(+id, updateStudentClassDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.studentClassService.remove(+id);
-  }
 
   @ApiTags('Settings')
   @Post('createClasses')

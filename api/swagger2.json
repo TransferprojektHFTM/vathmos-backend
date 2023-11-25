@@ -362,6 +362,7 @@
             },
             "patch": {
                 "operationId": "StudentClassController_update",
+                "summary": "",
                 "parameters": [
                     {
                         "name": "id",
@@ -384,33 +385,17 @@
                 },
                 "responses": {
                     "200": {
-                        "description": ""
-                    }
-                },
-                "tags": [
-                    "Student class"
-                ],
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
-            },
-            "delete": {
-                "operationId": "StudentClassController_remove",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "required": true,
-                        "in": "path",
-                        "schema": {
-                            "type": "string"
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UpdateStudentClassDto"
+                                    }
+                                }
+                            }
                         }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": ""
                     }
                 },
                 "tags": [
