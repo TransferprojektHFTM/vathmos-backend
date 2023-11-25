@@ -31,5 +31,5 @@ export class StudentClass {
 
   @ManyToOne(() => Cohort, (cohort) => cohort.studentClasses)
   @JoinColumn({ name: 'cohort_id' })
-  cohorts: Cohort;
+  cohort: Cohort;
 }

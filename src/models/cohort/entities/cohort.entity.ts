@@ -19,7 +19,7 @@ export class Cohort {
   @Index()
   name: string;
 
-  @OneToMany(() => StudentClass, (studentClass) => studentClass.cohorts)
+  @OneToMany(() => StudentClass, (studentClass) => studentClass.cohort)
   studentClasses: StudentClass[];
 
   @ManyToOne(() => DegreeProgram, { nullable: false })
