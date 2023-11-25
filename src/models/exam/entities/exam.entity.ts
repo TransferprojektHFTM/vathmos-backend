@@ -5,7 +5,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { HftmModulePart } from '../../hftm-module-part/entities/hftm-module-part.entity';
+import { Subject } from '../../subject/entities/subject.entity';
 
 @Entity()
 export class Exam {
@@ -18,7 +18,7 @@ export class Exam {
   @Column()
   weighting: string;
 
-  @ManyToOne(() => HftmModulePart, (modulpart) => modulpart.exams)
-  @JoinColumn({ name: 'module_part_id' })
-  modulpart: HftmModulePart;
+  @ManyToOne(() => Subject, (modulpart) => modulpart.exams)
+  @JoinColumn({ name: 'subject_id' })
+  modulpart: Subject;
 }

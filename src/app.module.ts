@@ -1,19 +1,21 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PersonModule } from './models/person/person.module';
-import { CourseModule } from './models/course/course.module';
-import { HftmClassModule } from './models/hftm-class/hftm-class.module';
-import { HftmModuleModule } from './models/hftm-module/hftm-module.module';
-import { HftmModulePartModule } from './models/hftm-module-part/hftm-module-part.module';
+import { CohortModule } from './models/cohort/cohort.module';
+import { StudentClassModule } from './models/student-class/student-class.module';
+import { CoreModuleModule } from './models/core-module/core-module.module';
+import { SubjectModule } from './models/subject/subject.module';
 import { ExamModule } from './models/exam/exam.module';
 import { EvaluationModule } from './models/evaluation/evaluation.module';
-import { ModulTypModule } from './models/modul-typ/modul-typ.module';
+import { ModuleTypeModule } from './models/module-type/module-type.module';
 import { JwtService } from '@nestjs/jwt';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { VathmosAuthGuard } from './auth-guard/vathmos-auth-guard';
-import { ModulePlanModule } from './models/module-plan/module-plan.module';
+import { DegreeModule } from './models/degree/degree.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppCustomLogger } from './app.custom.logger';
+import { NotFoundExceptionFilter } from './common/NotFoundExceptionFilter';
+import { RoleModule } from './models/role/role.module';
 
 @Module({
   imports: [
@@ -37,14 +39,15 @@ import { AppCustomLogger } from './app.custom.logger';
       inject: [ConfigService],
     }),
     PersonModule,
-    CourseModule,
-    HftmClassModule,
-    HftmModuleModule,
-    HftmModulePartModule,
+    CohortModule,
+    StudentClassModule,
+    CoreModuleModule,
+    SubjectModule,
     ExamModule,
     EvaluationModule,
-    ModulTypModule,
-    ModulePlanModule,
+    ModuleTypeModule,
+    DegreeModule,
+    RoleModule,
   ],
   controllers: [],
   providers: [
@@ -53,6 +56,10 @@ import { AppCustomLogger } from './app.custom.logger';
     {
       provide: APP_GUARD,
       useClass: VathmosAuthGuard,
+    },
+    {
+      provide: APP_FILTER,
+      useClass: NotFoundExceptionFilter,
     },
   ],
   exports: [],

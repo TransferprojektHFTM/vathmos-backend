@@ -1,35 +1,42 @@
 import {
   Column,
-  Entity,
+  Entity, JoinTable, ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import {Role} from "../../role/entities/role.entity";
 
 @Entity()
 export class Person {
   @PrimaryGeneratedColumn()
-  id: number;
+  id?: number;
 
   @Column({ type: 'uuid', unique: true })
   oid: string;
 
-  @Column()
+  @Column({ default: null })
   firstName: string;
 
-  @Column()
-  givenName: string;
+  @Column({ default: null })
+  surname: string;
 
-  @Column()
+  @Column({ default: null })
   email: string;
 
-  @Column('longtext')
+  @Column({ type: 'longtext', default: null })
   picture: string;
-
-  @Column({ default: 'Student' })
-  roles: string;
 
   @Column({ default: false })
   isActivated: boolean;
+
+  @ManyToMany(() => Role)
+  @JoinTable({
+    name: 'person_role',
+    joinColumn: { name: 'person_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'role_id', referencedColumnName: 'id' },
+  })
+  roles: Role[];
+
 
   @Column()
   @UpdateDateColumn({
