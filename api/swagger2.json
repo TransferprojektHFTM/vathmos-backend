@@ -428,6 +428,27 @@
                 ]
             }
         },
+        "/api/v1/student-class/createClasses": {
+            "post": {
+                "operationId": "StudentClassController_createPersons",
+                "summary": "Create all classes into hftm, only \"KursAdmin\" can use this route",
+                "parameters": [],
+                "responses": {
+                    "201": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "Student class",
+                    "Settings"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
         "/api/v1/core-module": {
             "post": {
                 "operationId": "CoreModuleController_create",

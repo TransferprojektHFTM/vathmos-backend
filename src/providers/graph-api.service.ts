@@ -39,4 +39,37 @@ export class GraphApiService {
       resolve(allUsers);
     });
   }
+
+  getClasses(token: string): Promise<AzureAdPersonDto[]> {
+    return new Promise(async (resolve, reject) => {
+      const url = 'https://graph.microsoft.com/v1.0/groups?$count=true';
+      let allClassses=  [];
+      let nextLink = url;
+
+      while (nextLink != '') {
+        try {
+          const config = {
+            method: 'get',
+            url: nextLink,
+            headers: {
+              Authorization: 'Bearer ' + token,
+            },
+          };
+          const response = await axios.request(config);
+          allClassses = allClassses.concat(response.data.value);
+
+          // Überprüfe, ob es einen nächsten Link gibt
+          if (response.data['@odata.nextLink']) {
+            nextLink = response.data['@odata.nextLink'];
+          } else {
+            nextLink = ''; // Setze nextLink auf null, um die Schleife zu beenden
+          }
+        } catch (error) {
+          reject(error);
+        }
+      }
+      this.logger.log('Count of Groups or Classes at hftm: ' + allClassses.length);
+      resolve(allClassses);
+    });
+  }
 }

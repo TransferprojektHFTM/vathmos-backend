@@ -5,12 +5,13 @@ import {
   Body,
   Patch,
   Param,
-  Delete,
+  Delete, UsePipes, ValidationPipe,
 } from '@nestjs/common';
 import { StudentClassService } from './student-class.service';
 import { CreateStudentClassDto } from './dto/create-student-class.dto';
 import { UpdateStudentClassDto } from './dto/update-student-class.dto';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import {ApiBearerAuth, ApiOperation, ApiTags} from '@nestjs/swagger';
+import {Roles} from "../../auth-guard/vathmos-auth-guard";
 
 @ApiTags('Student class')
 @ApiBearerAuth()
@@ -44,5 +45,17 @@ export class StudentClassController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.studentClassService.remove(+id);
+  }
+
+  @ApiTags('Settings')
+  @Post('createClasses')
+  @ApiOperation({
+    summary:
+        'Create all classes into hftm, only "KursAdmin" can use this route',
+  })
+  @Roles('KursAdmin')
+  @UsePipes(new ValidationPipe({ transform: true }))
+  createPersons() {
+    return this.studentClassService.createClasses();
   }
 }
