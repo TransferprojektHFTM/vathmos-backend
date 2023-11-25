@@ -15,7 +15,7 @@ export class Subject {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: false })
+  @Column({ type: 'json', nullable: false })
   name: string;
 
   @Column({ nullable: false, unique: true })
