@@ -3,8 +3,6 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { ModuleType } from '../../module-type/entities/module-type.entity';
@@ -14,7 +12,7 @@ export class CoreModule {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ type: 'json' })
   name: string;
 
   @ManyToOne(() => ModuleType)

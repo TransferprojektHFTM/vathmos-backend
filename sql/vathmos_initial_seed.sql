@@ -1,8 +1,8 @@
 DELETE FROM subject_module;
 DELETE FROM subject;
-DELETE FROM module_degree;
+DELETE FROM module_degree_program;
 DELETE FROM core_module;
-DELETE FROM degree;
+DELETE FROM degree_program;
 DELETE FROM module_type;
 DELETE FROM role;
 
@@ -16,11 +16,11 @@ INSERT INTO module_type VALUE (2,"M");
 INSERT INTO module_type VALUE (3,"D");
 INSERT INTO module_type VALUE (4,"F");
 
-/*INSERT INTO degree_part VALUE (1,"Vertiefung Automation 23");
-INSERT INTO degree_part VALUE (2,"Grundstudium 23");
-INSERT INTO degree_part VALUE (3,"Fachstudium Systemtechnik 23");*/
+/*INSERT INTO degree_program_program_part VALUE (1,"Vertiefung Automation 23");
+INSERT INTO degree_program_program_part VALUE (2,"Grundstudium 23");
+INSERT INTO degree_program_program_part VALUE (3,"Fachstudium Systemtechnik 23");*/
 
-INSERT INTO degree VALUE (1,"Systemtechnik","VZ","",NULL);
+INSERT INTO degree_program VALUE (1,"Systemtechnik","VZ","",NULL);
 
 # @TODO Zwischentabelle für grundstudium, fachstudium, vertiefung
 
@@ -36,17 +36,17 @@ INSERT INTO core_module(id, name, module_type_id) VALUE (9,"Informatik III", 2);
 INSERT INTO core_module(id, name, module_type_id) VALUE (10,"Transfer", 4);
 INSERT INTO core_module(id, name, module_type_id) VALUE (11,"Diplomarbeit", 3);
 
-INSERT INTO module_degree VALUE (1, 1);
-INSERT INTO module_degree VALUE (1, 2);
-INSERT INTO module_degree VALUE (1, 3);
-INSERT INTO module_degree VALUE (1, 4);
-INSERT INTO module_degree VALUE (1, 5);
-INSERT INTO module_degree VALUE (1, 6);
-INSERT INTO module_degree VALUE (1, 7);
-INSERT INTO module_degree VALUE (1, 8);
-INSERT INTO module_degree VALUE (1, 9);
-INSERT INTO module_degree VALUE (1, 10);
-INSERT INTO module_degree VALUE (1, 11);
+INSERT INTO module_degree_program VALUE (1, 1);
+INSERT INTO module_degree_program VALUE (1, 2);
+INSERT INTO module_degree_program VALUE (1, 3);
+INSERT INTO module_degree_program VALUE (1, 4);
+INSERT INTO module_degree_program VALUE (1, 5);
+INSERT INTO module_degree_program VALUE (1, 6);
+INSERT INTO module_degree_program VALUE (1, 7);
+INSERT INTO module_degree_program VALUE (1, 8);
+INSERT INTO module_degree_program VALUE (1, 9);
+INSERT INTO module_degree_program VALUE (1, 10);
+INSERT INTO module_degree_program VALUE (1, 11);
 
 INSERT INTO subject(id, name, shortName) VALUE (1,"Produktionsverfahren Grundlagen","");
 INSERT INTO subject(id, name, shortName) VALUE (2,"CAD Einführung","");

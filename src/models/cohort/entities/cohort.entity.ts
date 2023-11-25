@@ -1,31 +1,32 @@
 import {
   Column,
   Entity,
+  Index,
   JoinColumn,
-  JoinTable,
-  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { StudentClass } from '../../student-class/entities/student-class.entity';
-import { Degree } from '../../degree/entities/degree.entity';
+import { DegreeProgram } from '../../degree-program/entities/degree-program.entity';
 
 @Entity()
 export class Cohort {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: false })
+  @Index()
   name: string;
 
   @OneToMany(() => StudentClass, (studentClass) => studentClass.cohorts)
   studentClasses: StudentClass[];
 
-  @ManyToOne(() => Degree)
-  @JoinColumn({ name: 'degree_id' })
-  degree: Degree;
+  @ManyToOne(() => DegreeProgram, { nullable: false })
+  @JoinColumn({ name: 'degree_program_id' })
+  degreeProgram: DegreeProgram;
 
   @Column()
+  @Index()
   startYear: Date;
 }

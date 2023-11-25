@@ -1131,14 +1131,14 @@
         },
         "/api/v1/degree": {
             "post": {
-                "operationId": "DegreeController_create",
+                "operationId": "DegreeProgramController_create",
                 "parameters": [],
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/CreateDegreeDto"
+                                "$ref": "#/components/schemas/CreateDegreeProgramDto"
                             }
                         }
                     }
@@ -1149,7 +1149,7 @@
                     }
                 },
                 "tags": [
-                    "Degree"
+                    "DegreeProgram"
                 ],
                 "security": [
                     {
@@ -1158,7 +1158,7 @@
                 ]
             },
             "get": {
-                "operationId": "DegreeController_findAll",
+                "operationId": "DegreeProgramController_findAll",
                 "parameters": [],
                 "responses": {
                     "200": {
@@ -1166,7 +1166,7 @@
                     }
                 },
                 "tags": [
-                    "Degree"
+                    "DegreeProgram"
                 ],
                 "security": [
                     {
@@ -1177,7 +1177,7 @@
         },
         "/api/v1/degree/{id}": {
             "get": {
-                "operationId": "DegreeController_findOne",
+                "operationId": "DegreeProgramController_findOne",
                 "parameters": [
                     {
                         "name": "id",
@@ -1194,7 +1194,7 @@
                     }
                 },
                 "tags": [
-                    "Degree"
+                    "DegreeProgram"
                 ],
                 "security": [
                     {
@@ -1203,7 +1203,7 @@
                 ]
             },
             "patch": {
-                "operationId": "DegreeController_update",
+                "operationId": "DegreeProgramController_update",
                 "parameters": [
                     {
                         "name": "id",
@@ -1219,7 +1219,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/UpdateDegreeDto"
+                                "$ref": "#/components/schemas/UpdateDegreeProgramDto"
                             }
                         }
                     }
@@ -1230,7 +1230,7 @@
                     }
                 },
                 "tags": [
-                    "Degree"
+                    "DegreeProgram"
                 ],
                 "security": [
                     {
@@ -1239,7 +1239,7 @@
                 ]
             },
             "delete": {
-                "operationId": "DegreeController_remove",
+                "operationId": "DegreeProgramController_remove",
                 "parameters": [
                     {
                         "name": "id",
@@ -1256,7 +1256,7 @@
                     }
                 },
                 "tags": [
-                    "Degree"
+                    "DegreeProgram"
                 ],
                 "security": [
                     {
@@ -1543,11 +1543,11 @@
                 "type": "object",
                 "properties": {}
             },
-            "CreateDegreeDto": {
+            "CreateDegreeProgramDto": {
                 "type": "object",
                 "properties": {}
             },
-            "UpdateDegreeDto": {
+            "UpdateDegreeProgramDto": {
                 "type": "object",
                 "properties": {}
             },
