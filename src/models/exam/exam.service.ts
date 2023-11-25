@@ -34,7 +34,13 @@ export class ExamService {
     return `This action updates a #${id} exam`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} exam`;
+  async remove(id: number): Promise<void> {
+    const deleteResult = await this.examRepository.delete(id);
+    if(deleteResult.affected === 1) {
+      this.logger.log(`Exam with id ${id} deleted`);
+      //return {message: `Exam with id ${id} deleted`, status: 200};
+    }else{
+      throw new NotFoundException(`Exam with id ${id} not found`);
+    }
   }
 }
