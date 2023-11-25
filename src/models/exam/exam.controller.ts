@@ -11,10 +11,12 @@ import { ExamService } from './exam.service';
 import { CreateExamDto } from './dto/create-exam.dto';
 import { UpdateExamDto } from './dto/update-exam.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { VathmosAuthGuard } from '../../auth-guard/vathmos-auth-guard';
+import { Exam } from './entities/exam.entity';
+import {Roles, VathmosAuthGuard} from '../../auth-guard/vathmos-auth-guard';
 
 @ApiTags('Exam')
 @ApiBearerAuth()
+@Roles('Student', 'Dozent', 'KursAdmin')
 @Controller('exam')
 export class ExamController {
   constructor(private readonly examService: ExamService) {}
@@ -25,7 +27,7 @@ export class ExamController {
   }
 
   @Get()
-  findAll() {
+  findAll(): Promise<Exam[]> {
     return this.examService.findAll();
   }
 
