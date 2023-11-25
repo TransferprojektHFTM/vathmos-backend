@@ -18,6 +18,9 @@ export class StudentClass {
   @Column()
   name: string;
 
+  @Column({ type: 'uuid', unique: true })
+  oid: string;
+
   @ManyToMany(() => Person)
   @JoinTable({
     name: 'student_class_person',
@@ -28,5 +31,5 @@ export class StudentClass {
 
   @ManyToOne(() => Cohort, (cohort) => cohort.studentClasses)
   @JoinColumn({ name: 'cohort_id' })
-  cohorts: Cohort;
+  cohort: Cohort;
 }

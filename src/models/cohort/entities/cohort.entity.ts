@@ -19,7 +19,7 @@ export class Cohort {
   @Column()
   name: string;
 
-  @OneToMany(() => StudentClass, (studentClass) => studentClass.cohorts)
+  @OneToMany(() => StudentClass, (studentClass) => studentClass.cohort)
   studentClasses: StudentClass[];
 
   @ManyToOne(() => Degree)

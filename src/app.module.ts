@@ -53,10 +53,10 @@ import { RoleModule } from './models/role/role.module';
   providers: [
     JwtService,
     AppCustomLogger,
-    {
-      provide: APP_GUARD,
-      useClass: VathmosAuthGuard,
-    },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: VathmosAuthGuard,
+    // },
     {
       provide: APP_FILTER,
       useClass: NotFoundExceptionFilter,

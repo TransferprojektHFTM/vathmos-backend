@@ -2,14 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { CreateStudentClassDto } from './dto/create-student-class.dto';
 import { UpdateStudentClassDto } from './dto/update-student-class.dto';
 import {InjectRepository} from "@nestjs/typeorm";
-import {Person} from "../person/entities/person.entity";
 import {Repository} from "typeorm";
 import {GraphApiService} from "../../providers/graph-api.service";
 import {UserAccessService} from "../../providers/user-access.service";
 import {StudentClass} from "./entities/student-class.entity";
+import {AppCustomLogger} from "../../app.custom.logger";
 
 @Injectable()
 export class StudentClassService {
+  private readonly logger = new AppCustomLogger(StudentClassService.name);
 
   constructor(
       @InjectRepository(StudentClass)
@@ -18,37 +19,54 @@ export class StudentClassService {
       private userAccessService: UserAccessService,
   ) {}
   create(createStudentClassDto: CreateStudentClassDto) {
-    return 'This action adds a new studentClass';
+    return this.classRepository.save(createStudentClassDto);
   }
 
   findAll() {
-    return `This action returns all studentClass`;
+    return this.classRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} studentClass`;
+    return this.classRepository.findOne({where: {id: id}});
   }
 
   update(id: number, updateStudentClassDto: UpdateStudentClassDto) {
-    return `This action updates a #${id} studentClass`;
+    return this.classRepository.update(id, updateStudentClassDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} studentClass`;
+    return this.classRepository.delete(id);
   }
 
   async createClasses() {
     let message = {message: ``, status: 500};
     const token = await this.userAccessService.getAccessToken();
-    this.graphApiService.getClasses(token).then((studentClass: any[]) => {
+    await this.graphApiService.getClasses(token).then(async (studentClass: any[]) => {
       let count = 0;
       for (const classes of studentClass) {
         if (classes?.groupTypes.length == 0 && classes?.onPremisesDomainName === "hftm.ch" && classes?.mail !== null) {
-          console.log(classes)
-          count++;
+
+          if(classes?.displayName === "Geschäftsleitung" || classes?.displayName === "Dozierende" || classes?.displayName === "BBDA18.3a"){
+            console.log(classes)
+          }
+          const currentClass = await this.classRepository.findOne({
+            where: {oid: classes.id},
+          });
+          if (currentClass === null) {
+            const classEntity = new StudentClass();
+            classEntity.oid = classes.id;
+            classEntity.name = classes.displayName;
+            await this.create(classEntity);
+            count++;
+           }
         }
       }
-      console.log(count)
-    });
+      message = { message: `${count} Classes created`, status: 200 };
+      this.logger.log(`${count} Classes created`);
+    }).catch((error) => {
+          this.logger.error(error);
+          message = { message: `Unauthorized`, status: 401 };
+        });
+    return message;
   }
 }

@@ -293,39 +293,23 @@
             }
         },
         "/api/v1/student-class": {
-            "post": {
-                "operationId": "StudentClassController_create",
-                "parameters": [],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/CreateStudentClassDto"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": ""
-                    }
-                },
-                "tags": [
-                    "Student class"
-                ],
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
-            },
             "get": {
                 "operationId": "StudentClassController_findAll",
+                "summary": "Get a list of all classes",
                 "parameters": [],
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/GetClassesDto"
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -341,6 +325,7 @@
         "/api/v1/student-class/{id}": {
             "get": {
                 "operationId": "StudentClassController_findOne",
+                "summary": "Get classes with id",
                 "parameters": [
                     {
                         "name": "id",
@@ -353,7 +338,17 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/GetClassesDto"
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -1495,13 +1490,65 @@
                 "type": "object",
                 "properties": {}
             },
-            "CreateStudentClassDto": {
+            "GetClassesDto": {
                 "type": "object",
-                "properties": {}
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "example": "256"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "BBUPUL20.3a"
+                    },
+                    "oid": {
+                        "type": "string",
+                        "example": "dcd60435-dfff-4c73-b8aa-1e68d56fd1c6"
+                    },
+                    "persons": {
+                        "example": [
+                            {
+                                "id": 256,
+                                "oid": "dcd60435-dfff-4c73-b8aa-1e68d56fd1c6",
+                                "firstName": "Max",
+                                "surname": "Mustermann",
+                                "mail": "max.mustermann@hftm.ch",
+                                "picture": "data:image/png;base64,iVBORw0KGgoA........",
+                                "roles": "Student",
+                                "lastLogin": "2021-05-04T08:54:00.000Z",
+                                "isActivated": true
+                            }
+                        ],
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "cohort": {
+                        "type": "string",
+                        "example": "2"
+                    }
+                },
+                "required": [
+                    "id",
+                    "name",
+                    "oid",
+                    "persons",
+                    "cohort"
+                ]
             },
             "UpdateStudentClassDto": {
                 "type": "object",
-                "properties": {}
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "BBUPUL20.3a"
+                    },
+                    "oid": {
+                        "type": "string",
+                        "example": "fe95d302-dbc5-48c7-8a33-45460734d169"
+                    }
+                }
             },
             "CreateCoreModuleDto": {
                 "type": "object",

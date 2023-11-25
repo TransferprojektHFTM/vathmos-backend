@@ -5,13 +5,15 @@ import {
   Body,
   Patch,
   Param,
-  Delete, UsePipes, ValidationPipe,
+  Delete, UsePipes, ValidationPipe, HttpCode, HttpStatus,
 } from '@nestjs/common';
 import { StudentClassService } from './student-class.service';
 import { CreateStudentClassDto } from './dto/create-student-class.dto';
 import { UpdateStudentClassDto } from './dto/update-student-class.dto';
-import {ApiBearerAuth, ApiOperation, ApiTags} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from "../../auth-guard/vathmos-auth-guard";
+import {GetPersonDto} from "../person/dto/get-person.dto";
+import {GetClassesDto} from "./dto/get-classes.dto";
 
 @ApiTags('Student class')
 @ApiBearerAuth()
@@ -19,16 +21,25 @@ import {Roles} from "../../auth-guard/vathmos-auth-guard";
 export class StudentClassController {
   constructor(private readonly studentClassService: StudentClassService) {}
 
-  @Post()
-  create(@Body() createStudentClassDto: CreateStudentClassDto) {
-    return this.studentClassService.create(createStudentClassDto);
-  }
-
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Get a list of all classes' })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Ok',
+    type: GetClassesDto,
+    isArray: true,
+  })
   @Get()
   findAll() {
     return this.studentClassService.findAll();
   }
-
+  @ApiOperation({ summary: 'Get classes with id' })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Ok',
+    type: GetClassesDto,
+    isArray: true,
+  })
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.studentClassService.findOne(+id);
