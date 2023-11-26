@@ -38,12 +38,7 @@ export class Person {
   })
   roles: Role[];
 
-  @ManyToMany(() => StudentClass)
-     @JoinTable({
-        name: 'student_class_person',
-        joinColumn: { name: 'student_id', referencedColumnName: 'id' },
-        inverseJoinColumn: { name: 'student_class_id', referencedColumnName: 'id' },
-    })
+  @ManyToMany(() => StudentClass, classes => classes.persons)
   classes: StudentClass[]
 
   @Column()
