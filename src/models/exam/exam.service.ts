@@ -10,11 +10,19 @@ import { AppCustomLogger } from '../../app.custom.logger';
 export class ExamService {
   private readonly logger = new AppCustomLogger(ExamService.name);
 
-
   constructor(@InjectRepository(Exam) private readonly examRepository: Repository<Exam>) {
   }
-  create(createExamDto: CreateExamDto) {
-    return 'This action adds a new exam';
+
+  async create(createExamDto: CreateExamDto): Promise<Exam>{
+    if(createExamDto.name === undefined || createExamDto.weighting === undefined) {
+      this.logger.warn(`Exam [create] does not have a name or weighting!`);
+      throw new Error(`Exam [create] does not have a name or weighting!`);
+    }
+    const exam = new Exam();
+    exam.name = createExamDto.name;
+    exam.weighting = createExamDto.weighting;
+    // exam.modulpart = createExamDto.modulpart; // hier noch probleme mit modulpart
+    return this.examRepository.save(exam);
   }
 
   async findAll(): Promise<Exam[]> {

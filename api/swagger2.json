@@ -1521,11 +1521,48 @@
             },
             "CreateExamDto": {
                 "type": "object",
-                "properties": {}
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Verteilte Systeme Test 1"
+                    },
+                    "weighting": {
+                        "type": "string",
+                        "example": "40%"
+                    },
+                    "modulpart": {
+                        "example": "Subject Verteilte Systeme",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "required": [
+                    "name",
+                    "weighting",
+                    "modulpart"
+                ]
             },
             "UpdateExamDto": {
                 "type": "object",
-                "properties": {}
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Verteilte Systeme Test 1"
+                    },
+                    "weighting": {
+                        "type": "string",
+                        "example": "40%"
+                    },
+                    "modulpart": {
+                        "example": "Subject Verteilte Systeme",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
             },
             "CreateEvaluationDto": {
                 "type": "object",
