@@ -62,7 +62,12 @@ export class PersonService {
             where: { oid: person.id },
           });
 
-          if (currentPerson === null) {
+         // if(person.userPrincipalName === 'vathmos.kursadmin@hftm.ch'){
+         //   console.log(person)
+         // }
+
+
+          if (currentPerson === null && person.givenName && person.surname || currentPerson === null && person.userPrincipalName.includes('vathmos')) {
             const newPerson = new Person();
             newPerson.email = this.getUserEmail(person);
             newPerson.firstName = person.givenName;
