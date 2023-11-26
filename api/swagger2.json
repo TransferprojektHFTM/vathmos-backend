@@ -1556,7 +1556,7 @@
                         "example": "40%"
                     },
                     "modulpart": {
-                        "example": "Subject Verteilte Systeme",
+                        "example": "Verteilte Systeme",
                         "type": "array",
                         "items": {
                             "type": "string"

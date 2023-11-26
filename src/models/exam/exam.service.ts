@@ -38,8 +38,16 @@ export class ExamService {
     return entity;
   }
 
-  update(id: number, updateExamDto: UpdateExamDto) {
-    return `This action updates a #${id} exam`;
+  async update(id: number, updateExamDto: UpdateExamDto): Promise<Exam> {
+    const existingExam = await this.examRepository.findOne({where: {id}});
+    if(!existingExam) {
+      this.logger.warn(`Exam with id ${id} not found`);
+      throw new NotFoundException(`Exam with id ${id} not found`);
+    }
+    existingExam.name = updateExamDto.name;
+    existingExam.weighting = updateExamDto.weighting;
+    // existingExam.modulpart = updateExamDto.modulpart; // hier noch probleme mit modulpart
+    return this.examRepository.save(existingExam);
   }
 
   async remove(id: number): Promise<void> {
