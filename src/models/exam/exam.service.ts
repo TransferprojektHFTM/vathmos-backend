@@ -5,12 +5,13 @@ import { Exam } from './entities/exam.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AppCustomLogger } from '../../app.custom.logger';
+import { Subject } from '../subject/entities/subject.entity';
 
 @Injectable()
 export class ExamService {
   private readonly logger = new AppCustomLogger(ExamService.name);
 
-  constructor(@InjectRepository(Exam) private readonly examRepository: Repository<Exam>) {
+  constructor(@InjectRepository(Exam) private readonly examRepository: Repository<Exam>, @InjectRepository(Subject) private readonly subjectRepository: Repository<Subject>){
   }
 
   async create(createExamDto: CreateExamDto): Promise<Exam>{
@@ -58,5 +59,35 @@ export class ExamService {
     }else{
       throw new NotFoundException(`Exam with id ${id} not found`);
     }
+  }
+
+  // @ToDo: Check ob dies so funktioniert sobald Subjetcs fertig sind für create and update
+  async getExamsBySubject(subject: Subject): Promise<Exam[]> {
+    const subjectWithExams = await this.subjectRepository
+        .createQueryBuilder('subject')
+        .leftJoinAndSelect('subject.exams', 'exam')
+        .where('subject.id = :subjectId', { subjectId: subject.id })
+        .getOne();
+    if (!subjectWithExams) {
+      // Case wenn Subject keine Exams hat
+      return [];
+    }
+
+    // Case wenn Subject Exams hat nicht über 100%
+    const filteredExams = subjectWithExams.exams.filter(exam =>
+        this.isTotalWeightingValid([exam]),
+    );
+
+    return filteredExams;
+  }
+
+  // @ToDo: Check ob dies so funktioniert sobald Subjetcs fertig sind für create and update
+  private isTotalWeightingValid(exams: Exam[]): boolean {
+    const totalWeighting = exams.reduce(
+        (sum, exam) => sum + parseFloat(exam.weighting),
+        0,
+    );
+
+    return totalWeighting <= 100;
   }
 }
