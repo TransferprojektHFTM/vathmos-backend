@@ -11,5 +11,6 @@ import { UserAccessService } from '../../providers/user-access.service';
   imports: [TypeOrmModule.forFeature([Person])],
   controllers: [PersonController],
   providers: [PersonService, JwtService, GraphApiService, UserAccessService],
+  exports: [TypeOrmModule.forFeature([Person]), PersonService]
 })
 export class PersonModule {}

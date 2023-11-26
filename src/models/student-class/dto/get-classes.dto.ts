@@ -1,6 +1,7 @@
 import {ApiProperty} from "@nestjs/swagger";
 import {IsNotEmpty} from "class-validator";
 import {GetPersonDto} from "../../person/dto/get-person.dto";
+import {Person} from "../../person/entities/person.entity";
 
 export class GetClassesDto{
     @ApiProperty({ example: '256' })
@@ -22,11 +23,10 @@ export class GetClassesDto{
             "surname": "Mustermann",
             "mail": "max.mustermann@hftm.ch",
             "picture": "data:image/png;base64,iVBORw0KGgoA........",
-            "roles": "Student",
             "lastLogin": "2021-05-04T08:54:00.000Z",
-            "isActivated": true
+            "isActivated": true,
         }] })
-    persons: string[];
+    persons: Person[];
 
     @ApiProperty({ example: '2' })
     cohort: string;

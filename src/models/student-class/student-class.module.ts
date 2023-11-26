@@ -12,5 +12,6 @@ import {StudentClass} from "./entities/student-class.entity";
   imports: [TypeOrmModule.forFeature([StudentClass])],
   controllers: [StudentClassController],
   providers: [StudentClassService, JwtService, GraphApiService, UserAccessService],
+  exports:[TypeOrmModule.forFeature([StudentClass]), StudentClassService]
 })
 export class StudentClassModule {}

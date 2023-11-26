@@ -8,6 +8,7 @@ import {UserAccessService} from "../../providers/user-access.service";
 import {StudentClass} from "./entities/student-class.entity";
 import {AppCustomLogger} from "../../app.custom.logger";
 import { WebUntisAnonymousAuth } from 'webuntis';
+import {Person} from "../person/entities/person.entity";
 
 @Injectable()
 export class StudentClassService {
@@ -27,13 +28,11 @@ export class StudentClassService {
   }
 
   findAll() {
-    //@TODO Join weit person
-    return this.classRepository.find();
+    return this.classRepository.find({relations: ['persons','cohort']});
   }
 
   findOne(id: number) {
-    //@TODO Join weit person
-    return this.classRepository.findOne({where: {id: id}});
+    return this.classRepository.findOne({where: {id: id},relations: ['persons', 'cohort']});
   }
 
   update(id: number, updateStudentClassDto: UpdateStudentClassDto) {
@@ -47,7 +46,6 @@ export class StudentClassService {
     this.logger.log(`Current count of webuntis classes  ${webUntisClasses.length}`)
     await this.graphApiService.getClasses(token).then(async (studentClasses: any[]) => {
       let count = 0;
-      console.log(webUntisClasses)
       for (const studentClass of studentClasses) {
         if (this.compareObjectsInArray(webUntisClasses, studentClass)) {
           const currentClass = await this.classRepository.findOne({

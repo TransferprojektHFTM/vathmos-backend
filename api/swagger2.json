@@ -1410,13 +1410,6 @@
                         "type": "string",
                         "example": "data:image/png;base64,iVBORw0KGgoA........"
                     },
-                    "roles": {
-                        "example": "Student",
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    },
                     "lastLogin": {
                         "format": "date-time",
                         "type": "string",
@@ -1425,6 +1418,32 @@
                     "isActivated": {
                         "type": "boolean",
                         "example": true
+                    },
+                    "roles": {
+                        "example": [
+                            {
+                                "id": 1,
+                                "appRoleId": "00000000-0000-0000-0000-000000000000",
+                                "name": "Student"
+                            }
+                        ],
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "classes": {
+                        "example": [
+                            {
+                                "id": 71,
+                                "name": "BBMB21.2b",
+                                "oid": "00000000-0000-0000-0000-000000000000"
+                            }
+                        ],
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
                     }
                 },
                 "required": [
@@ -1434,9 +1453,10 @@
                     "surname",
                     "mail",
                     "picture",
-                    "roles",
                     "lastLogin",
-                    "isActivated"
+                    "isActivated",
+                    "roles",
+                    "classes"
                 ]
             },
             "UpdatePersonDto": {
@@ -1499,7 +1519,6 @@
                                 "surname": "Mustermann",
                                 "mail": "max.mustermann@hftm.ch",
                                 "picture": "data:image/png;base64,iVBORw0KGgoA........",
-                                "roles": "Student",
                                 "lastLogin": "2021-05-04T08:54:00.000Z",
                                 "isActivated": true
                             }

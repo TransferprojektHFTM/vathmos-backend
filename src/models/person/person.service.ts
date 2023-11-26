@@ -24,11 +24,11 @@ export class PersonService {
   }
 
   async findAll(): Promise<Person[]> {
-    return await this.personRepository.find();
+    return await this.personRepository.find({relations: ['roles','studentClasses']});
   }
 
   async findOne(oid: string) {
-    const entity = await this.personRepository.findOne({ where: { oid: oid } });
+    const entity = await this.personRepository.findOne({ where: { oid: oid }, relations: ['roles','classes'] });
     if (!entity) {
       this.logger.warn(`Person with id ${oid} not found`);
       throw new NotFoundException(`Entity with id ${oid} not found`);
@@ -61,11 +61,6 @@ export class PersonService {
           const currentPerson = await this.personRepository.findOne({
             where: { oid: person.id },
           });
-
-         // if(person.userPrincipalName === 'vathmos.kursadmin@hftm.ch'){
-         //   console.log(person)
-         // }
-
 
           if (currentPerson === null && person.givenName && person.surname || currentPerson === null && person.userPrincipalName.includes('vathmos')) {
             const newPerson = new Person();

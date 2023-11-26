@@ -5,6 +5,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import {Role} from "../../role/entities/role.entity";
+import {StudentClass} from "../../student-class/entities/student-class.entity";
 
 @Entity()
 export class Person {
@@ -37,6 +38,13 @@ export class Person {
   })
   roles: Role[];
 
+  @ManyToMany(() => StudentClass)
+     @JoinTable({
+        name: 'student_class_person',
+        joinColumn: { name: 'student_id', referencedColumnName: 'id' },
+        inverseJoinColumn: { name: 'student_class_id', referencedColumnName: 'id' },
+    })
+  classes: StudentClass[]
 
   @Column()
   @UpdateDateColumn({

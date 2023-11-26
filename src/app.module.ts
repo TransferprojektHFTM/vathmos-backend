@@ -10,15 +10,18 @@ import { EvaluationModule } from './models/evaluation/evaluation.module';
 import { ModuleTypeModule } from './models/module-type/module-type.module';
 import { JwtService } from '@nestjs/jwt';
 import { APP_FILTER, APP_GUARD } from '@nestjs/core';
-import { VathmosAuthGuard } from './auth-guard/vathmos-auth-guard';
+import { ScheduleModule } from '@nestjs/schedule';
 import { DegreeModule } from './models/degree/degree.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppCustomLogger } from './app.custom.logger';
 import { NotFoundExceptionFilter } from './common/NotFoundExceptionFilter';
 import { RoleModule } from './models/role/role.module';
+import { TaskService } from './services/task/task.service';
+import { TaskModule } from './services/task/task.module';
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -48,6 +51,7 @@ import { RoleModule } from './models/role/role.module';
     ModuleTypeModule,
     DegreeModule,
     RoleModule,
+    TaskModule,
   ],
   controllers: [],
   providers: [
@@ -61,6 +65,7 @@ import { RoleModule } from './models/role/role.module';
       provide: APP_FILTER,
       useClass: NotFoundExceptionFilter,
     },
+    TaskService,
   ],
   exports: [],
 })
