@@ -9,6 +9,7 @@
     "build": "nest build && npm run move-api && npm run move-public",
     "move-api": "node -e \"require('fs-extra').copySync('./api', './dist/api')\"",
     "move-public": "node -e \"require('fs-extra').copySync('./public', './dist/public')\"",
+    "copy-env": "node -e \"const fs = require('fs'); fs.copyFileSync('example.env', '.env'); console.log('.env.template has been copied to .env');\"",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
