@@ -9,6 +9,7 @@ import {StudentClass} from "./entities/student-class.entity";
 import {AppCustomLogger} from "../../app.custom.logger";
 import { WebUntisAnonymousAuth } from 'webuntis';
 import {Person} from "../person/entities/person.entity";
+import {Role} from "../role/entities/role.entity";
 
 @Injectable()
 export class StudentClassService {
@@ -85,5 +86,35 @@ export class StudentClassService {
     await this.untis.login()
     const schoolYear = await this.untis.getSchoolyears()
     return await this.untis.getClasses(true, schoolYear[0].id)
+  }
+
+  public async appRolesAzureAssignments(appRole: string = 'Student') {
+    const studentClasses = await this.findAll();
+
+    const appRoleId = '77ca2e45-398c-402e-bd63-c8d0ae2aa51e';
+    //@TODO get appRoleId from database by name to make it dynamic with appRoleId
+
+    const token = await this.userAccessService.getAccessToken();
+    const currentAssignment = await this.graphApiService.getCurrentAppRoleAssignments(token);
+    const filteredClasses = this.filterObjectsByProperty(studentClasses, currentAssignment);
+
+    for (const studentClass of filteredClasses) {
+      await this.graphApiService.addedUserOrGroupToVathmosApp(token, studentClass, appRoleId);
+    }
+  }
+
+
+  private filterObjectsByProperty(studentClasses: StudentClass[], currentAssignment: []): StudentClass[] {
+    const filteredObjects: StudentClass[] = [];
+
+    for (const objectStudent of studentClasses) {
+      const matchingObject = currentAssignment.find((objectAssignment) => objectStudent['oid'] === objectAssignment['principalId']);
+
+      if (!matchingObject) {
+        filteredObjects.push(objectStudent);
+      }
+    }
+
+    return filteredObjects;
   }
 }

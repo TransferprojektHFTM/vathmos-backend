@@ -12,9 +12,10 @@ export class TaskService {
                 private studentClassService: StudentClassService) {
     }
 
-    @Cron('45 * * * * *')
-    handleCron() {
+    @Cron('15 * * * * *')
+    async handleCron() {
         this.logger.debug('Called when the current second is 45');
+
     }
 
     @Cron(CronExpression.EVERY_DAY_AT_2AM, {
@@ -25,5 +26,6 @@ export class TaskService {
         this.logger.debug('Create Persons and Classes')
         await this.personService.createPersons();
         await this.studentClassService.createClasses();
+        await this.studentClassService.appRolesAzureAssignments();
     }
 }
