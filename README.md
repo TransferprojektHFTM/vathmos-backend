@@ -88,3 +88,19 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+## Important run locally into docker
+
+To Run Locally into docker, check your env file and set the following values:
+````
+MYSQL_HOST=vathmos_mysql_container (the name of the mysql container from docker-compose.yml)
+````
+
+and update host file on path(C:\Windows\System32\drivers\etc\hosts) with the following entry:
+````
+127.0.0.1 vathmos_mysql_container
+````
+
+
+
+

@@ -27,5 +27,19 @@ services:
       - "8080:80"
     networks:
       - vathmos_backend
+  vathmos_backend:
+     build:
+       context: .
+       dockerfile: Dockerfile
+     image: vathmos_backend
+     container_name: vathmos_backend
+     ports:
+       - 3000:3000
+     networks:
+       - vathmos_backend
+     command: npm run start:dev
+     env_file:
+       - .env
+
 networks:
   vathmos_backend:
