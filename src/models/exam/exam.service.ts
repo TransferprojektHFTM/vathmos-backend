@@ -60,34 +60,4 @@ export class ExamService {
       throw new NotFoundException(`Exam with id ${id} not found`);
     }
   }
-
-  // @ToDo: Check ob dies so funktioniert sobald Subjetcs fertig sind für create and update
-  async getExamsBySubject(subject: Subject): Promise<Exam[]> {
-    const subjectWithExams = await this.subjectRepository
-        .createQueryBuilder('subject')
-        .leftJoinAndSelect('subject.exams', 'exam')
-        .where('subject.id = :subjectId', { subjectId: subject.id })
-        .getOne();
-    if (!subjectWithExams) {
-      // Case wenn Subject keine Exams hat
-      return [];
-    }
-
-    // Case wenn Subject Exams hat nicht über 100%
-    const filteredExams = subjectWithExams.exams.filter(exam =>
-        this.isTotalWeightingValid([exam]),
-    );
-
-    return filteredExams;
-  }
-
-  // @ToDo: Check ob dies so funktioniert sobald Subjetcs fertig sind für create and update
-  private isTotalWeightingValid(exams: Exam[]): boolean {
-    const totalWeighting = exams.reduce(
-        (sum, exam) => sum + parseFloat(exam.weighting),
-        0,
-    );
-
-    return totalWeighting <= 100;
-  }
 }
