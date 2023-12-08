@@ -14,6 +14,6 @@ export class UpdateExamDto extends PartialType(CreateExamDto) {
     weighting: string;
 
     @IsNotEmpty()
-    @ApiProperty({ example: 'Verteilte Systeme' })
-    modulpart: Subject[];
+    @ApiProperty({ example: 1 })
+    modulpart: Subject;
 }

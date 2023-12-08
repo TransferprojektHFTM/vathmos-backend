@@ -20,5 +20,6 @@ export class Exam {
 
   @ManyToOne(() => Subject, (modulpart) => modulpart.exams)
   @JoinColumn({ name: 'subject_id' })
+  // @Column()
   modulpart: Subject;
 }

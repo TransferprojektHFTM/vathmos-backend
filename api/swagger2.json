@@ -1519,6 +1519,10 @@
                 "type": "object",
                 "properties": {}
             },
+            "Subject": {
+                "type": "object",
+                "properties": {}
+            },
             "CreateExamDto": {
                 "type": "object",
                 "properties": {
@@ -1531,11 +1535,12 @@
                         "example": "40%"
                     },
                     "modulpart": {
-                        "example": "Subject Verteilte Systeme",
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
+                        "example": 1,
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Subject"
+                            }
+                        ]
                     }
                 },
                 "required": [
@@ -1556,11 +1561,12 @@
                         "example": "40%"
                     },
                     "modulpart": {
-                        "example": "Verteilte Systeme",
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
+                        "example": 1,
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Subject"
+                            }
+                        ]
                     }
                 }
             },

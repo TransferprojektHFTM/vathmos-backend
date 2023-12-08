@@ -13,6 +13,6 @@ export class CreateExamDto {
     weighting: string;
 
     @IsNotEmpty()
-    @ApiProperty({ example: 'Subject Verteilte Systeme' })
-    modulpart: Subject[];
+    @ApiProperty({ example: 1 })
+    modulpart: Subject;
 }
