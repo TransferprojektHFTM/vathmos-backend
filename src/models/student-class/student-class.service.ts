@@ -8,32 +8,35 @@ import {UserAccessService} from "../../providers/user-access.service";
 import {StudentClass} from "./entities/student-class.entity";
 import {AppCustomLogger} from "../../app.custom.logger";
 import { WebUntisAnonymousAuth } from 'webuntis';
+import {PersonService} from "../person/person.service";
 import {Person} from "../person/entities/person.entity";
-import {Role} from "../role/entities/role.entity";
 
 @Injectable()
 export class StudentClassService {
   private readonly logger = new AppCustomLogger(StudentClassService.name);
   private untis = new WebUntisAnonymousAuth('hftm', 'mese.webuntis.com')
   private webUntisClasses = []
+
   constructor(
       @InjectRepository(StudentClass)
       private classRepository: Repository<StudentClass>,
       private graphApiService: GraphApiService,
       private userAccessService: UserAccessService,
+      private personService: PersonService,
   ) {
 
   }
+
   create(createStudentClassDto: CreateStudentClassDto) {
     return this.classRepository.save(createStudentClassDto);
   }
 
   findAll() {
-    return this.classRepository.find({relations: ['persons','cohort']});
+    return this.classRepository.find({relations: ['persons', 'cohort']});
   }
 
   findOne(id: number) {
-    return this.classRepository.findOne({where: {id: id},relations: ['persons', 'cohort']});
+    return this.classRepository.findOne({where: {id: id}, relations: ['persons', 'cohort']});
   }
 
   update(id: number, updateStudentClassDto: UpdateStudentClassDto) {
@@ -43,7 +46,7 @@ export class StudentClassService {
   async createClasses() {
     let message = {message: ``, status: 500};
     const token = await this.userAccessService.getAccessToken();
-    const  webUntisClasses = await this.getCurrentWebUntisClasses()
+    const webUntisClasses = await this.getCurrentWebUntisClasses()
     this.logger.log(`Current count of webuntis classes  ${webUntisClasses.length}`)
     await this.graphApiService.getClasses(token).then(async (studentClasses: any[]) => {
       let count = 0;
@@ -58,15 +61,15 @@ export class StudentClassService {
             classEntity.name = studentClass.displayName;
             await this.create(classEntity);
             count++;
-           }
+          }
         }
       }
-      message = { message: `${count} Classes created`, status: 200 };
+      message = {message: `${count} Classes created`, status: 200};
       this.logger.log(`${count} Classes created`);
     }).catch((error) => {
-          this.logger.error(error);
-          message = { message: `Unauthorized`, status: 401 };
-        });
+      this.logger.error(error);
+      message = {message: `Unauthorized`, status: 401};
+    });
     return message;
   }
 
@@ -82,7 +85,7 @@ export class StudentClassService {
     return false; // Return false if no match is found
   }
 
-  private async getCurrentWebUntisClasses(){
+  private async getCurrentWebUntisClasses() {
     await this.untis.login()
     const schoolYear = await this.untis.getSchoolyears()
     return await this.untis.getClasses(true, schoolYear[0].id)
@@ -100,6 +103,29 @@ export class StudentClassService {
 
     for (const studentClass of filteredClasses) {
       await this.graphApiService.addedUserOrGroupToVathmosApp(token, studentClass, appRoleId);
+    }
+  }
+
+  public async assignClassesToPersons() {
+    const persons = await this.personService.findAll();
+    const studentClasses = await this.findAll();
+    const token = await this.userAccessService.getAccessToken();
+
+
+    for (const studentClass of studentClasses) {
+      const members = await this.graphApiService.getGroupMembers(token, studentClass);
+      for (const member of members) {
+
+        const matchingPerson = persons.find((person) => member['id'] === person['oid']);
+        if (matchingPerson) {
+          const person = new Person()
+          person.id = matchingPerson.id
+          person.oid = matchingPerson.oid
+          studentClass.persons.push(person)
+        }
+      }
+      //@TODO fix update studentClass with persons Cannot query across many-to-many for property persons
+      await this.update(studentClass.id,studentClass);
     }
   }
 

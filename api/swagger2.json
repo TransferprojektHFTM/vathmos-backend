@@ -68,16 +68,18 @@
                         "bearer": []
                     }
                 ]
-            },
+            }
+        },
+        "/api/v1/person/{id}": {
             "patch": {
                 "operationId": "PersonController_update",
                 "parameters": [
                     {
-                        "name": "oid",
+                        "name": "id",
                         "required": true,
                         "in": "path",
                         "schema": {
-                            "type": "string"
+                            "type": "number"
                         }
                     }
                 ],
@@ -104,9 +106,7 @@
                         "bearer": []
                     }
                 ]
-            }
-        },
-        "/api/v1/person/{id}": {
+            },
             "delete": {
                 "operationId": "PersonController_remove",
                 "summary": "Delete a person with id",

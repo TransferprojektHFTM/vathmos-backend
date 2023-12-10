@@ -18,6 +18,7 @@ import { NotFoundExceptionFilter } from './common/NotFoundExceptionFilter';
 import { RoleModule } from './models/role/role.module';
 import { TaskService } from './services/task/task.service';
 import { TaskModule } from './services/task/task.module';
+import {VathmosAuthGuard} from "./auth-guard/vathmos-auth-guard";
 
 @Module({
   imports: [
@@ -57,10 +58,10 @@ import { TaskModule } from './services/task/task.module';
   providers: [
     JwtService,
     AppCustomLogger,
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: VathmosAuthGuard,
-    // },
+    {
+      provide: APP_GUARD,
+      useClass: VathmosAuthGuard,
+    },
     {
       provide: APP_FILTER,
       useClass: NotFoundExceptionFilter,

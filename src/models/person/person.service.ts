@@ -36,8 +36,8 @@ export class PersonService {
     return entity;
   }
 
-  update(oid: string, updatePersonDto: UpdatePersonDto) {
-    return `This action updates a #${oid} person`;
+  update(id: number, updatePersonDto: UpdatePersonDto) {
+    //return this.personRepository.update(id, updatePersonDto);
   }
 
   async remove(id: number): Promise<{ message: string; status: number }> {
@@ -67,7 +67,7 @@ export class PersonService {
             newPerson.email = this.getUserEmail(person);
             newPerson.firstName = person.givenName;
             newPerson.surname = person.surname;
-            newPerson.roles = [];
+            newPerson.roles = this.getInitialPersonsRoleFromJobTitle(person);
             newPerson.oid = person.id;
             newPerson.lastLogin = new Date('2000-01-01');
             await this.create(newPerson);
@@ -86,6 +86,16 @@ export class PersonService {
 
   private getUserEmail(person: AzureAdPersonDto): string {
     return person.email ? person.email : person.userPrincipalName;
+  }
+
+  getInitialPersonsRoleFromJobTitle(person: AzureAdPersonDto): Role[] {
+    const role = new Role();
+    if(person.jobTitle === 'Mitarbeiter') {
+      role.name = 'Dozent';
+    }else{
+        role.name = 'Student';
+    }
+    return [role];
   }
 
 }

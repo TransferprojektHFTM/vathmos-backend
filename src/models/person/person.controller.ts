@@ -55,9 +55,9 @@ export class PersonController {
     return this.personService.findOne(oid);
   }
 
-  @Patch(':oid')
-  update(@Param('oid') oid: string, @Body() updatePersonDto: UpdatePersonDto) {
-    return this.personService.update(oid, updatePersonDto);
+  @Patch(':id')
+  update(@Param('id') id: number, @Body() updatePersonDto: UpdatePersonDto) {
+    return this.personService.update(id, updatePersonDto);
   }
 
   @Delete(':id')

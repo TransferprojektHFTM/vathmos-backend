@@ -116,7 +116,45 @@ export class GraphApiService {
     });
   }
 
+  getGroupMembers(token: string, studentClass: StudentClass): Promise<AzureAdPersonDto[]> {
+    return new Promise(async (resolve, reject) => {
+      const url = `${this.mainUrl}/groups/${studentClass.oid}/members?$count=true`;
+      let allUsers: AzureAdPersonDto[] = [];
+      let nextLink = url;
 
+      while (nextLink != '') {
+        try {
+          const config = this.getAxiosConfig('GET',nextLink, token);
+          const response = await axios.request(config);
+          allUsers = allUsers.concat(response.data.value);
+
+          // Überprüfe, ob es einen nächsten Link gibt
+          if (response.data['@odata.nextLink']) {
+            nextLink = response.data['@odata.nextLink'];
+          } else {
+            nextLink = ''; // Set nextLink to null to exit the loop
+          }
+        } catch (error) {
+          reject(error);
+        }
+      }
+      this.logger.log(`Count of Persons at hftm into Class ${studentClass.name}: ` + allUsers.length);
+      resolve(allUsers);
+    });
+  }
+
+
+  async meGetMemberOf(token: string, oid: string) {
+    const url = `${this.mainUrl}/users/${oid}/memberOf`;
+    const config = this.getAxiosConfig('GET', url, token);
+    return await axios.request(config).then((response) => {
+      this.logger.log(`Get all Groups of ${oid}`);
+      return response.data.value
+    }).catch((error) => {
+      this.logger.error(error);
+      this.logger.error(error.response.data.error.message);
+    });
+  }
 
   private getAxiosConfig(method: string, nextLinkOrUrl: string, token: string) {
     return {

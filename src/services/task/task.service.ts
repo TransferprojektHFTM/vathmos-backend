@@ -1,18 +1,18 @@
-import { Injectable } from '@nestjs/common';
+import {Injectable, OnModuleInit} from '@nestjs/common';
 import {AppCustomLogger} from "../../app.custom.logger";
 import {Cron, CronExpression } from "@nestjs/schedule";
 import {PersonService} from "../../models/person/person.service";
 import {StudentClassService} from "../../models/student-class/student-class.service";
 
 @Injectable()
-export class TaskService {
+export class TaskService implements OnModuleInit{
     private readonly logger = new AppCustomLogger(TaskService.name);
 
     constructor(private personService: PersonService,
                 private studentClassService: StudentClassService) {
     }
 
-    @Cron('15 * * * * *')
+    @Cron('0 */5 * * * *')
     async handleCron() {
         this.logger.debug('Called when the current second is 45');
 
@@ -27,5 +27,12 @@ export class TaskService {
         await this.personService.createPersons();
         await this.studentClassService.createClasses();
         await this.studentClassService.appRolesAzureAssignments();
+    }
+
+    async onModuleInit() {
+        // await this.personService.createPersons();
+        // await this.studentClassService.createClasses();
+        // await this.studentClassService.appRolesAzureAssignments();
+        // await this.studentClassService.assignClassesToPersons();
     }
 }

@@ -7,11 +7,13 @@ import {UserAccessService} from "../../providers/user-access.service";
 import {TypeOrmModule} from "@nestjs/typeorm";
 import {Person} from "../person/entities/person.entity";
 import {StudentClass} from "./entities/student-class.entity";
+import {PersonService} from "../person/person.service";
+import {PersonModule} from "../person/person.module";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([StudentClass])],
+  imports: [TypeOrmModule.forFeature([StudentClass]), PersonModule],
   controllers: [StudentClassController],
-  providers: [StudentClassService, JwtService, GraphApiService, UserAccessService],
+  providers: [StudentClassService, JwtService, GraphApiService, UserAccessService, PersonService],
   exports:[TypeOrmModule.forFeature([StudentClass]), StudentClassService]
 })
 export class StudentClassModule {}
