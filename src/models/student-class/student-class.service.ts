@@ -115,6 +115,7 @@ export class StudentClassService {
     for (const studentClass of studentClasses) {
       const members = await this.graphApiService.getGroupMembers(token, studentClass);
       for (const member of members) {
+        console.log(member)
 
         const matchingPerson = persons.find((person) => member['id'] === person['oid']);
         if (matchingPerson) {
@@ -124,6 +125,7 @@ export class StudentClassService {
           studentClass.persons.push(person)
         }
       }
+      console.log(studentClass)
       //@TODO fix update studentClass with persons Cannot query across many-to-many for property persons
       await this.update(studentClass.id,studentClass);
     }

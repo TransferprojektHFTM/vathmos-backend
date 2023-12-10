@@ -1,6 +1,7 @@
 import {IsNotEmpty, IsOptional} from "class-validator";
 import {ApiProperty} from "@nestjs/swagger";
 import {Person} from "../../person/entities/person.entity";
+import {Cohort} from "../../cohort/entities/cohort.entity";
 
 export class CreateStudentClassDto {
     @IsNotEmpty()
@@ -14,4 +15,8 @@ export class CreateStudentClassDto {
     @IsNotEmpty()
     @IsOptional()
     persons:  Person[];
+
+    @ApiProperty({ example: 1 })
+    @IsOptional()
+    cohort: Cohort;
 }

@@ -33,6 +33,6 @@ export class TaskService implements OnModuleInit{
         // await this.personService.createPersons();
         // await this.studentClassService.createClasses();
         // await this.studentClassService.appRolesAzureAssignments();
-        // await this.studentClassService.assignClassesToPersons();
+        await this.studentClassService.assignClassesToPersons();
     }
 }

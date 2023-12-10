@@ -1479,7 +1479,7 @@
                         "example": "data:image/png;base64,iVBORw0KGgoA........"
                     },
                     "roles": {
-                        "example": "Student",
+                        "example": "Role",
                         "type": "array",
                         "items": {
                             "type": "string"
@@ -1541,6 +1541,10 @@
                     "cohort"
                 ]
             },
+            "Cohort": {
+                "type": "object",
+                "properties": {}
+            },
             "UpdateStudentClassDto": {
                 "type": "object",
                 "properties": {
@@ -1551,6 +1555,14 @@
                     "oid": {
                         "type": "string",
                         "example": "fe95d302-dbc5-48c7-8a33-45460734d169"
+                    },
+                    "cohort": {
+                        "example": 1,
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Cohort"
+                            }
+                        ]
                     }
                 }
             },
