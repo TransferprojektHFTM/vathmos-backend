@@ -2,9 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PersonService } from './person.service';
 import { mockCreatePerson } from './mockTests/mock.create';
 import { NotFoundException } from '@nestjs/common';
-import {TestDatabaseModule} from "../../config/database/mysql/test-database-module";
-import {PersonModule} from "./person.module";
-
+import { TestDatabaseModule } from '../../config/database/mysql/test-database-module';
+import { PersonModule } from './person.module';
 
 describe('PersonService', () => {
   let personService: PersonService;
@@ -13,7 +12,7 @@ describe('PersonService', () => {
 
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [TestDatabaseModule,PersonModule],
+      imports: [TestDatabaseModule, PersonModule],
     }).compile();
     personService = module.get<PersonService>(PersonService);
   });

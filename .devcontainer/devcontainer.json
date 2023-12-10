@@ -2,7 +2,7 @@
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.195.0/containers/php
 {
 	"name": "Backend-Dev-Environment",
-	"dockerComposeFile": ["../docker-compose.yml", "../docker-compose.workspace.yml"],
+	"dockerComposeFile": ["../docker-compose.workspace.yml"],
 	"workspaceFolder": "/workspace",
 	"shutdownAction": "stopCompose",
 	"service": "dev",
@@ -20,10 +20,8 @@
     },
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	"forwardPorts": [3000],
+	/*"forwardPorts": [3001],*/
 
-	// Use 'postCreateCommand' to run commands after the container is created.
-	"postStartCommand": "sudo chown node node_modules && npm install",
 	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
 	"remoteUser": "node"
 }

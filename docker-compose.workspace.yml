@@ -1,21 +1,49 @@
 version: '3'
 services:
+  database:
+    container_name: ${MYSQL_CONTAINER_NAME}
+    image: mysql:8.0.34
+    restart: unless-stopped
+    environment:
+      MYSQL_PORT: ${MYSQL_PORT}
+      MYSQL_HOST: ${MYSQL_HOST}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "${MYSQL_PORT}:${MYSQL_PORT}"
+    networks:
+      - vathmos_backend
+  phpmyadmin:
+    container_name: vathmos_phpmyadmin_container
+    image: phpmyadmin/phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: ${MYSQL_CONTAINER_NAME}
+    depends_on:
+      - database
+    ports:
+      - "8080:80"
+    networks:
+      - vathmos_backend
   dev:
-    container_name: dev_container
+    container_name: vathmos_backend_dev
+    image: vathmos_backend
     build:
-      context: .
-      dockerfile: .devcontainer/Dockerfile
+       context: .
+       dockerfile: Dockerfile
     volumes:
       # Mounts the project folder to '/workspace'. While this file is in .devcontainer,
       # mounts are relative to the first file in the list, which is a level up.
       - .:/workspace:cached
       - dev-extensions:/vscode/.vscode-server/extensions
       - dev-node_modules:/workspace/node_modules
-      
+    
     # Overrides default command so things don't shut down after the process ends.
     command: /bin/sh -c "while sleep 1000; do :; done"
     ports:
-      - "3000:3000"
+      - "${PORT}:${PORT}"
     depends_on:
       - database
     networks:
@@ -25,3 +53,6 @@ volumes:
   dev-extensions:
     driver: local
   dev-node_modules:
+
+networks:
+  vathmos_backend:

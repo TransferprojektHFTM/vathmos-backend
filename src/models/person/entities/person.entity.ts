@@ -25,7 +25,7 @@ export class Person {
   @Column({ default: null, unique: true, nullable: false })
   email: string;
 
-  @Column({ type: 'longtext', default: null, nullable: false })
+  @Column({ type: 'longtext', default: null })
   picture: string;
 
   @Column({ default: false, nullable: false })
