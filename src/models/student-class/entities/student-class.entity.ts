@@ -15,6 +15,9 @@ export class StudentClass {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({ type: 'uuid', unique: true })
+  oid: string;
+
   @Column()
   name: string;
 
@@ -28,5 +31,5 @@ export class StudentClass {
 
   @ManyToOne(() => Cohort, (cohort) => cohort.studentClasses)
   @JoinColumn({ name: 'cohort_id' })
-  cohorts: Cohort;
+  cohort: Cohort;
 }

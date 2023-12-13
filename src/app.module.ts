@@ -11,7 +11,7 @@ import { ModuleTypeModule } from './models/module-type/module-type.module';
 import { JwtService } from '@nestjs/jwt';
 import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { VathmosAuthGuard } from './auth-guard/vathmos-auth-guard';
-import { DegreeModule } from './models/degree/degree.module';
+import { DegreeProgramModule } from './models/degree-program/degree-program.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppCustomLogger } from './app.custom.logger';
 import { NotFoundExceptionFilter } from './common/NotFoundExceptionFilter';
@@ -46,7 +46,7 @@ import { RoleModule } from './models/role/role.module';
     ExamModule,
     EvaluationModule,
     ModuleTypeModule,
-    DegreeModule,
+    DegreeProgramModule,
     RoleModule,
   ],
   controllers: [],
