@@ -15,10 +15,10 @@ export class Subject {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ type: 'json', nullable: false })
   name: string;
 
-  @Column()
+  @Column({ nullable: false, unique: true })
   shortName: string;
 
   @ManyToMany(() => Person)

@@ -14,11 +14,11 @@ RUN npm install -g npm@10.2.4
 # Install dependencies
 RUN npm install
 
+# Install git just for the workspace
+RUN apk add --no-cache git
+
 # Copy the rest of the application code to the container
 COPY . .
 
 # Expose the port on which the NestJS application will run
 EXPOSE 3000
-
-# Command to run the application
-CMD ["npm", "start"]

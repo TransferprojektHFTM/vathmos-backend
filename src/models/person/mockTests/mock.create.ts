@@ -5,6 +5,7 @@ export const mockCreatePerson = {
   lastLogin: new Date('2023-11-01'),
   oid: '99999999-9999-9999-9999-999999999999',
   roles:[],
+  classes: [],
   surname: '',
   picture: '',
   isActivated: true,
