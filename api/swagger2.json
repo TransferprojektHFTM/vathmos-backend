@@ -1493,7 +1493,7 @@
                         "example": "data:image/png;base64,iVBORw0KGgoA........"
                     },
                     "roles": {
-                        "example": "Role",
+                        "example": "Student",
                         "type": "array",
                         "items": {
                             "type": "string"

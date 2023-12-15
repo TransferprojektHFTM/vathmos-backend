@@ -58,10 +58,10 @@ import { VathmosAuthGuard } from "./auth-guard/vathmos-auth-guard";
   providers: [
     JwtService,
     AppCustomLogger,
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: VathmosAuthGuard,
-    // },
+    {
+      provide: APP_GUARD,
+      useClass: VathmosAuthGuard,
+    },
     {
       provide: APP_FILTER,
       useClass: NotFoundExceptionFilter,

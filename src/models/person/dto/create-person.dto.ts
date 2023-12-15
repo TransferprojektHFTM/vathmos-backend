@@ -19,6 +19,6 @@ export class CreatePersonDto {
   public picture: string;
 
   @IsNotEmpty()
-  @ApiProperty({ example: Role.name })
-  public roles: Role[];
+  @ApiProperty({ example: 'Student' })
+  public roles: string[];
 }
