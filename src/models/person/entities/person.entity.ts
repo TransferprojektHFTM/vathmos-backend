@@ -1,12 +1,10 @@
 import {
   Column,
-  Entity,
-  JoinTable,
-  ManyToMany,
+  Entity, JoinTable, ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Role } from '../../role/entities/role.entity';
+import {Role} from "../../role/entities/role.entity";
 import {StudentClass} from "../../student-class/entities/student-class.entity";
 
 @Entity()
@@ -14,22 +12,22 @@ export class Person {
   @PrimaryGeneratedColumn()
   id?: number;
 
-  @Column({ type: 'uuid', unique: true, nullable: false })
+  @Column({ type: 'uuid', unique: true })
   oid: string;
 
-  @Column({ default: null, nullable: false })
+  @Column({ default: null })
   firstName: string;
 
-  @Column({ default: null, nullable: false })
+  @Column({ default: null })
   surname: string;
 
-  @Column({ default: null, unique: true, nullable: false })
+  @Column({ default: null })
   email: string;
 
   @Column({ type: 'longtext', default: null })
   picture: string;
 
-  @Column({ default: false, nullable: false })
+  @Column({ default: false })
   isActivated: boolean;
 
   @ManyToMany(() => Role)
