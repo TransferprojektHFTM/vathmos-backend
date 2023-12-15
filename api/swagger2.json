@@ -372,7 +372,7 @@
             },
             "patch": {
                 "operationId": "StudentClassController_update",
-                "summary": "",
+                "summary": "Append Dozent to class, only \"KursAdmin\" can use this route or assign to cohort",
                 "parameters": [
                     {
                         "name": "id",

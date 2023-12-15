@@ -25,7 +25,7 @@ import { GetPersonDto } from './dto/get-person.dto';
 
 @ApiTags('Person')
 @ApiBearerAuth()
-@Roles('Student', 'Dozent', 'KursAdmin')
+@Roles('Student', 'Dozent', 'KursAdmin', 'FachBereichsLeiter')
 @Controller('person')
 export class PersonController {
   constructor(private readonly personService: PersonService) {}

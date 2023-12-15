@@ -17,6 +17,7 @@ import {GetClassesDto} from "./dto/get-classes.dto";
 
 @ApiTags('Student class')
 @ApiBearerAuth()
+@Roles('Student', 'Dozent', 'KursAdmin', 'FachBereichsLeiter')
 @Controller('student-class')
 export class StudentClassController {
   constructor(private readonly studentClassService: StudentClassService) {}
@@ -53,15 +54,19 @@ export class StudentClassController {
     return this.studentClassService.findOne(+id);
   }
 
-  @ApiOperation({ summary: '' })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Ok',
     type: GetClassesDto,
     isArray: true,
   })
-  @Patch(':id')
+  @ApiOperation({
+    summary:
+        'Append Dozent to class, only "KursAdmin" can use this route or assign to cohort',
+  })
+  @Roles('KursAdmin')
   @UsePipes(new ValidationPipe({ transform: true }))
+  @Patch(':id')
   update(
     @Param('id') id: string,
     @Body() updateStudentClassDto: UpdateStudentClassDto,
@@ -77,7 +82,6 @@ export class StudentClassController {
         'Create all classes into hftm, only "KursAdmin" can use this route',
   })
   @Roles('KursAdmin')
-  @UsePipes(new ValidationPipe({ transform: true }))
   createPersons() {
     return this.studentClassService.createClasses();
   }
