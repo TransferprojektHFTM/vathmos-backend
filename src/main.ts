@@ -26,6 +26,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .addTag('Person', 'Student and lecturer management')
     .addTag('Settings', 'optional for course administrators')
+    .addTag('Student class', 'Student class management')
     .addBearerAuth()
     .setTitle('Swagger Documentation Vathmos')
     .setDescription('The Vathmos API description')

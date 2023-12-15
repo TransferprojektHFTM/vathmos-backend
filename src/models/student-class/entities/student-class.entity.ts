@@ -21,9 +21,6 @@ export class StudentClass {
   @Column()
   name: string;
 
-  @Column({ type: 'uuid', unique: true })
-  oid: string;
-
   @ManyToMany(() => Person, (person) => person.classes, { cascade: true })
   @JoinTable({
     name: 'student_class_person',

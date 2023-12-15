@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateStudentClassDto } from './dto/create-student-class.dto';
 import { UpdateStudentClassDto } from './dto/update-student-class.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import {Like, Repository} from 'typeorm';
 import { GraphApiService } from '../../providers/graph-api.service';
 import { UserAccessService } from '../../providers/user-access.service';
 import { StudentClass } from './entities/student-class.entity';
@@ -15,7 +15,6 @@ import { Person } from '../person/entities/person.entity';
 export class StudentClassService {
   private readonly logger = new AppCustomLogger(StudentClassService.name);
   private untis = new WebUntisAnonymousAuth('hftm', 'mese.webuntis.com');
-  private webUntisClasses = [];
 
   constructor(
     @InjectRepository(StudentClass)
@@ -29,8 +28,11 @@ export class StudentClassService {
     return this.classRepository.save(createStudentClassDto);
   }
 
-  findAll() {
-    return this.classRepository.find({ relations: ['persons', 'cohort'] });
+  findAll(className: string = '') {
+    if(className.length < 2) return this.classRepository.find({ relations: ['persons', 'cohort'] });
+    return this.classRepository.find({ where:{
+        name: Like(`%${className}%`)
+      },relations: ['persons', 'cohort'] });
   }
 
   findOne(id: number) {
@@ -40,9 +42,13 @@ export class StudentClassService {
     });
   }
 
-  update(id: number, updateStudentClassDto: UpdateStudentClassDto) {
-    //return this.classRepository.update(id, updateStudentClassDto);
-    return this.classRepository.save(updateStudentClassDto);
+  //@TODO update class if cohort finally ready
+  async update(id: number, updateStudentClassDto: UpdateStudentClassDto) {
+    const studentClass = await this.classRepository.findOne({where: {id: id},  relations: ['persons', 'cohort']});
+    if(studentClass.cohort) {
+      studentClass.cohort = updateStudentClassDto.cohort;
+      return this.classRepository.save(studentClass);
+    }
   }
 
   async createClasses() {
@@ -132,7 +138,6 @@ export class StudentClassService {
         studentClass,
       );
       for (const member of members) {
-        console.log(member);
 
         const matchingPerson = persons.find(
           (person) => member['id'] === person['oid'],
@@ -146,8 +151,6 @@ export class StudentClassService {
           studentClass.persons.push(person);
         }
       }
-      console.log(studentClass);
-      //@TODO fix update studentClass with persons Cannot query across many-to-many for property persons
       await this.update(studentClass.id, studentClass);
     }
   }

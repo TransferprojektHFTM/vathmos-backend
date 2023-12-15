@@ -27,12 +27,21 @@ export class TaskService implements OnModuleInit{
         await this.personService.createPersons();
         await this.studentClassService.createClasses();
         await this.studentClassService.appRolesAzureAssignments();
+        await this.studentClassService.assignClassesToPersons();
     }
 
+    /**
+     * This method is called when the application starts
+     * @TODO Remove this method on Init when the application is ready
+     */
     async onModuleInit() {
-        // await this.personService.createPersons();
-        // await this.studentClassService.createClasses();
-        // await this.studentClassService.appRolesAzureAssignments();
-        await this.studentClassService.assignClassesToPersons();
+        const persons = await this.personService.findAll();
+        if(persons.length === 0) {
+            this.logger.debug('Create Persons and Classes over task service on init')
+            await this.personService.createPersons();
+            await this.studentClassService.createClasses();
+            await this.studentClassService.appRolesAzureAssignments();
+            await this.studentClassService.assignClassesToPersons();
+        }
     }
 }

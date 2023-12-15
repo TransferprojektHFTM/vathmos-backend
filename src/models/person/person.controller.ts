@@ -56,6 +56,7 @@ export class PersonController {
   }
 
   @Patch(':id')
+  @UsePipes(new ValidationPipe({ transform: true }))
   update(@Param('id') id: number, @Body() updatePersonDto: UpdatePersonDto) {
     return this.personService.update(id, updatePersonDto);
   }

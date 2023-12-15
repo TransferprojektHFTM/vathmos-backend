@@ -296,7 +296,17 @@
             "get": {
                 "operationId": "StudentClassController_findAll",
                 "summary": "Get a list of all classes",
-                "parameters": [],
+                "parameters": [
+                    {
+                        "name": "className",
+                        "required": false,
+                        "in": "query",
+                        "description": "Find where class Name like \"BBIN.....\"",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Ok",
@@ -391,7 +401,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/UpdateStudentClassDto"
+                                        "$ref": "#/components/schemas/GetClassesDto"
                                     }
                                 }
                             }
@@ -1371,6 +1381,10 @@
         {
             "name": "Settings",
             "description": "optional for course administrators"
+        },
+        {
+            "name": "Student class",
+            "description": "Student class management"
         }
     ],
     "servers": [],
@@ -1548,23 +1562,33 @@
             "UpdateStudentClassDto": {
                 "type": "object",
                 "properties": {
-                    "name": {
-                        "type": "string",
-                        "example": "BBUPUL20.3a"
-                    },
-                    "oid": {
-                        "type": "string",
-                        "example": "fe95d302-dbc5-48c7-8a33-45460734d169"
+                    "persons": {
+                        "example": [
+                            {
+                                "id": 256,
+                                "oid": "dcd60435-dfff-4c73-b8aa-1e68d56fd1c6",
+                                "firstName": "Max",
+                                "surname": "Mustermann",
+                                "mail": "max.mustermann@hftm.ch"
+                            }
+                        ],
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
                     },
                     "cohort": {
-                        "example": 1,
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/Cohort"
                             }
                         ]
                     }
-                }
+                },
+                "required": [
+                    "persons",
+                    "cohort"
+                ]
             },
             "CreateCoreModuleDto": {
                 "type": "object",
