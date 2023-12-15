@@ -10,6 +10,7 @@ import { AppCustomLogger } from '../../app.custom.logger';
 import { WebUntisAnonymousAuth } from 'webuntis';
 import { PersonService } from '../person/person.service';
 import { Person } from '../person/entities/person.entity';
+import {ClientAccessService} from "../../providers/client-access.service";
 
 @Injectable()
 export class StudentClassService {
@@ -21,6 +22,7 @@ export class StudentClassService {
     private classRepository: Repository<StudentClass>,
     private graphApiService: GraphApiService,
     private userAccessService: UserAccessService,
+    private clientAccessService: ClientAccessService,
     private personService: PersonService,
   ) {}
 
@@ -110,7 +112,7 @@ export class StudentClassService {
     const appRoleId = '77ca2e45-398c-402e-bd63-c8d0ae2aa51e';
     //@TODO get appRoleId from database by name to make it dynamic with appRoleId
 
-    const token = await this.userAccessService.getAccessToken();
+    const token = await this.clientAccessService.getAccessToken();
     const currentAssignment =
       await this.graphApiService.getCurrentAppRoleAssignments(token);
     const filteredClasses = this.filterObjectsByProperty(

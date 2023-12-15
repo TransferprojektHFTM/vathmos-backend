@@ -4,6 +4,7 @@ import qs from 'qs';
 import axios from 'axios';
 import {AuthAccessService, AuthEnvironment} from "./auth-access.service";
 import {JwtService} from "@nestjs/jwt";
+import {log} from "winston";
 
 @Injectable()
 export class ClientAccessService extends AuthAccessService {
@@ -30,13 +31,13 @@ export class ClientAccessService extends AuthAccessService {
         throw new Error('Error while empty ENV variables');
       }
 
+      const config = this.getAxiosConfig()
 
       try {
-        const response = await axios(this.getAxiosConfig());
+        const response = await axios(config);
         this.logger.log('Successfully retrieved access token');
         this.accessToken = response.data.access_token;
       } catch (error) {
-        console.log(error)
         // Handle error
         this.logger.error('Error while retrieving access token');
         throw new Error('Error while retrieving access token');
