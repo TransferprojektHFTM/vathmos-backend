@@ -5,35 +5,67 @@ import {
   Body,
   Patch,
   Param,
-  Delete, UsePipes, ValidationPipe,
+  Delete, UsePipes, ValidationPipe, HttpCode, HttpStatus, Query,
 } from '@nestjs/common';
 import { StudentClassService } from './student-class.service';
 import { CreateStudentClassDto } from './dto/create-student-class.dto';
 import { UpdateStudentClassDto } from './dto/update-student-class.dto';
-import {ApiBearerAuth, ApiOperation, ApiTags} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from "../../auth-guard/vathmos-auth-guard";
+import {GetPersonDto} from "../person/dto/get-person.dto";
+import {GetClassesDto} from "./dto/get-classes.dto";
 
 @ApiTags('Student class')
 @ApiBearerAuth()
+@Roles('Student', 'Dozent', 'KursAdmin', 'FachBereichsLeiter')
 @Controller('student-class')
 export class StudentClassController {
   constructor(private readonly studentClassService: StudentClassService) {}
 
-  @Post()
-  create(@Body() createStudentClassDto: CreateStudentClassDto) {
-    return this.studentClassService.create(createStudentClassDto);
-  }
-
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Get a list of all classes' })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Ok',
+    type: GetClassesDto,
+    isArray: true,
+  })
+  @ApiQuery({
+    name: 'className',
+    required: false,
+    type: String,
+    description: 'Find where class Name like "BBIN....."',
+  })
   @Get()
-  findAll() {
-    return this.studentClassService.findAll();
+  findAll(@Query('className') className: string = '') {
+    return this.studentClassService.findAll(className);
   }
 
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Get classes with id' })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Ok',
+    type: GetClassesDto,
+    isArray: true,
+  })
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.studentClassService.findOne(+id);
   }
 
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Ok',
+    type: GetClassesDto,
+    isArray: true,
+  })
+  @ApiOperation({
+    summary:
+        'Append Dozent to class, only "KursAdmin" can use this route or assign to cohort',
+  })
+  @Roles('KursAdmin')
+  @UsePipes(new ValidationPipe({ transform: true }))
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -42,10 +74,6 @@ export class StudentClassController {
     return this.studentClassService.update(+id, updateStudentClassDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.studentClassService.remove(+id);
-  }
 
   @ApiTags('Settings')
   @Post('createClasses')
@@ -54,7 +82,6 @@ export class StudentClassController {
         'Create all classes into hftm, only "KursAdmin" can use this route',
   })
   @Roles('KursAdmin')
-  @UsePipes(new ValidationPipe({ transform: true }))
   createPersons() {
     return this.studentClassService.createClasses();
   }

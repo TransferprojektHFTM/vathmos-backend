@@ -24,11 +24,11 @@ export class PersonService {
   }
 
   async findAll(): Promise<Person[]> {
-    return await this.personRepository.find();
+    return await this.personRepository.find({relations: ['roles','classes']});
   }
 
   async findOne(oid: string) {
-    const entity = await this.personRepository.findOne({ where: { oid: oid } });
+    const entity = await this.personRepository.findOne({ where: { oid: oid }, relations: ['roles','classes'] });
     if (!entity) {
       this.logger.warn(`Person with id ${oid} not found`);
       throw new NotFoundException(`Entity with id ${oid} not found`);
@@ -36,8 +36,9 @@ export class PersonService {
     return entity;
   }
 
-  update(oid: string, updatePersonDto: UpdatePersonDto) {
-    return `This action updates a #${oid} person`;
+  //@TODO update person
+  update(id: number, updatePersonDto: UpdatePersonDto) {
+    //return this.personRepository.update(id, updatePersonDto);
   }
 
   async remove(id: number): Promise<{ message: string; status: number }> {
@@ -62,12 +63,12 @@ export class PersonService {
             where: { oid: person.id },
           });
 
-          if (currentPerson === null) {
+          if (currentPerson === null && person.givenName && person.surname || currentPerson === null && person.userPrincipalName.includes('vathmos')) {
             const newPerson = new Person();
             newPerson.email = this.getUserEmail(person);
             newPerson.firstName = person.givenName;
             newPerson.surname = person.surname;
-            newPerson.roles = [];
+            newPerson.roles = this.getInitialPersonsRoleFromJobTitle(person);
             newPerson.oid = person.id;
             newPerson.lastLogin = new Date('2000-01-01');
             await this.create(newPerson);
@@ -86,6 +87,16 @@ export class PersonService {
 
   private getUserEmail(person: AzureAdPersonDto): string {
     return person.email ? person.email : person.userPrincipalName;
+  }
+
+  getInitialPersonsRoleFromJobTitle(person: AzureAdPersonDto): Role[] {
+    const role = new Role();
+    if(person.jobTitle === 'Mitarbeiter') {
+      role.name = 'Dozent';
+    }else{
+        role.name = 'Student';
+    }
+    return [role];
   }
 
 }

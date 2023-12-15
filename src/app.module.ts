@@ -10,15 +10,19 @@ import { EvaluationModule } from './models/evaluation/evaluation.module';
 import { ModuleTypeModule } from './models/module-type/module-type.module';
 import { JwtService } from '@nestjs/jwt';
 import { APP_FILTER, APP_GUARD } from '@nestjs/core';
-import { VathmosAuthGuard } from './auth-guard/vathmos-auth-guard';
+import { ScheduleModule } from '@nestjs/schedule';
 import { DegreeProgramModule } from './models/degree-program/degree-program.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppCustomLogger } from './app.custom.logger';
 import { NotFoundExceptionFilter } from './common/NotFoundExceptionFilter';
 import { RoleModule } from './models/role/role.module';
+import { TaskService } from './services/task/task.service';
+import { TaskModule } from './services/task/task.module';
+import { VathmosAuthGuard } from "./auth-guard/vathmos-auth-guard";
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -48,19 +52,21 @@ import { RoleModule } from './models/role/role.module';
     ModuleTypeModule,
     DegreeProgramModule,
     RoleModule,
+    TaskModule,
   ],
   controllers: [],
   providers: [
     JwtService,
     AppCustomLogger,
-    {
-      provide: APP_GUARD,
-      useClass: VathmosAuthGuard,
-    },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: VathmosAuthGuard,
+    // },
     {
       provide: APP_FILTER,
       useClass: NotFoundExceptionFilter,
     },
+    TaskService,
   ],
   exports: [],
 })

@@ -21,11 +21,11 @@ export class StudentClass {
   @Column()
   name: string;
 
-  @ManyToMany(() => Person)
+  @ManyToMany(() => Person, (person) => person.classes, { cascade: true })
   @JoinTable({
     name: 'student_class_person',
     joinColumn: { name: 'student_class_id', referencedColumnName: 'id' },
-    inverseJoinColumn: { name: 'student_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'person_id', referencedColumnName: 'id' },
   })
   persons: Person[];
 

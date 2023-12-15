@@ -25,7 +25,7 @@ import { GetPersonDto } from './dto/get-person.dto';
 
 @ApiTags('Person')
 @ApiBearerAuth()
-@Roles('Student', 'Dozent', 'KursAdmin')
+@Roles('Student', 'Dozent', 'KursAdmin', 'FachBereichsLeiter')
 @Controller('person')
 export class PersonController {
   constructor(private readonly personService: PersonService) {}
@@ -55,9 +55,10 @@ export class PersonController {
     return this.personService.findOne(oid);
   }
 
-  @Patch(':oid')
-  update(@Param('oid') oid: string, @Body() updatePersonDto: UpdatePersonDto) {
-    return this.personService.update(oid, updatePersonDto);
+  @Patch(':id')
+  @UsePipes(new ValidationPipe({ transform: true }))
+  update(@Param('id') id: number, @Body() updatePersonDto: UpdatePersonDto) {
+    return this.personService.update(id, updatePersonDto);
   }
 
   @Delete(':id')
