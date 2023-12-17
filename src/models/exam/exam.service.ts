@@ -5,7 +5,6 @@ import { Exam } from './entities/exam.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AppCustomLogger } from '../../app.custom.logger';
-import { Subject } from '../subject/entities/subject.entity';
 
 function isExamUndefined(createExamDto: CreateExamDto) {
   return createExamDto.name === undefined || createExamDto.weighting === undefined;
@@ -19,7 +18,7 @@ function isExamEmpty(createExamDto: CreateExamDto) {
 export class ExamService {
   private readonly logger = new AppCustomLogger(ExamService.name);
 
-  constructor(@InjectRepository(Exam) private readonly examRepository: Repository<Exam>, @InjectRepository(Subject) private readonly subjectRepository: Repository<Subject>){
+  constructor(@InjectRepository(Exam) private readonly examRepository: Repository<Exam>){
   }
 
   async create(createExamDto: CreateExamDto): Promise<Exam | Error>{
