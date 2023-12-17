@@ -18,8 +18,7 @@ export class Exam {
   @Column()
   weighting: string;
 
-  @ManyToOne(() => Subject, (modulpart) => modulpart.exams)
+  @ManyToOne(() => Subject, (subject) => subject.exams)
   @JoinColumn({ name: 'subject_id' })
-  // @Column()
-  modulpart: Subject;
+  subject: Subject;
 }

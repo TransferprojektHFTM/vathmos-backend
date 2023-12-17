@@ -30,16 +30,16 @@ export class ExamService {
     const exam = new Exam();
     exam.name = createExamDto.name;
     exam.weighting = createExamDto.weighting;
-    exam.modulpart = createExamDto.modulpart;
+    exam.subject = createExamDto.subject;
     return this.examRepository.save(exam);
   }
 
   async findAll(): Promise<Exam[]> {
-    return this.examRepository.find({ relations: ['modulpart'] });
+    return this.examRepository.find({ relations: ['subject'] });
   }
 
   async findOne(id: number): Promise<Exam | NotFoundException> {
-    const entity = await this.examRepository.findOne({where: {id}, relations: ['modulpart']});
+    const entity = await this.examRepository.findOne({where: {id}, relations: ['subject']});
     if(!entity) {
       this.logger.warn(`Exam with id ${id} not found`);
       throw new NotFoundException(`Entity with id ${id} not found`);
@@ -58,7 +58,7 @@ export class ExamService {
     }
     existingExam.name = updateExamDto.name;
     existingExam.weighting = updateExamDto.weighting;
-    existingExam.modulpart = updateExamDto.modulpart;
+    existingExam.subject = updateExamDto.subject;
     return this.examRepository.save(existingExam);
   }
 

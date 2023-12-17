@@ -14,5 +14,5 @@ export class CreateExamDto {
 
     @IsNotEmpty()
     @ApiProperty({ example: 1 })
-    modulpart: Subject;
+    subject: Subject;
 }

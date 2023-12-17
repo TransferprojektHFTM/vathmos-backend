@@ -14,5 +14,5 @@ export class UpdateExamDto {
 
     @IsNotEmpty()
     @ApiProperty({ example: 1 })
-    modulpart: Subject;
+    subject: Subject;
 }
