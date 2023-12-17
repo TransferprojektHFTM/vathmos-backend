@@ -1554,7 +1554,7 @@
                 "properties": {
                     "name": {
                         "type": "string",
-                        "example": "Verteilte Systeme Test 2"
+                        "example": "Verteilte Systeme Test 1"
                     },
                     "weighting": {
                         "type": "string",
