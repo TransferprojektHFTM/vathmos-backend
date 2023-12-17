@@ -1,12 +1,11 @@
-import { ApiProperty, PartialType } from '@nestjs/swagger';
-import { CreateExamDto } from './create-exam.dto';
+import { ApiProperty } from '@nestjs/swagger';
 import { Subject } from '../../subject/entities/subject.entity';
 import { IsNotEmpty } from 'class-validator';
 
-export class UpdateExamDto extends PartialType(CreateExamDto) {
+export class UpdateExamDto {
 
     @IsNotEmpty()
-    @ApiProperty({ example: 'Verteilte Systeme Test 1' })
+    @ApiProperty({ example: 'Verteilte Systeme Test 2' })
     name: string;
 
     @IsNotEmpty()

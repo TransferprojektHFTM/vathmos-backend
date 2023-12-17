@@ -1554,7 +1554,7 @@
                 "properties": {
                     "name": {
                         "type": "string",
-                        "example": "Verteilte Systeme Test 1"
+                        "example": "Verteilte Systeme Test 2"
                     },
                     "weighting": {
                         "type": "string",
@@ -1568,7 +1568,12 @@
                             }
                         ]
                     }
-                }
+                },
+                "required": [
+                    "name",
+                    "weighting",
+                    "modulpart"
+                ]
             },
             "CreateEvaluationDto": {
                 "type": "object",
