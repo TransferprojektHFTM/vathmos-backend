@@ -61,6 +61,7 @@ export class ExamService {
     return this.examRepository.save(existingExam);
   }
 
+  // @todo return exam when deleted?
   async remove(id: number): Promise<Exam | NotFoundException> {
     const findDeletedExam = await this.examRepository.findOne({where: {id}});
     if(!findDeletedExam) {
