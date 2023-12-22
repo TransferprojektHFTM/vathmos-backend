@@ -8,6 +8,7 @@ import { GraphApiService } from '../../providers/graph-api.service';
 import { AzureAdPersonDto } from './dto/azure-ad-person.dto';
 import { UserAccessService } from '../../providers/user-access.service';
 import {Role} from "../role/entities/role.entity";
+import {RoleService} from "../role/role.service";
 
 @Injectable()
 export class PersonService {
@@ -16,6 +17,7 @@ export class PersonService {
   constructor(
     @InjectRepository(Person)
     private personRepository: Repository<Person>,
+    private roleService: RoleService,
     private graphApiService: GraphApiService,
     private userAccessService: UserAccessService,
   ) {}
@@ -54,6 +56,8 @@ export class PersonService {
   async createPersons(): Promise<{ message: string; status: number }> {
     let message = { message: ``, status: 500 };
     const token = await this.userAccessService.getAccessToken();
+    const student = await this.roleService.findByName('Student');
+    const teacher = await this.roleService.findByName('Dozent');
     await this.graphApiService
       .getUserList(token)
       .then(async (persons: AzureAdPersonDto[]) => {
@@ -68,7 +72,11 @@ export class PersonService {
             newPerson.email = this.getUserEmail(person);
             newPerson.firstName = person.givenName;
             newPerson.surname = person.surname;
-            newPerson.roles = this.getInitialPersonsRoleFromJobTitle(person);
+            if(person.jobTitle === 'Mitarbeiter') {
+              newPerson.roles = [teacher];
+            }else{
+              newPerson.roles = [student];
+            }
             newPerson.oid = person.id;
             newPerson.lastLogin = new Date('2000-01-01');
             await this.create(newPerson);
@@ -88,15 +96,4 @@ export class PersonService {
   private getUserEmail(person: AzureAdPersonDto): string {
     return person.email ? person.email : person.userPrincipalName;
   }
-
-  getInitialPersonsRoleFromJobTitle(person: AzureAdPersonDto): Role[] {
-    const role = new Role();
-    if(person.jobTitle === 'Mitarbeiter') {
-      role.name = 'Dozent';
-    }else{
-        role.name = 'Student';
-    }
-    return [role];
-  }
-
 }

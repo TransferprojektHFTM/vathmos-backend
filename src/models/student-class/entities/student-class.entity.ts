@@ -29,7 +29,7 @@ export class StudentClass {
   })
   persons: Person[];
 
-  @ManyToOne(() => Cohort, (cohort) => cohort.studentClasses)
+  @ManyToOne(() => Cohort, (cohort) => cohort.studentClasses, {cascade: true})
   @JoinColumn({ name: 'cohort_id' })
   cohort: Cohort;
 }

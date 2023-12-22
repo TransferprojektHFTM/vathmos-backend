@@ -30,7 +30,7 @@ export class Person {
   @Column({ default: false })
   isActivated: boolean;
 
-  @ManyToMany(() => Role)
+  @ManyToMany(() => Role,{cascade: true})
   @JoinTable({
     name: 'person_role',
     joinColumn: { name: 'person_id', referencedColumnName: 'id' },
@@ -38,7 +38,7 @@ export class Person {
   })
   roles: Role[];
 
-  @ManyToMany(() => StudentClass, classes => classes.persons)
+  @ManyToMany(() => StudentClass, (classes) => classes.persons)
   classes: StudentClass[]
 
   @Column()

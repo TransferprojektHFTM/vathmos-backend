@@ -10,11 +10,12 @@ import {StudentClass} from "./entities/student-class.entity";
 import {PersonService} from "../person/person.service";
 import {PersonModule} from "../person/person.module";
 import {ClientAccessService} from "../../providers/client-access.service";
+import {RoleService} from "../role/role.service";
 
 @Module({
   imports: [TypeOrmModule.forFeature([StudentClass]), PersonModule],
   controllers: [StudentClassController],
-  providers: [StudentClassService, JwtService, GraphApiService, UserAccessService, PersonService, ClientAccessService],
+  providers: [StudentClassService, JwtService, GraphApiService, UserAccessService, PersonService, ClientAccessService, RoleService],
   exports:[TypeOrmModule.forFeature([StudentClass]), StudentClassService]
 })
 export class StudentClassModule {}

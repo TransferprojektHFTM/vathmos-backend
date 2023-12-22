@@ -145,14 +145,10 @@ export class StudentClassService {
           (person) => member['id'] === person['oid'],
         );
         if (matchingPerson) {
-          const person = new Person();
-          person.id = matchingPerson.id;
-          person.oid = matchingPerson.oid;
-          await this.personService.create(person);
-
-          studentClass.persons.push(person);
+          studentClass.persons.push(matchingPerson);
         }
       }
+      console.log(studentClass)
       await this.update(studentClass.id, studentClass);
     }
   }
