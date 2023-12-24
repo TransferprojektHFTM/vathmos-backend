@@ -5,14 +5,15 @@ import {
   Body,
   Patch,
   Param,
-  Delete,
+  Delete, HttpCode, HttpStatus,
 } from '@nestjs/common';
 import { ExamService } from './exam.service';
 import { CreateExamDto } from './dto/create-exam.dto';
 import { UpdateExamDto } from './dto/update-exam.dto';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Exam } from './entities/exam.entity';
-import {Roles, VathmosAuthGuard} from '../../auth-guard/vathmos-auth-guard';
+import { Roles, VathmosAuthGuard } from '../../auth-guard/vathmos-auth-guard';
+import { GetExamDto } from './dto/get-exam.dto';
 
 @ApiTags('Exam')
 @ApiBearerAuth()
@@ -27,6 +28,14 @@ export class ExamController {
   }
 
   @Get()
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Get a list of all exams' })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Ok',
+    type: GetExamDto,
+    isArray: true,
+  })
   findAll(): Promise<Exam[]> {
     return this.examService.findAll();
   }

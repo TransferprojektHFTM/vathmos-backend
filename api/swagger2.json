@@ -751,10 +751,21 @@
             },
             "get": {
                 "operationId": "ExamController_findAll",
+                "summary": "Get a list of all exams",
                 "parameters": [],
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/GetExamDto"
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -1550,6 +1561,32 @@
                 "required": [
                     "name",
                     "weighting",
+                    "subject"
+                ]
+            },
+            "GetExamDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "example": 2
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Verteilte Systeme Test 1"
+                    },
+                    "subject": {
+                        "example": 1,
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Subject"
+                            }
+                        ]
+                    }
+                },
+                "required": [
+                    "id",
+                    "name",
                     "subject"
                 ]
             },
