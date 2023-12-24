@@ -724,6 +724,7 @@
         "/api/v1/exam": {
             "post": {
                 "operationId": "ExamController_create",
+                "summary": "Create a new exam",
                 "parameters": [],
                 "requestBody": {
                     "required": true,
@@ -737,7 +738,14 @@
                 },
                 "responses": {
                     "201": {
-                        "description": ""
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetExamDto"
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -781,6 +789,7 @@
         "/api/v1/exam/{id}": {
             "get": {
                 "operationId": "ExamController_findOne",
+                "summary": "Get exam with id",
                 "parameters": [
                     {
                         "name": "id",
@@ -793,7 +802,14 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetExamDto"
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -807,6 +823,7 @@
             },
             "patch": {
                 "operationId": "ExamController_update",
+                "summary": "Update exam with id",
                 "parameters": [
                     {
                         "name": "id",
@@ -829,7 +846,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Ok"
                     }
                 },
                 "tags": [
@@ -843,6 +860,7 @@
             },
             "delete": {
                 "operationId": "ExamController_remove",
+                "summary": "Delete a exam with id",
                 "parameters": [
                     {
                         "name": "id",
@@ -855,7 +873,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Ok"
                     }
                 },
                 "tags": [
