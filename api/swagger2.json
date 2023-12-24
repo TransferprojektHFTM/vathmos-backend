@@ -1391,6 +1391,10 @@
         {
             "name": "Settings",
             "description": "optional for course administrators"
+        },
+        {
+            "name": "Exam",
+            "description": "Exams management"
         }
     ],
     "servers": [],
