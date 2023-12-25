@@ -5,6 +5,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import {Role} from "../../role/entities/role.entity";
+import {StudentClass} from "../../student-class/entities/student-class.entity";
 
 @Entity()
 export class Person {
@@ -37,6 +38,8 @@ export class Person {
   })
   roles: Role[];
 
+  @ManyToMany(() => StudentClass, classes => classes.persons)
+  classes: StudentClass[]
 
   @Column()
   @UpdateDateColumn({

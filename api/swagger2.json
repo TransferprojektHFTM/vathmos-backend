@@ -68,16 +68,18 @@
                         "bearer": []
                     }
                 ]
-            },
+            }
+        },
+        "/api/v1/person/{id}": {
             "patch": {
                 "operationId": "PersonController_update",
                 "parameters": [
                     {
-                        "name": "oid",
+                        "name": "id",
                         "required": true,
                         "in": "path",
                         "schema": {
-                            "type": "string"
+                            "type": "number"
                         }
                     }
                 ],
@@ -104,9 +106,7 @@
                         "bearer": []
                     }
                 ]
-            }
-        },
-        "/api/v1/person/{id}": {
+            },
             "delete": {
                 "operationId": "PersonController_remove",
                 "summary": "Delete a person with id",
@@ -293,39 +293,33 @@
             }
         },
         "/api/v1/student-class": {
-            "post": {
-                "operationId": "StudentClassController_create",
-                "parameters": [],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/CreateStudentClassDto"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": ""
-                    }
-                },
-                "tags": [
-                    "Student class"
-                ],
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
-            },
             "get": {
                 "operationId": "StudentClassController_findAll",
-                "parameters": [],
+                "summary": "Get a list of all classes",
+                "parameters": [
+                    {
+                        "name": "className",
+                        "required": false,
+                        "in": "query",
+                        "description": "Find where class Name like \"BBIN.....\"",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/GetClassesDto"
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -341,6 +335,7 @@
         "/api/v1/student-class/{id}": {
             "get": {
                 "operationId": "StudentClassController_findOne",
+                "summary": "Get classes with id",
                 "parameters": [
                     {
                         "name": "id",
@@ -353,7 +348,17 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/GetClassesDto"
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -367,6 +372,7 @@
             },
             "patch": {
                 "operationId": "StudentClassController_update",
+                "summary": "Append Dozent to class, only \"KursAdmin\" can use this route or assign to cohort",
                 "parameters": [
                     {
                         "name": "id",
@@ -389,33 +395,17 @@
                 },
                 "responses": {
                     "200": {
-                        "description": ""
-                    }
-                },
-                "tags": [
-                    "Student class"
-                ],
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
-            },
-            "delete": {
-                "operationId": "StudentClassController_remove",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "required": true,
-                        "in": "path",
-                        "schema": {
-                            "type": "string"
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/GetClassesDto"
+                                    }
+                                }
+                            }
                         }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": ""
                     }
                 },
                 "tags": [
@@ -1160,14 +1150,14 @@
         },
         "/api/v1/degree": {
             "post": {
-                "operationId": "DegreeController_create",
+                "operationId": "DegreeProgramController_create",
                 "parameters": [],
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/CreateDegreeDto"
+                                "$ref": "#/components/schemas/CreateDegreeProgramDto"
                             }
                         }
                     }
@@ -1178,7 +1168,7 @@
                     }
                 },
                 "tags": [
-                    "Degree"
+                    "DegreeProgram"
                 ],
                 "security": [
                     {
@@ -1187,7 +1177,7 @@
                 ]
             },
             "get": {
-                "operationId": "DegreeController_findAll",
+                "operationId": "DegreeProgramController_findAll",
                 "parameters": [],
                 "responses": {
                     "200": {
@@ -1195,7 +1185,7 @@
                     }
                 },
                 "tags": [
-                    "Degree"
+                    "DegreeProgram"
                 ],
                 "security": [
                     {
@@ -1206,7 +1196,7 @@
         },
         "/api/v1/degree/{id}": {
             "get": {
-                "operationId": "DegreeController_findOne",
+                "operationId": "DegreeProgramController_findOne",
                 "parameters": [
                     {
                         "name": "id",
@@ -1223,7 +1213,7 @@
                     }
                 },
                 "tags": [
-                    "Degree"
+                    "DegreeProgram"
                 ],
                 "security": [
                     {
@@ -1232,7 +1222,7 @@
                 ]
             },
             "patch": {
-                "operationId": "DegreeController_update",
+                "operationId": "DegreeProgramController_update",
                 "parameters": [
                     {
                         "name": "id",
@@ -1248,7 +1238,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/UpdateDegreeDto"
+                                "$ref": "#/components/schemas/UpdateDegreeProgramDto"
                             }
                         }
                     }
@@ -1259,7 +1249,7 @@
                     }
                 },
                 "tags": [
-                    "Degree"
+                    "DegreeProgram"
                 ],
                 "security": [
                     {
@@ -1268,7 +1258,7 @@
                 ]
             },
             "delete": {
-                "operationId": "DegreeController_remove",
+                "operationId": "DegreeProgramController_remove",
                 "parameters": [
                     {
                         "name": "id",
@@ -1285,7 +1275,7 @@
                     }
                 },
                 "tags": [
-                    "Degree"
+                    "DegreeProgram"
                 ],
                 "security": [
                     {
@@ -1424,6 +1414,10 @@
         {
             "name": "Exam",
             "description": "Exams management"
+        },
+        {
+            "name": "Student class",
+            "description": "Student class management"
         }
     ],
     "servers": [],
@@ -1463,13 +1457,6 @@
                         "type": "string",
                         "example": "data:image/png;base64,iVBORw0KGgoA........"
                     },
-                    "roles": {
-                        "example": "Student",
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    },
                     "lastLogin": {
                         "format": "date-time",
                         "type": "string",
@@ -1478,6 +1465,32 @@
                     "isActivated": {
                         "type": "boolean",
                         "example": true
+                    },
+                    "roles": {
+                        "example": [
+                            {
+                                "id": 1,
+                                "appRoleId": "00000000-0000-0000-0000-000000000000",
+                                "name": "Student"
+                            }
+                        ],
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "classes": {
+                        "example": [
+                            {
+                                "id": 71,
+                                "name": "BBMB21.2b",
+                                "oid": "00000000-0000-0000-0000-000000000000"
+                            }
+                        ],
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
                     }
                 },
                 "required": [
@@ -1487,9 +1500,10 @@
                     "surname",
                     "mail",
                     "picture",
-                    "roles",
                     "lastLogin",
-                    "isActivated"
+                    "isActivated",
+                    "roles",
+                    "classes"
                 ]
             },
             "UpdatePersonDto": {
@@ -1528,13 +1542,86 @@
                 "type": "object",
                 "properties": {}
             },
-            "CreateStudentClassDto": {
+            "GetClassesDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "example": "256"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "BBUPUL20.3a"
+                    },
+                    "oid": {
+                        "type": "string",
+                        "example": "dcd60435-dfff-4c73-b8aa-1e68d56fd1c6"
+                    },
+                    "persons": {
+                        "example": [
+                            {
+                                "id": 256,
+                                "oid": "dcd60435-dfff-4c73-b8aa-1e68d56fd1c6",
+                                "firstName": "Max",
+                                "surname": "Mustermann",
+                                "mail": "max.mustermann@hftm.ch",
+                                "picture": "data:image/png;base64,iVBORw0KGgoA........",
+                                "lastLogin": "2021-05-04T08:54:00.000Z",
+                                "isActivated": true
+                            }
+                        ],
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "cohort": {
+                        "type": "string",
+                        "example": "2"
+                    }
+                },
+                "required": [
+                    "id",
+                    "name",
+                    "oid",
+                    "persons",
+                    "cohort"
+                ]
+            },
+            "Cohort": {
                 "type": "object",
                 "properties": {}
             },
             "UpdateStudentClassDto": {
                 "type": "object",
-                "properties": {}
+                "properties": {
+                    "persons": {
+                        "example": [
+                            {
+                                "id": 256,
+                                "oid": "dcd60435-dfff-4c73-b8aa-1e68d56fd1c6",
+                                "firstName": "Max",
+                                "surname": "Mustermann",
+                                "mail": "max.mustermann@hftm.ch"
+                            }
+                        ],
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "cohort": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Cohort"
+                            }
+                        ]
+                    }
+                },
+                "required": [
+                    "persons",
+                    "cohort"
+                ]
             },
             "CreateCoreModuleDto": {
                 "type": "object",
@@ -1655,11 +1742,11 @@
                 "type": "object",
                 "properties": {}
             },
-            "CreateDegreeDto": {
+            "CreateDegreeProgramDto": {
                 "type": "object",
                 "properties": {}
             },
-            "UpdateDegreeDto": {
+            "UpdateDegreeProgramDto": {
                 "type": "object",
                 "properties": {}
             },

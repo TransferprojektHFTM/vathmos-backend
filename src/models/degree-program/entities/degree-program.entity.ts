@@ -18,26 +18,26 @@ export enum Model {
 }
 
 @Entity()
-export class Degree {
+export class DegreeProgram {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ type: 'json' })
   name: string;
 
   @Column({ type: 'enum', enum: Model })
   model: string;
 
-  @Column()
+  @Column({ type: 'json' })
   specialisation: string;
 
-  @OneToMany(() => Cohort, (cohort) => cohort.degree)
+  @OneToMany(() => Cohort, (cohort) => cohort.degreeProgram)
   cohorts: Cohort[];
 
   @ManyToMany(() => CoreModule)
   @JoinTable({
-    name: 'module_degree',
-    joinColumn: { name: 'degree_id', referencedColumnName: 'id' },
+    name: 'module_degree_program',
+    joinColumn: { name: 'degree_program_id', referencedColumnName: 'id' },
     inverseJoinColumn: { name: 'module_id', referencedColumnName: 'id' },
   })
   coreModules: CoreModule[];

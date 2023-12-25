@@ -27,6 +27,7 @@ async function bootstrap() {
     .addTag('Person', 'Student and lecturer management')
     .addTag('Settings', 'optional for course administrators')
     .addTag('Exam', 'Exams management')
+    .addTag('Student class', 'Student class management')
     .addBearerAuth()
     .setTitle('Swagger Documentation Vathmos')
     .setDescription('The Vathmos API description')

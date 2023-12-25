@@ -3,7 +3,6 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Person } from '../../person/entities/person.entity';
@@ -14,15 +13,14 @@ export class Evaluation {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: false })
   val: number;
 
-  @Column()
-  @ManyToOne(() => Exam, (exam) => exam.id)
+  @ManyToOne(() => Exam, (exam) => exam.id, { nullable: false })
   @JoinColumn({ name: 'exam_id' })
-  exam: number;
+  exam: Exam;
 
-  @OneToOne(() => Person)
+  @ManyToOne(() => Person, { nullable: false })
   @JoinColumn({ name: 'student_id' })
-  student: number;
+  student: Person;
 }

@@ -26,18 +26,36 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Docker Dev Container starten
+## How to start your Docker Containers with a Dev container  
 INFO: apparently, despite dev containers being a standard, [some versions of WebStorm might have issues running 'em](https://youtrack.jetbrains.com/issue/IDEA-326228/Dev-Containers-Support-Docker-Compose). 
 
-- ```$ cp example.env .env``` -> to make the env file ready
+1) ```$ cp example.env .env``` -> to make the env file ready
 HINT: You need to set `MYSQL_HOST` to the same value as `MYSQL_CONTAINER_NAME` 
-- For VS Code: Start VS Code, run the Dev Containers: Open Folder in Container... command from the Command Palette (F1) or quick actions Status bar item, and select the project folder you would like to set up the container for.
-- For WebStorm & co: Start WebStorm, right click on `.devcontainer/devcontainer.json` and select Dev Containers > Create Dev Container and Mount Sources...
+2) Start the dev containers from your IDE
+  - For VS Code: Start VS Code, run the Dev Containers: Open Folder in Container... command from the Command Palette (F1) or quick actions Status bar item, and select the project folder you would like to set up the container for.
+  - For WebStorm & co: Start WebStorm, right click on `.devcontainer/devcontainer.json` and select Dev Containers > Create Dev Container and Mount Sources...
 
-## Docker Container starten
+## How to start your Docker containers the "old-fashioned" way
 In case you can't use dev containers like shown above, just run it as you would normally do:
 1) ```$ cp example.env .env``` -> to make the env file ready
 2) ```$ docker-compose up -d```
+
+## In case you the previous hint about MySQL doesn't work
+1) Check your env file and set the following values:
+````
+MYSQL_HOST=vathmos_mysql_container (the name of the mysql container from docker-compose.yml)
+````
+
+2) and update host file on path(C:\Windows\System32\drivers\etc\hosts) with the following entry:
+````
+127.0.0.1 vathmos_mysql_container
+````
+
+## How to execute the SQL seed 
+```
+Get-Content .\sql\vathmos_initial_seed.sql | docker exec -i "$MYSQL_HOST" sh -c "exec mysql -uroot -p'$MYSQL_ROOT_PASSWORD' $MYSQL_DATABASE"
+```
+Hint: declare 'em $MYSQL_ variables. Unfortunately PowerShell is too stupid to be able to read a .env file 
 
 ## URLs
 - http://localhost:3000
@@ -88,19 +106,3 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
-
-## Important run locally into docker
-
-To Run Locally into docker, check your env file and set the following values:
-````
-MYSQL_HOST=vathmos_mysql_container (the name of the mysql container from docker-compose.yml)
-````
-
-and update host file on path(C:\Windows\System32\drivers\etc\hosts) with the following entry:
-````
-127.0.0.1 vathmos_mysql_container
-````
-
-
-
-
