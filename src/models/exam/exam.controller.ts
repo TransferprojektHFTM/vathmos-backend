@@ -31,6 +31,7 @@ export class ExamController {
         type: GetExamDto,
     })
     @UsePipes(new ValidationPipe({ transform: true }))
+    @Roles('Dozent', 'KursAdmin')
     create(@Body() createExamDto: CreateExamDto) {
         return this.examService.create(createExamDto);
     }
@@ -65,12 +66,14 @@ export class ExamController {
       description: 'Ok',
     })
     @UsePipes(new ValidationPipe({ transform: true }))
+    @Roles('Dozent', 'KursAdmin')
     update(@Param('id') id: string, @Body() updateExamDto: UpdateExamDto) {
         return this.examService.update(+id, updateExamDto);
     }
 
     @Delete(':id')
     @ApiOperation({summary: 'Delete a exam with id'})
+    @Roles('Dozent', 'KursAdmin')
     remove(@Param('id') id: string) {
         return this.examService.remove(+id);
     }
