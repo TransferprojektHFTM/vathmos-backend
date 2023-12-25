@@ -18,7 +18,7 @@ import { NotFoundExceptionFilter } from './common/NotFoundExceptionFilter';
 import { RoleModule } from './models/role/role.module';
 import { TaskService } from './services/task/task.service';
 import { TaskModule } from './services/task/task.module';
-import { VathmosAuthGuard } from "./auth-guard/vathmos-auth-guard";
+import { VathmosAuthGuard } from './auth-guard/vathmos-auth-guard';
 
 @Module({
   imports: [

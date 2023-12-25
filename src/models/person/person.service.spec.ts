@@ -21,7 +21,6 @@ describe('PersonService', () => {
     expect(personService).toBeDefined();
   });
 
-
   describe('create', () => {
     it('should create a person', async () => {
       const result = await personService.create(mockCreatePerson);

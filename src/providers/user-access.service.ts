@@ -1,8 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import {AuthAccessService, AuthEnvironment} from './auth-access.service';
+import { AuthAccessService, AuthEnvironment } from './auth-access.service';
 import axios from 'axios';
-import {JwtService} from "@nestjs/jwt";
+import { JwtService } from '@nestjs/jwt';
 @Injectable()
 export class UserAccessService extends AuthAccessService {
   private readonly logger = new Logger(UserAccessService.name);
@@ -13,7 +13,6 @@ export class UserAccessService extends AuthAccessService {
   private tokenEndpoint = '';
   private userName = '';
   private password = '';
-
 
   constructor(private readonly configService: ConfigService) {
     super(new JwtService({}));
@@ -27,7 +26,6 @@ export class UserAccessService extends AuthAccessService {
 
   async getAccessToken(): Promise<string> {
     if (!this.accessToken || this.isTokenExpired(this.accessToken)) {
-
       if (!this.checkEnvVariables()) {
         throw new Error('Error while empty ENV variables');
       }
@@ -52,10 +50,19 @@ export class UserAccessService extends AuthAccessService {
    */
   private checkEnvVariables(): boolean {
     const variableNames = [
-      AuthEnvironment.USER_NAME, AuthEnvironment.USER_PW, AuthEnvironment.TENANT_ID,
-      AuthEnvironment.CLIENT_ID, AuthEnvironment.CLIENT_SECRET,
+      AuthEnvironment.USER_NAME,
+      AuthEnvironment.USER_PW,
+      AuthEnvironment.TENANT_ID,
+      AuthEnvironment.CLIENT_ID,
+      AuthEnvironment.CLIENT_SECRET,
     ];
-    const variables = [this.userName, this.password, this.tenantId, this.clientId, this.clientSecret];
+    const variables = [
+      this.userName,
+      this.password,
+      this.tenantId,
+      this.clientId,
+      this.clientSecret,
+    ];
     const emptyVariables: string[] = [];
 
     variableNames.forEach((name, index) => {
@@ -65,16 +72,16 @@ export class UserAccessService extends AuthAccessService {
     });
     if (emptyVariables.length > 0) {
       this.logger.error(
-          'Undefined or Empty ENV variables, check .env file: ' +
+        'Undefined or Empty ENV variables, check .env file: ' +
           emptyVariables.join(', '),
       );
-        return false;
+      return false;
     }
     return true;
   }
 
   private getAuthData(): any {
-    return  {
+    return {
       grant_type: 'password',
       client_id: this.clientId,
       client_secret: this.clientSecret,
@@ -92,9 +99,9 @@ export class UserAccessService extends AuthAccessService {
         'Content-Type': 'application/x-www-form-urlencoded',
         SdkVersion: 'nest-js-v1.0.0',
         Cookie:
-            'fpc=AkQE13zTvTRAq56R-rBfUDjdHYPbAQAAANFoetcOAAAA; x-ms-gateway-slice=estsfd; stsservicecookie=estsfd',
+          'fpc=AkQE13zTvTRAq56R-rBfUDjdHYPbAQAAANFoetcOAAAA; x-ms-gateway-slice=estsfd; stsservicecookie=estsfd',
       },
       data: this.getAuthData(),
-    }
+    };
   }
 }

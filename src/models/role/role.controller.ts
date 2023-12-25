@@ -1,11 +1,29 @@
-import {Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, Query} from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  HttpCode,
+  HttpStatus,
+  Query,
+} from '@nestjs/common';
 import { RoleService } from './role.service';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
-import {ApiBearerAuth, ApiExcludeEndpoint, ApiOperation, ApiQuery, ApiResponse, ApiTags} from "@nestjs/swagger";
-import {GetPersonDto} from "../person/dto/get-person.dto";
-import {Role} from "./entities/role.entity";
-import {Roles} from "../../auth-guard/vathmos-auth-guard";
+import {
+  ApiBearerAuth,
+  ApiExcludeEndpoint,
+  ApiOperation,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { GetPersonDto } from '../person/dto/get-person.dto';
+import { Role } from './entities/role.entity';
+import { Roles } from '../../auth-guard/vathmos-auth-guard';
 
 @ApiTags('Role')
 @ApiBearerAuth()

@@ -72,12 +72,11 @@ export class VathmosAuthGuard implements CanActivate {
     ]);
 
     try {
-      if(roles === undefined) return true; //allow if no roles are defined
+      if (roles === undefined) return true; //allow if no roles are defined
       this.checkRoles(VathmosAuthGuard.user, roles);
-    }catch (e) {
+    } catch (e) {
       return false;
     }
-
 
     return true; // change to enable
   }

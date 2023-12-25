@@ -5,15 +5,26 @@ import {
   Body,
   Patch,
   Param,
-  Delete, UsePipes, ValidationPipe, HttpCode, HttpStatus, Query,
+  Delete,
+  UsePipes,
+  ValidationPipe,
+  HttpCode,
+  HttpStatus,
+  Query,
 } from '@nestjs/common';
 import { StudentClassService } from './student-class.service';
 import { CreateStudentClassDto } from './dto/create-student-class.dto';
 import { UpdateStudentClassDto } from './dto/update-student-class.dto';
-import {ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags} from '@nestjs/swagger';
-import {Roles} from "../../auth-guard/vathmos-auth-guard";
-import {GetPersonDto} from "../person/dto/get-person.dto";
-import {GetClassesDto} from "./dto/get-classes.dto";
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { Roles } from '../../auth-guard/vathmos-auth-guard';
+import { GetPersonDto } from '../person/dto/get-person.dto';
+import { GetClassesDto } from './dto/get-classes.dto';
 
 @ApiTags('Student class')
 @ApiBearerAuth()
@@ -61,7 +72,7 @@ export class StudentClassController {
   })
   @ApiOperation({
     summary:
-        'Append Dozent to class, only "KursAdmin" can use this route or assign to cohort',
+      'Append Dozent to class, only "KursAdmin" can use this route or assign to cohort',
   })
   @Roles('KursAdmin')
   @UsePipes(new ValidationPipe({ transform: true }))
@@ -73,12 +84,11 @@ export class StudentClassController {
     return this.studentClassService.update(+id, updateStudentClassDto);
   }
 
-
   @ApiTags('Settings')
   @Post('createClasses')
   @ApiOperation({
     summary:
-        'Create all classes into hftm, only "KursAdmin" can use this route',
+      'Create all classes into hftm, only "KursAdmin" can use this route',
   })
   @Roles('KursAdmin')
   createPersons() {

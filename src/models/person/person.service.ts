@@ -1,13 +1,13 @@
-import {Injectable, NotFoundException} from '@nestjs/common';
-import {UpdatePersonDto} from './dto/update-person.dto';
-import {AppCustomLogger} from '../../app.custom.logger';
-import {InjectRepository} from '@nestjs/typeorm';
-import {Person} from './entities/person.entity';
-import {Repository} from 'typeorm';
-import {GraphApiService} from '../../providers/graph-api.service';
-import {AzureAdPersonDto} from './dto/azure-ad-person.dto';
-import {UserAccessService} from '../../providers/user-access.service';
-import {RoleService} from "../role/role.service";
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { UpdatePersonDto } from './dto/update-person.dto';
+import { AppCustomLogger } from '../../app.custom.logger';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Person } from './entities/person.entity';
+import { Repository } from 'typeorm';
+import { GraphApiService } from '../../providers/graph-api.service';
+import { AzureAdPersonDto } from './dto/azure-ad-person.dto';
+import { UserAccessService } from '../../providers/user-access.service';
+import { RoleService } from '../role/role.service';
 
 @Injectable()
 export class PersonService {
@@ -25,11 +25,16 @@ export class PersonService {
   }
 
   async findAll(): Promise<Person[]> {
-    return await this.personRepository.find({relations: ['roles','classes']});
+    return await this.personRepository.find({
+      relations: ['roles', 'classes'],
+    });
   }
 
   async findOne(oid: string) {
-    const entity = await this.personRepository.findOne({ where: { oid: oid }, relations: ['roles','classes'] });
+    const entity = await this.personRepository.findOne({
+      where: { oid: oid },
+      relations: ['roles', 'classes'],
+    });
     if (!entity) {
       this.logger.warn(`Person with id ${oid} not found`);
       throw new NotFoundException(`Entity with id ${oid} not found`);
@@ -66,14 +71,18 @@ export class PersonService {
             where: { oid: person.id },
           });
 
-          if (currentPerson === null && person.givenName && person.surname || currentPerson === null && person.userPrincipalName.includes('vathmos')) {
+          if (
+            (currentPerson === null && person.givenName && person.surname) ||
+            (currentPerson === null &&
+              person.userPrincipalName.includes('vathmos'))
+          ) {
             const newPerson = new Person();
             newPerson.email = this.getUserEmail(person);
             newPerson.firstName = person.givenName;
             newPerson.surname = person.surname;
-            if(person.jobTitle === 'Mitarbeiter') {
+            if (person.jobTitle === 'Mitarbeiter') {
               newPerson.roles = [teacher];
-            }else{
+            } else {
               newPerson.roles = [student];
             }
             newPerson.oid = person.id;
@@ -98,21 +107,30 @@ export class PersonService {
 
   async getAllUserPicturesAndSave(): Promise<void> {
     const token = await this.userAccessService.getAccessToken();
-    this.personRepository.find().then(async (persons: Person[]) => {
-      for (const person of persons) {
-        const image = await this.graphApiService.getUserPicture(token, person)
-        if(image) {
-          //@TODO: Save image into other format
-          // person.picture = 'data:image/jpeg;base64,' + new Buffer.from(image, 'binary').toString('base64');
-          person.picture = image
-          this.logger.log(`Picture of ${person.firstName} ${person.surname} is updated`)
-          await this.personRepository.update(person.id, person);
+    this.personRepository
+      .find()
+      .then(async (persons: Person[]) => {
+        for (const person of persons) {
+          const image = await this.graphApiService.getUserPicture(
+            token,
+            person,
+          );
+          if (image) {
+            //@TODO: Save image into other format
+            // person.picture = 'data:image/jpeg;base64,' + new Buffer.from(image, 'binary').toString('base64');
+            person.picture = image;
+            this.logger.log(
+              `Picture of ${person.firstName} ${person.surname} is updated`,
+            );
+            await this.personRepository.update(person.id, person);
+          }
         }
-      }
-    }).then(() => {
-      this.logger.log('All User Pictures are updated')
-    }).catch((error) => {
+      })
+      .then(() => {
+        this.logger.log('All User Pictures are updated');
+      })
+      .catch((error) => {
         this.logger.error(error);
-    });
+      });
   }
 }

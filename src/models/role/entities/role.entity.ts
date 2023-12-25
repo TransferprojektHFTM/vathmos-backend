@@ -1,5 +1,5 @@
-import {Column, Entity, PrimaryGeneratedColumn} from 'typeorm';
-import {ApiProperty} from "@nestjs/swagger";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity()
 export class Role {
@@ -7,7 +7,7 @@ export class Role {
   @ApiProperty({ example: '1' })
   id: number;
 
-  @Column({ type: 'uuid', unique: true , default: null})
+  @Column({ type: 'uuid', unique: true, default: null })
   @ApiProperty({ example: '00000000-0000-0000-0000-000000000000' })
   appRoleId: string;
 

@@ -2,9 +2,9 @@ import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import qs from 'qs';
 import axios from 'axios';
-import {AuthAccessService, AuthEnvironment} from "./auth-access.service";
-import {JwtService} from "@nestjs/jwt";
-import {log} from "winston";
+import { AuthAccessService, AuthEnvironment } from './auth-access.service';
+import { JwtService } from '@nestjs/jwt';
+import { log } from 'winston';
 
 @Injectable()
 export class ClientAccessService extends AuthAccessService {
@@ -24,14 +24,13 @@ export class ClientAccessService extends AuthAccessService {
 
   async getAccessToken(): Promise<string> {
     if (!this.accessToken || this.isTokenExpired(this.accessToken)) {
-
       this.tokenEndpoint = `https://login.microsoftonline.com/${this.tenantId}/oauth2/v2.0/token`;
 
       if (!this.checkEnvVariables()) {
         throw new Error('Error while empty ENV variables');
       }
 
-      const config = this.getAxiosConfig()
+      const config = this.getAxiosConfig();
 
       try {
         const response = await axios(config);
@@ -52,7 +51,8 @@ export class ClientAccessService extends AuthAccessService {
    * @private
    */
   private checkEnvVariables(): boolean {
-    const variableNames = [AuthEnvironment.TENANT_ID,
+    const variableNames = [
+      AuthEnvironment.TENANT_ID,
       AuthEnvironment.CLIENT_ID,
       AuthEnvironment.CLIENT_SECRET,
     ];
@@ -66,7 +66,7 @@ export class ClientAccessService extends AuthAccessService {
     });
     if (emptyVariables.length > 0) {
       this.logger.error(
-          'Undefined or Empty ENV variables, check .env file: ' +
+        'Undefined or Empty ENV variables, check .env file: ' +
           emptyVariables.join(', '),
       );
       return false;
@@ -75,7 +75,7 @@ export class ClientAccessService extends AuthAccessService {
   }
 
   private getAuthData(): any {
-    return  {
+    return {
       grant_type: 'client_credentials',
       client_id: this.clientId,
       client_secret: this.clientSecret,
@@ -91,9 +91,9 @@ export class ClientAccessService extends AuthAccessService {
         'Content-Type': 'application/x-www-form-urlencoded',
         SdkVersion: 'nest-js-v1.0.0',
         Cookie:
-            'fpc=AkQE13zTvTRAq56R-rBfUDjdHYPbAQAAANFoetcOAAAA; x-ms-gateway-slice=estsfd; stsservicecookie=estsfd',
+          'fpc=AkQE13zTvTRAq56R-rBfUDjdHYPbAQAAANFoetcOAAAA; x-ms-gateway-slice=estsfd; stsservicecookie=estsfd',
       },
       data: this.getAuthData(),
-    }
+    };
   }
 }

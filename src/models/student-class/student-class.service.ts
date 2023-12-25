@@ -1,17 +1,17 @@
-import {Injectable} from '@nestjs/common';
-import {CreateStudentClassDto} from './dto/create-student-class.dto';
-import {UpdateStudentClassDto} from './dto/update-student-class.dto';
-import {InjectRepository} from '@nestjs/typeorm';
-import {Like, Repository} from 'typeorm';
-import {GraphApiService} from '../../providers/graph-api.service';
-import {UserAccessService} from '../../providers/user-access.service';
-import {StudentClass} from './entities/student-class.entity';
-import {AppCustomLogger} from '../../app.custom.logger';
-import {WebUntisAnonymousAuth} from 'webuntis';
-import {PersonService} from '../person/person.service';
-import {ClientAccessService} from "../../providers/client-access.service";
-import {RoleService} from "../role/role.service";
-import {Role} from "../role/entities/role.entity";
+import { Injectable } from '@nestjs/common';
+import { CreateStudentClassDto } from './dto/create-student-class.dto';
+import { UpdateStudentClassDto } from './dto/update-student-class.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Like, Repository } from 'typeorm';
+import { GraphApiService } from '../../providers/graph-api.service';
+import { UserAccessService } from '../../providers/user-access.service';
+import { StudentClass } from './entities/student-class.entity';
+import { AppCustomLogger } from '../../app.custom.logger';
+import { WebUntisAnonymousAuth } from 'webuntis';
+import { PersonService } from '../person/person.service';
+import { ClientAccessService } from '../../providers/client-access.service';
+import { RoleService } from '../role/role.service';
+import { Role } from '../role/entities/role.entity';
 
 @Injectable()
 export class StudentClassService {
@@ -33,10 +33,14 @@ export class StudentClassService {
   }
 
   findAll(className: string = '') {
-    if(className.length < 2) return this.classRepository.find({ relations: ['persons', 'cohort'] });
-    return this.classRepository.find({ where:{
-        name: Like(`%${className}%`)
-      },relations: ['persons', 'cohort'] });
+    if (className.length < 2)
+      return this.classRepository.find({ relations: ['persons', 'cohort'] });
+    return this.classRepository.find({
+      where: {
+        name: Like(`%${className}%`),
+      },
+      relations: ['persons', 'cohort'],
+    });
   }
 
   findOne(id: number) {
@@ -47,11 +51,13 @@ export class StudentClassService {
   }
 
   async update(id: number, updateStudentClassDto: UpdateStudentClassDto) {
-    const studentClass = await this.classRepository.findOne({where: {id: id},  relations: ['persons', 'cohort']});
+    const studentClass = await this.classRepository.findOne({
+      where: { id: id },
+      relations: ['persons', 'cohort'],
+    });
     studentClass.cohort = updateStudentClassDto.cohort;
     studentClass.persons = updateStudentClassDto.persons;
     return this.classRepository.save(studentClass);
-
   }
 
   async createClasses() {
@@ -132,7 +138,7 @@ export class StudentClassService {
     const persons = await this.personService.findAll();
     const studentClasses = await this.findAll();
     const token = await this.userAccessService.getAccessToken();
-    let currentCountStudents = 0
+    let currentCountStudents = 0;
     for (const studentClass of studentClasses) {
       const members = await this.graphApiService.getGroupMembers(
         token,
@@ -143,7 +149,7 @@ export class StudentClassService {
           (person) => member['id'] === person['oid'],
         );
         const personInClass = studentClass.persons.find(
-            (person) => person.id === matchingPerson.id,
+          (person) => person.id === matchingPerson.id,
         );
         if (matchingPerson && !personInClass) {
           studentClass.persons.push(matchingPerson);
@@ -152,7 +158,7 @@ export class StudentClassService {
       currentCountStudents += studentClass.persons.length;
       await this.update(studentClass.id, studentClass);
     }
-    this.logger.log(`Current assign of students ${currentCountStudents}`)
+    this.logger.log(`Current assign of students ${currentCountStudents}`);
   }
 
   private filterObjectsByProperty(
