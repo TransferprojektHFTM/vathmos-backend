@@ -181,7 +181,7 @@ export class GraphApiService {
       return await axios.request(config).then((response) => {
         return response.data
       }).catch(() => {
-        console.log(person.surname + ' ' + person.firstName + ' has no picture')
+        //has no picture
       });
   }
 }

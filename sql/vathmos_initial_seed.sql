@@ -157,3 +157,17 @@ INSERT INTO subject_module (module_id, subject_id) VALUES (10, 52);
 INSERT INTO subject_module (module_id, subject_id) VALUES (11, 53);
 INSERT INTO subject_module (module_id, subject_id) VALUES (11, 54);
 INSERT INTO subject_module (module_id, subject_id) VALUES (11, 55);
+
+--
+-- Daten für Tabelle `exam`
+--
+INSERT INTO `exam` (`id`, `name`, `weighting`, `subject_id`) VALUES (1, 'Verteilte Systeme Test 1', '40%', 43);
+INSERT INTO `exam` (`id`, `name`, `weighting`, `subject_id`) VALUES (2, 'Verteilte Systeme Test 2', '40%', 43);
+INSERT INTO `exam` (`id`, `name`, `weighting`, `subject_id`) VALUES (3, 'Verteilte Systeme Test 3', '20%', 43);
+INSERT INTO `exam` (`id`, `name`, `weighting`, `subject_id`) VALUES (4, 'Präsentation', '100%', 32);
+INSERT INTO `exam` (`id`, `name`, `weighting`, `subject_id`) VALUES (5, 'Algebra Test 1', '50%', 21);
+INSERT INTO `exam` (`id`, `name`, `weighting`, `subject_id`) VALUES (6, 'Word Test 1', '25%', 17);
+INSERT INTO `exam` (`id`, `name`, `weighting`, `subject_id`) VALUES (7, 'Word Test 2', '25%', 17);
+INSERT INTO `exam` (`id`, `name`, `weighting`, `subject_id`) VALUES (8, 'Excel Test 1', '25%', 17);
+INSERT INTO `exam` (`id`, `name`, `weighting`, `subject_id`) VALUES (9, 'Algebra Test 2', '50%', 21);
+INSERT INTO `exam` (`id`, `name`, `weighting`, `subject_id`) VALUES (10, 'PowerPoint Test 1', '25%', 17);

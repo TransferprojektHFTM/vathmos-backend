@@ -1,7 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
-import {Role} from "../../role/entities/role.entity";
 import {NoScriptTags} from "../../../common/validators/noScriptTags.validator";
+import {Role} from "../../role/entities/role.entity";
+
 
 export class CreatePersonDto {
   @IsNotEmpty()
@@ -24,6 +25,9 @@ export class CreatePersonDto {
   public picture: string;
 
   @IsNotEmpty()
-  @ApiProperty({ example: Role.name })
+  @ApiProperty({ example: {
+    "id": 1,
+    "name": "Student",
+    }})
   public roles: Role[];
 }

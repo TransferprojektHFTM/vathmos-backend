@@ -102,11 +102,17 @@ export class PersonService {
       for (const person of persons) {
         const image = await this.graphApiService.getUserPicture(token, person)
         if(image) {
+          //@TODO: Save image into other format
           // person.picture = 'data:image/jpeg;base64,' + new Buffer.from(image, 'binary').toString('base64');
           person.picture = image
+          this.logger.log(`Picture of ${person.firstName} ${person.surname} is updated`)
           await this.personRepository.update(person.id, person);
         }
       }
+    }).then(() => {
+      this.logger.log('All User Pictures are updated')
+    }).catch((error) => {
+        this.logger.error(error);
     });
   }
 }
