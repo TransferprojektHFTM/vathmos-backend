@@ -1593,6 +1593,10 @@
                         "type": "string",
                         "example": "Verteilte Systeme Test 1"
                     },
+                    "weighting": {
+                        "type": "string",
+                        "example": "50%"
+                    },
                     "subject": {
                         "example": 1,
                         "allOf": [
@@ -1605,6 +1609,7 @@
                 "required": [
                     "id",
                     "name",
+                    "weighting",
                     "subject"
                 ]
             },
