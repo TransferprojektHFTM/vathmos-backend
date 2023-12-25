@@ -79,7 +79,6 @@ export class PersonController {
       'Create all persons into hftm, only "KursAdmin" can use this route',
   })
   @Roles('KursAdmin')
-  @UsePipes(new ValidationPipe({ transform: true }))
   createPersons() {
     return this.personService.createPersons();
   }

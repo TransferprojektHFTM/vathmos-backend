@@ -5,15 +5,12 @@ import {Person} from "../../person/entities/person.entity";
 
 export class GetClassesDto{
     @ApiProperty({ example: '256' })
-    @IsNotEmpty()
     id: number;
 
-    @IsNotEmpty()
     @ApiProperty({ example: 'BBUPUL20.3a' })
     name: string;
 
     @ApiProperty({ example: 'dcd60435-dfff-4c73-b8aa-1e68d56fd1c6' })
-    @IsNotEmpty()
     oid: string;
 
     @ApiProperty({ example: [{

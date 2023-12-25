@@ -13,7 +13,7 @@ import {ClientAccessService} from "../../providers/client-access.service";
 import {RoleService} from "../role/role.service";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([StudentClass]), PersonModule],
+  imports: [TypeOrmModule.forFeature([StudentClass]), TypeOrmModule.forFeature([Person]),PersonModule],
   controllers: [StudentClassController],
   providers: [StudentClassService, JwtService, GraphApiService, UserAccessService, PersonService, ClientAccessService, RoleService],
   exports:[TypeOrmModule.forFeature([StudentClass]), StudentClassService]

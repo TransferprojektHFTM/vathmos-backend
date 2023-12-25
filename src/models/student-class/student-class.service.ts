@@ -1,16 +1,16 @@
-import { Injectable } from '@nestjs/common';
-import { CreateStudentClassDto } from './dto/create-student-class.dto';
-import { UpdateStudentClassDto } from './dto/update-student-class.dto';
-import { InjectRepository } from '@nestjs/typeorm';
+import {Injectable} from '@nestjs/common';
+import {CreateStudentClassDto} from './dto/create-student-class.dto';
+import {UpdateStudentClassDto} from './dto/update-student-class.dto';
+import {InjectRepository} from '@nestjs/typeorm';
 import {Like, Repository} from 'typeorm';
-import { GraphApiService } from '../../providers/graph-api.service';
-import { UserAccessService } from '../../providers/user-access.service';
-import { StudentClass } from './entities/student-class.entity';
-import { AppCustomLogger } from '../../app.custom.logger';
-import { WebUntisAnonymousAuth } from 'webuntis';
-import { PersonService } from '../person/person.service';
-import { Person } from '../person/entities/person.entity';
+import {GraphApiService} from '../../providers/graph-api.service';
+import {UserAccessService} from '../../providers/user-access.service';
+import {StudentClass} from './entities/student-class.entity';
+import {AppCustomLogger} from '../../app.custom.logger';
+import {WebUntisAnonymousAuth} from 'webuntis';
+import {PersonService} from '../person/person.service';
 import {ClientAccessService} from "../../providers/client-access.service";
+import {Person} from "../person/entities/person.entity";
 
 @Injectable()
 export class StudentClassService {
@@ -31,7 +31,7 @@ export class StudentClassService {
   }
 
   findAll(className: string = '') {
-    if(className.length < 2) return this.classRepository.find({ relations: ['persons', 'cohort'] });
+    if(className.length < 2) return this.classRepository.find({ relations: ['cohort'] });
     return this.classRepository.find({ where:{
         name: Like(`%${className}%`)
       },relations: ['persons', 'cohort'] });
@@ -44,13 +44,12 @@ export class StudentClassService {
     });
   }
 
-  //@TODO update class if cohort finally ready
   async update(id: number, updateStudentClassDto: UpdateStudentClassDto) {
     const studentClass = await this.classRepository.findOne({where: {id: id},  relations: ['persons', 'cohort']});
-    if(studentClass.cohort) {
-      studentClass.cohort = updateStudentClassDto.cohort;
-      return this.classRepository.save(studentClass);
-    }
+    studentClass.cohort = updateStudentClassDto.cohort;
+    studentClass.persons = updateStudentClassDto.persons;
+    return this.classRepository.save(studentClass);
+
   }
 
   async createClasses() {
@@ -139,6 +138,7 @@ export class StudentClassService {
         token,
         studentClass,
       );
+      studentClass.persons = [];
       for (const member of members) {
 
         const matchingPerson = persons.find(
@@ -148,7 +148,6 @@ export class StudentClassService {
           studentClass.persons.push(matchingPerson);
         }
       }
-      console.log(studentClass)
       await this.update(studentClass.id, studentClass);
     }
   }

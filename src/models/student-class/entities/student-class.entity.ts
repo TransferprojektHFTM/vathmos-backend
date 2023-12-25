@@ -21,7 +21,9 @@ export class StudentClass {
   @Column()
   name: string;
 
-  @ManyToMany(() => Person, (person) => person.classes, { cascade: true })
+  @ManyToMany(() => Person, (person) => person.classes,
+      { cascade: true }
+  )
   @JoinTable({
     name: 'student_class_person',
     joinColumn: { name: 'student_class_id', referencedColumnName: 'id' },
@@ -29,7 +31,9 @@ export class StudentClass {
   })
   persons: Person[];
 
-  @ManyToOne(() => Cohort, (cohort) => cohort.studentClasses, {cascade: true})
+  @ManyToOne(() => Cohort, (cohort) => cohort.studentClasses,
+      { cascade: true }
+  )
   @JoinColumn({ name: 'cohort_id' })
   cohort: Cohort;
 }
