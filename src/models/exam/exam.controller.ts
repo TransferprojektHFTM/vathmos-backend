@@ -5,7 +5,7 @@ import {
     Body,
     Patch,
     Param,
-    Delete, HttpCode, HttpStatus,
+    Delete, HttpStatus, UsePipes, ValidationPipe,
 } from '@nestjs/common';
 import {ExamService} from './exam.service';
 import {CreateExamDto} from './dto/create-exam.dto';
@@ -30,6 +30,7 @@ export class ExamController {
         description: 'Created',
         type: GetExamDto,
     })
+    @UsePipes(new ValidationPipe({ transform: true }))
     create(@Body() createExamDto: CreateExamDto) {
         return this.examService.create(createExamDto);
     }
@@ -63,16 +64,13 @@ export class ExamController {
       status: HttpStatus.OK,
       description: 'Ok',
     })
+    @UsePipes(new ValidationPipe({ transform: true }))
     update(@Param('id') id: string, @Body() updateExamDto: UpdateExamDto) {
         return this.examService.update(+id, updateExamDto);
     }
 
     @Delete(':id')
     @ApiOperation({summary: 'Delete a exam with id'})
-    @ApiResponse({
-      status: HttpStatus.OK,
-      description: 'Ok',
-    })
     remove(@Param('id') id: string) {
         return this.examService.remove(+id);
     }
