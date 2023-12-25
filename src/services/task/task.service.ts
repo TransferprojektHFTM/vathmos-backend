@@ -28,6 +28,7 @@ export class TaskService implements OnModuleInit{
         await this.studentClassService.createClasses();
         await this.studentClassService.appRolesAzureAssignments();
         await this.studentClassService.assignClassesToPersons();
+        await this.personService.getAllUserPicturesAndSave()
     }
 
     /**
@@ -36,12 +37,14 @@ export class TaskService implements OnModuleInit{
      */
     async onModuleInit() {
         const persons = await this.personService.findAll();
+        await this.personService.getAllUserPicturesAndSave()
         if(persons.length === 0) {
             this.logger.debug('Create Persons and Classes over task service on init')
             await this.personService.createPersons();
             await this.studentClassService.createClasses();
             await this.studentClassService.appRolesAzureAssignments();
             await this.studentClassService.assignClassesToPersons();
+            await this.personService.getAllUserPicturesAndSave()
         }
     }
 }

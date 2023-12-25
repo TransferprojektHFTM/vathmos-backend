@@ -4,6 +4,7 @@ import {AppCustomLogger} from '../app.custom.logger';
 import {AzureAdPersonDto} from '../models/person/dto/azure-ad-person.dto';
 import {ConfigService} from "@nestjs/config";
 import {StudentClass} from "../models/student-class/entities/student-class.entity";
+import {Person} from "../models/person/entities/person.entity";
 
 @Injectable()
 export class GraphApiService {
@@ -165,5 +166,22 @@ export class GraphApiService {
         Authorization: 'Bearer ' + token,
       },
     };
+  }
+
+  async getUserPicture(token:string, person: Person) {
+      const url = `${this.mainUrl}/users/${person.oid}/photo/$value`;
+      const config = {
+        method: 'GET',
+        url: url,
+        headers: {
+          'Content-Type': 'application/octet-stream',
+          Authorization: 'Bearer ' + token,
+        }
+      }
+      return await axios.request(config).then((response) => {
+        return response.data
+      }).catch(() => {
+        console.log(person.surname + ' ' + person.firstName + ' has no picture')
+      });
   }
 }

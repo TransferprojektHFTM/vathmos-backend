@@ -1,13 +1,12 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { UpdatePersonDto } from './dto/update-person.dto';
-import { AppCustomLogger } from '../../app.custom.logger';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Person } from './entities/person.entity';
-import { Repository } from 'typeorm';
-import { GraphApiService } from '../../providers/graph-api.service';
-import { AzureAdPersonDto } from './dto/azure-ad-person.dto';
-import { UserAccessService } from '../../providers/user-access.service';
-import {Role} from "../role/entities/role.entity";
+import {Injectable, NotFoundException} from '@nestjs/common';
+import {UpdatePersonDto} from './dto/update-person.dto';
+import {AppCustomLogger} from '../../app.custom.logger';
+import {InjectRepository} from '@nestjs/typeorm';
+import {Person} from './entities/person.entity';
+import {Repository} from 'typeorm';
+import {GraphApiService} from '../../providers/graph-api.service';
+import {AzureAdPersonDto} from './dto/azure-ad-person.dto';
+import {UserAccessService} from '../../providers/user-access.service';
 import {RoleService} from "../role/role.service";
 
 @Injectable()
@@ -95,5 +94,19 @@ export class PersonService {
 
   private getUserEmail(person: AzureAdPersonDto): string {
     return person.email ? person.email : person.userPrincipalName;
+  }
+
+  async getAllUserPicturesAndSave(): Promise<void> {
+    const token = await this.userAccessService.getAccessToken();
+    this.personRepository.find().then(async (persons: Person[]) => {
+      for (const person of persons) {
+        const image = await this.graphApiService.getUserPicture(token, person)
+        if(image) {
+          // person.picture = 'data:image/jpeg;base64,' + new Buffer.from(image, 'binary').toString('base64');
+          person.picture = image
+          await this.personRepository.update(person.id, person);
+        }
+      }
+    });
   }
 }

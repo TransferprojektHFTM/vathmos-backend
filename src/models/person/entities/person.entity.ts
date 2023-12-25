@@ -24,7 +24,7 @@ export class Person {
   @Column({ default: null })
   email: string;
 
-  @Column({ type: 'longtext', default: null })
+  @Column({ type: 'longblob', default: null })
   picture: string;
 
   @Column({ default: false })
