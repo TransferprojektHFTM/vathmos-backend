@@ -14,7 +14,7 @@ export class SubjectService {
               private subjectRepository: Repository<Subject>,) {
   }
   create(createSubjectDto: CreateSubjectDto) {
-    return 'This action adds a new subject';
+    return 'This action adds a new subject Test';
   }
 
   findAll() {
