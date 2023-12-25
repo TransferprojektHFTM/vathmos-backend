@@ -156,6 +156,82 @@
                 ]
             }
         },
+        "/api/v1/role": {
+            "get": {
+                "operationId": "RoleController_findAll",
+                "summary": "Get all roles",
+                "parameters": [
+                    {
+                        "name": "roleName",
+                        "required": false,
+                        "in": "query",
+                        "description": "Find role with name",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Role"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Role"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/role/{id}": {
+            "get": {
+                "operationId": "RoleController_findOne",
+                "summary": "Get a role with id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Role"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Role"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
         "/api/v1/cohort": {
             "post": {
                 "operationId": "CohortController_create",
@@ -1283,117 +1359,6 @@
                     }
                 ]
             }
-        },
-        "/api/v1/role": {
-            "post": {
-                "operationId": "RoleController_create",
-                "parameters": [],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/CreateRoleDto"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": ""
-                    }
-                },
-                "tags": [
-                    "Role"
-                ]
-            },
-            "get": {
-                "operationId": "RoleController_findAll",
-                "parameters": [],
-                "responses": {
-                    "200": {
-                        "description": ""
-                    }
-                },
-                "tags": [
-                    "Role"
-                ]
-            }
-        },
-        "/api/v1/role/{id}": {
-            "get": {
-                "operationId": "RoleController_findOne",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "required": true,
-                        "in": "path",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": ""
-                    }
-                },
-                "tags": [
-                    "Role"
-                ]
-            },
-            "patch": {
-                "operationId": "RoleController_update",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "required": true,
-                        "in": "path",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/UpdateRoleDto"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": ""
-                    }
-                },
-                "tags": [
-                    "Role"
-                ]
-            },
-            "delete": {
-                "operationId": "RoleController_remove",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "required": true,
-                        "in": "path",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": ""
-                    }
-                },
-                "tags": [
-                    "Role"
-                ]
-            }
         }
     },
     "info": {
@@ -1418,6 +1383,10 @@
         {
             "name": "Student class",
             "description": "Student class management"
+        },
+        {
+            "name": "Role",
+            "description": "Roles management"
         }
     ],
     "servers": [],
@@ -1526,13 +1495,38 @@
                         "example": "data:image/png;base64,iVBORw0KGgoA........"
                     },
                     "roles": {
-                        "example": "Student",
+                        "example": {
+                            "id": 1,
+                            "name": "Student"
+                        },
                         "type": "array",
                         "items": {
                             "type": "string"
                         }
                     }
                 }
+            },
+            "Role": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "example": "1"
+                    },
+                    "appRoleId": {
+                        "type": "string",
+                        "example": "00000000-0000-0000-0000-000000000000"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Student"
+                    }
+                },
+                "required": [
+                    "id",
+                    "appRoleId",
+                    "name"
+                ]
             },
             "CreateCohortDto": {
                 "type": "object",
@@ -1685,7 +1679,13 @@
                         "example": "50%"
                     },
                     "subject": {
-                        "example": 1,
+                        "example": {
+                            "id": 43,
+                            "name": {
+                                "de": "Software Engineering"
+                            },
+                            "shortName": "Q3R421.3a"
+                        },
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/Subject"
@@ -1719,12 +1719,7 @@
                             }
                         ]
                     }
-                },
-                "required": [
-                    "name",
-                    "weighting",
-                    "subject"
-                ]
+                }
             },
             "CreateEvaluationDto": {
                 "type": "object",
@@ -1747,14 +1742,6 @@
                 "properties": {}
             },
             "UpdateDegreeProgramDto": {
-                "type": "object",
-                "properties": {}
-            },
-            "CreateRoleDto": {
-                "type": "object",
-                "properties": {}
-            },
-            "UpdateRoleDto": {
                 "type": "object",
                 "properties": {}
             }

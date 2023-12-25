@@ -1,11 +1,13 @@
 import {
   Column,
-  Entity, JoinTable, ManyToMany,
+  Entity,
+  JoinTable,
+  ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import {Role} from "../../role/entities/role.entity";
-import {StudentClass} from "../../student-class/entities/student-class.entity";
+import { Role } from '../../role/entities/role.entity';
+import { StudentClass } from '../../student-class/entities/student-class.entity';
 
 @Entity()
 export class Person {
@@ -24,13 +26,13 @@ export class Person {
   @Column({ default: null })
   email: string;
 
-  @Column({ type: 'longtext', default: null })
+  @Column({ type: 'longblob', default: null })
   picture: string;
 
   @Column({ default: false })
   isActivated: boolean;
 
-  @ManyToMany(() => Role)
+  @ManyToMany(() => Role, { cascade: true })
   @JoinTable({
     name: 'person_role',
     joinColumn: { name: 'person_id', referencedColumnName: 'id' },
@@ -38,8 +40,8 @@ export class Person {
   })
   roles: Role[];
 
-  @ManyToMany(() => StudentClass, classes => classes.persons)
-  classes: StudentClass[]
+  @ManyToMany(() => StudentClass, (classes) => classes.persons)
+  classes: StudentClass[];
 
   @Column()
   @UpdateDateColumn({
