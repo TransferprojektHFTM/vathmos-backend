@@ -2,26 +2,27 @@ import {Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus,
 import { RoleService } from './role.service';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
-import {ApiExcludeEndpoint, ApiOperation, ApiQuery, ApiResponse, ApiTags} from "@nestjs/swagger";
+import {ApiBearerAuth, ApiExcludeEndpoint, ApiOperation, ApiQuery, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {GetPersonDto} from "../person/dto/get-person.dto";
 import {Role} from "./entities/role.entity";
 import {Roles} from "../../auth-guard/vathmos-auth-guard";
 
 @ApiTags('Role')
-@Roles('KursAdmin')
+@ApiBearerAuth()
 @Controller('role')
 export class RoleController {
   constructor(private readonly roleService: RoleService) {}
 
   @Post()
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Create a new Role' })
+  @ApiOperation({ summary: 'Create a new Role only KursAdmin' })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Ok',
     type: CreateRoleDto,
     isArray: false,
   })
+  @Roles('KursAdmin')
   @ApiExcludeEndpoint()
   create(@Body() createRoleDto: CreateRoleDto) {
     return this.roleService.create(createRoleDto);
@@ -61,13 +62,14 @@ export class RoleController {
 
   @Patch(':id')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Update a role' })
+  @ApiOperation({ summary: 'Update a role only KursAdmin' })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Ok',
     type: Role,
     isArray: false,
   })
+  @Roles('KursAdmin')
   @ApiExcludeEndpoint()
   update(@Param('id') id: string, @Body() updateRoleDto: UpdateRoleDto) {
     return this.roleService.update(+id, updateRoleDto);
@@ -75,11 +77,12 @@ export class RoleController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Delete role with id' })
+  @ApiOperation({ summary: 'Delete role with id only KursAdmin' })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Ok',
   })
+  @Roles('KursAdmin')
   @ApiExcludeEndpoint()
   remove(@Param('id') id: string) {
     return this.roleService.remove(+id);

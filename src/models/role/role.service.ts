@@ -3,7 +3,6 @@ import {CreateRoleDto} from './dto/create-role.dto';
 import {UpdateRoleDto} from './dto/update-role.dto';
 import {AppCustomLogger} from "../../app.custom.logger";
 import {InjectRepository} from "@nestjs/typeorm";
-import {Person} from "../person/entities/person.entity";
 import {Like, Repository} from "typeorm";
 import {Role} from "./entities/role.entity";
 

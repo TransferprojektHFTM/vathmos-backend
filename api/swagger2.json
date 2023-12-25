@@ -188,6 +188,11 @@
                 },
                 "tags": [
                     "Role"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
                 ]
             }
         },
@@ -219,6 +224,11 @@
                 },
                 "tags": [
                     "Role"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
                 ]
             }
         },

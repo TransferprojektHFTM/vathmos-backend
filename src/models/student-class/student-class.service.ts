@@ -10,7 +10,8 @@ import {AppCustomLogger} from '../../app.custom.logger';
 import {WebUntisAnonymousAuth} from 'webuntis';
 import {PersonService} from '../person/person.service';
 import {ClientAccessService} from "../../providers/client-access.service";
-import {Person} from "../person/entities/person.entity";
+import {RoleService} from "../role/role.service";
+import {Role} from "../role/entities/role.entity";
 
 @Injectable()
 export class StudentClassService {
@@ -24,6 +25,7 @@ export class StudentClassService {
     private userAccessService: UserAccessService,
     private clientAccessService: ClientAccessService,
     private personService: PersonService,
+    private roleService: RoleService,
   ) {}
 
   create(createStudentClassDto: CreateStudentClassDto) {
@@ -31,7 +33,7 @@ export class StudentClassService {
   }
 
   findAll(className: string = '') {
-    if(className.length < 2) return this.classRepository.find({ relations: ['cohort'] });
+    if(className.length < 2) return this.classRepository.find({ relations: ['persons', 'cohort'] });
     return this.classRepository.find({ where:{
         name: Like(`%${className}%`)
       },relations: ['persons', 'cohort'] });
@@ -107,9 +109,7 @@ export class StudentClassService {
 
   public async appRolesAzureAssignments(appRole: string = 'Student') {
     const studentClasses = await this.findAll();
-
-    const appRoleId = '77ca2e45-398c-402e-bd63-c8d0ae2aa51e';
-    //@TODO get appRoleId from database by name to make it dynamic with appRoleId
+    const role: Role = await this.roleService.findByName(appRole);
 
     const token = await this.clientAccessService.getAccessToken();
     const currentAssignment =
@@ -123,7 +123,7 @@ export class StudentClassService {
       await this.graphApiService.addedUserOrGroupToVathmosApp(
         token,
         studentClass,
-        appRoleId,
+        role.appRoleId,
       );
     }
   }
@@ -132,24 +132,27 @@ export class StudentClassService {
     const persons = await this.personService.findAll();
     const studentClasses = await this.findAll();
     const token = await this.userAccessService.getAccessToken();
-
+    let currentCountStudents = 0
     for (const studentClass of studentClasses) {
       const members = await this.graphApiService.getGroupMembers(
         token,
         studentClass,
       );
-      studentClass.persons = [];
       for (const member of members) {
-
         const matchingPerson = persons.find(
           (person) => member['id'] === person['oid'],
         );
-        if (matchingPerson) {
+        const personInClass = studentClass.persons.find(
+            (person) => person.id === matchingPerson.id,
+        );
+        if (matchingPerson && !personInClass) {
           studentClass.persons.push(matchingPerson);
         }
       }
+      currentCountStudents += studentClass.persons.length;
       await this.update(studentClass.id, studentClass);
     }
+    this.logger.log(`Current assign of students ${currentCountStudents}`)
   }
 
   private filterObjectsByProperty(

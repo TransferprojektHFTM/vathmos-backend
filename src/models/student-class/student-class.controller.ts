@@ -17,7 +17,6 @@ import {GetClassesDto} from "./dto/get-classes.dto";
 
 @ApiTags('Student class')
 @ApiBearerAuth()
-@Roles('Student', 'Dozent', 'KursAdmin', 'FachBereichsLeiter')
 @Controller('student-class')
 export class StudentClassController {
   constructor(private readonly studentClassService: StudentClassService) {}
