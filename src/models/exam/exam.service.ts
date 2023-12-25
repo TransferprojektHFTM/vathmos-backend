@@ -1,26 +1,56 @@
-import { Injectable } from '@nestjs/common';
-import { CreateExamDto } from './dto/create-exam.dto';
-import { UpdateExamDto } from './dto/update-exam.dto';
+import {Injectable, NotFoundException} from '@nestjs/common';
+import {CreateExamDto} from './dto/create-exam.dto';
+import {UpdateExamDto} from './dto/update-exam.dto';
+import {Exam} from './entities/exam.entity';
+import {Repository} from 'typeorm';
+import {InjectRepository} from '@nestjs/typeorm';
+import {AppCustomLogger} from '../../app.custom.logger';
 
 @Injectable()
 export class ExamService {
-  create(createExamDto: CreateExamDto) {
-    return 'This action adds a new exam';
-  }
+    private readonly logger = new AppCustomLogger(ExamService.name);
 
-  findAll() {
-    return `This action returns all exam`;
-  }
+    constructor(@InjectRepository(Exam) private readonly examRepository: Repository<Exam>) {
+    }
 
-  findOne(id: number) {
-    return `This action returns a #${id} exam`;
-  }
+    async create(createExamDto: CreateExamDto): Promise<Exam | Error> {
+        const exam = new Exam();
+        exam.name = createExamDto.name;
+        exam.weighting = createExamDto.weighting;
+        exam.subject = createExamDto.subject;
+        return this.examRepository.save(exam);
+    }
 
-  update(id: number, updateExamDto: UpdateExamDto) {
-    return `This action updates a #${id} exam`;
-  }
+    async findAll(): Promise<Exam[]> {
+        return this.examRepository.find({relations: ['subject']});
+    }
 
-  remove(id: number) {
-    return `This action removes a #${id} exam`;
-  }
+    async findOne(id: number): Promise<Exam | NotFoundException> {
+        const entity = await this.examRepository.findOne({where: {id}, relations: ['subject']});
+        if (!entity) {
+            this.logger.warn(`Exam with id ${id} not found`);
+            throw new NotFoundException(`Entity with id ${id} not found`);
+        }
+        return entity;
+    }
+
+    async update(id: number, updateExamDto: UpdateExamDto): Promise<Exam | NotFoundException | Error> {
+        const existingExam = await this.examRepository.findOne({where: {id}});
+        existingExam.name = updateExamDto.name;
+        existingExam.weighting = updateExamDto.weighting;
+        existingExam.subject = updateExamDto.subject;
+        return this.examRepository.save(existingExam);
+    }
+
+    // @todo return exam when deleted?
+    async remove(id: number): Promise<Exam | NotFoundException> {
+        const findDeletedExam = await this.examRepository.findOne({where: {id}});
+        if (!findDeletedExam) {
+            this.logger.warn(`Exam with id ${id} not found`);
+            throw new NotFoundException(`Exam with id ${id} not found`);
+        } else {
+            await this.examRepository.delete(id)
+            return findDeletedExam;
+        }
+    }
 }

@@ -714,6 +714,7 @@
         "/api/v1/exam": {
             "post": {
                 "operationId": "ExamController_create",
+                "summary": "Create a new exam",
                 "parameters": [],
                 "requestBody": {
                     "required": true,
@@ -727,7 +728,14 @@
                 },
                 "responses": {
                     "201": {
-                        "description": ""
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetExamDto"
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -741,10 +749,21 @@
             },
             "get": {
                 "operationId": "ExamController_findAll",
+                "summary": "Get a list of all exams",
                 "parameters": [],
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/GetExamDto"
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -760,6 +779,7 @@
         "/api/v1/exam/{id}": {
             "get": {
                 "operationId": "ExamController_findOne",
+                "summary": "Get exam with id",
                 "parameters": [
                     {
                         "name": "id",
@@ -772,7 +792,14 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetExamDto"
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -786,6 +813,7 @@
             },
             "patch": {
                 "operationId": "ExamController_update",
+                "summary": "Update exam with id",
                 "parameters": [
                     {
                         "name": "id",
@@ -808,7 +836,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Ok"
                     }
                 },
                 "tags": [
@@ -822,6 +850,7 @@
             },
             "delete": {
                 "operationId": "ExamController_remove",
+                "summary": "Delete a exam with id",
                 "parameters": [
                     {
                         "name": "id",
@@ -1383,6 +1412,10 @@
             "description": "optional for course administrators"
         },
         {
+            "name": "Exam",
+            "description": "Exams management"
+        },
+        {
             "name": "Student class",
             "description": "Student class management"
         }
@@ -1606,13 +1639,92 @@
                 "type": "object",
                 "properties": {}
             },
-            "CreateExamDto": {
+            "Subject": {
                 "type": "object",
                 "properties": {}
             },
+            "CreateExamDto": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Verteilte Systeme Test 1"
+                    },
+                    "weighting": {
+                        "type": "string",
+                        "example": "40%"
+                    },
+                    "subject": {
+                        "example": 1,
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Subject"
+                            }
+                        ]
+                    }
+                },
+                "required": [
+                    "name",
+                    "weighting",
+                    "subject"
+                ]
+            },
+            "GetExamDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "example": 2
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Verteilte Systeme Test 1"
+                    },
+                    "weighting": {
+                        "type": "string",
+                        "example": "50%"
+                    },
+                    "subject": {
+                        "example": 1,
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Subject"
+                            }
+                        ]
+                    }
+                },
+                "required": [
+                    "id",
+                    "name",
+                    "weighting",
+                    "subject"
+                ]
+            },
             "UpdateExamDto": {
                 "type": "object",
-                "properties": {}
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Verteilte Systeme Test 1"
+                    },
+                    "weighting": {
+                        "type": "string",
+                        "example": "40%"
+                    },
+                    "subject": {
+                        "example": 1,
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Subject"
+                            }
+                        ]
+                    }
+                },
+                "required": [
+                    "name",
+                    "weighting",
+                    "subject"
+                ]
             },
             "CreateEvaluationDto": {
                 "type": "object",
