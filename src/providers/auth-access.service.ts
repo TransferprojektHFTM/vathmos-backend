@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 export const enum AuthEnvironment {
-  USER_NAME= 'USER_NAME',
+  USER_NAME = 'USER_NAME',
   USER_PW = 'USER_PW',
   TENANT_ID = 'TENANT_ID',
   CLIENT_ID = 'CLIENT_ID',

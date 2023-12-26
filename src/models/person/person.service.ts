@@ -7,7 +7,7 @@ import { Repository } from 'typeorm';
 import { GraphApiService } from '../../providers/graph-api.service';
 import { AzureAdPersonDto } from './dto/azure-ad-person.dto';
 import { UserAccessService } from '../../providers/user-access.service';
-import {Role} from "../role/entities/role.entity";
+import { RoleService } from '../role/role.service';
 
 @Injectable()
 export class PersonService {
@@ -16,6 +16,7 @@ export class PersonService {
   constructor(
     @InjectRepository(Person)
     private personRepository: Repository<Person>,
+    private roleService: RoleService,
     private graphApiService: GraphApiService,
     private userAccessService: UserAccessService,
   ) {}
@@ -24,11 +25,16 @@ export class PersonService {
   }
 
   async findAll(): Promise<Person[]> {
-    return await this.personRepository.find({relations: ['roles','classes']});
+    return await this.personRepository.find({
+      relations: ['roles', 'classes'],
+    });
   }
 
   async findOne(oid: string) {
-    const entity = await this.personRepository.findOne({ where: { oid: oid }, relations: ['roles','classes'] });
+    const entity = await this.personRepository.findOne({
+      where: { oid: oid },
+      relations: ['roles', 'classes'],
+    });
     if (!entity) {
       this.logger.warn(`Person with id ${oid} not found`);
       throw new NotFoundException(`Entity with id ${oid} not found`);
@@ -54,6 +60,8 @@ export class PersonService {
   async createPersons(): Promise<{ message: string; status: number }> {
     let message = { message: ``, status: 500 };
     const token = await this.userAccessService.getAccessToken();
+    const student = await this.roleService.findByName('Student');
+    const teacher = await this.roleService.findByName('Dozent');
     await this.graphApiService
       .getUserList(token)
       .then(async (persons: AzureAdPersonDto[]) => {
@@ -63,12 +71,20 @@ export class PersonService {
             where: { oid: person.id },
           });
 
-          if (currentPerson === null && person.givenName && person.surname || currentPerson === null && person.userPrincipalName.includes('vathmos')) {
+          if (
+            (currentPerson === null && person.givenName && person.surname) ||
+            (currentPerson === null &&
+              person.userPrincipalName.includes('vathmos'))
+          ) {
             const newPerson = new Person();
             newPerson.email = this.getUserEmail(person);
             newPerson.firstName = person.givenName;
             newPerson.surname = person.surname;
-            newPerson.roles = this.getInitialPersonsRoleFromJobTitle(person);
+            if (person.jobTitle === 'Mitarbeiter') {
+              newPerson.roles = [teacher];
+            } else {
+              newPerson.roles = [student];
+            }
             newPerson.oid = person.id;
             newPerson.lastLogin = new Date('2000-01-01');
             await this.create(newPerson);
@@ -89,14 +105,32 @@ export class PersonService {
     return person.email ? person.email : person.userPrincipalName;
   }
 
-  getInitialPersonsRoleFromJobTitle(person: AzureAdPersonDto): Role[] {
-    const role = new Role();
-    if(person.jobTitle === 'Mitarbeiter') {
-      role.name = 'Dozent';
-    }else{
-        role.name = 'Student';
-    }
-    return [role];
+  async getAllUserPicturesAndSave(): Promise<void> {
+    const token = await this.userAccessService.getAccessToken();
+    this.personRepository
+      .find()
+      .then(async (persons: Person[]) => {
+        for (const person of persons) {
+          const image = await this.graphApiService.getUserPicture(
+            token,
+            person,
+          );
+          if (image) {
+            //@TODO: Save image into other format
+            // person.picture = 'data:image/jpeg;base64,' + new Buffer.from(image, 'binary').toString('base64');
+            person.picture = image;
+            this.logger.log(
+              `Picture of ${person.firstName} ${person.surname} is updated`,
+            );
+            await this.personRepository.update(person.id, person);
+          }
+        }
+      })
+      .then(() => {
+        this.logger.log('All User Pictures are updated');
+      })
+      .catch((error) => {
+        this.logger.error(error);
+      });
   }
-
 }

@@ -11,7 +11,7 @@ import { SubjectService } from './subject.service';
 import { CreateSubjectDto } from './dto/create-subject.dto';
 import { UpdateSubjectDto } from './dto/update-subject.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import {Roles} from "../../auth-guard/vathmos-auth-guard";
+import { Roles } from '../../auth-guard/vathmos-auth-guard';
 
 @ApiTags('Subject')
 @Roles('Student', 'Dozent', 'KursAdmin')
