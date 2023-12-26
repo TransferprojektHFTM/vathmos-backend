@@ -6,7 +6,7 @@ export class GetSubjectDto{
     @IsNotEmpty()
     public id: number;
 
-    @ApiProperty({ example: '{"de": "Programmierung Einführung}' })
+    @ApiProperty({ example: {"de": "Programmierung Einführung"}})
     @IsNotEmpty()
     public name: string;
 
