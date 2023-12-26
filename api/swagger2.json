@@ -654,6 +654,7 @@
         "/api/v1/subject": {
             "post": {
                 "operationId": "SubjectController_create",
+                "summary": "Create a new subject",
                 "parameters": [],
                 "requestBody": {
                     "required": true,
@@ -667,7 +668,7 @@
                 },
                 "responses": {
                     "201": {
-                        "description": ""
+                        "description": "Created"
                     }
                 },
                 "tags": [
@@ -681,10 +682,11 @@
             },
             "get": {
                 "operationId": "SubjectController_findAll",
+                "summary": "Get a list of all subjects",
                 "parameters": [],
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Ok"
                     }
                 },
                 "tags": [
@@ -700,6 +702,7 @@
         "/api/v1/subject/{id}": {
             "get": {
                 "operationId": "SubjectController_findOne",
+                "summary": "Get subject with id",
                 "parameters": [
                     {
                         "name": "id",
@@ -712,7 +715,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Ok"
                     }
                 },
                 "tags": [
@@ -726,6 +729,7 @@
             },
             "patch": {
                 "operationId": "SubjectController_update",
+                "summary": "Update exam with id",
                 "parameters": [
                     {
                         "name": "id",
@@ -748,7 +752,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Ok"
                     }
                 },
                 "tags": [
@@ -762,6 +766,7 @@
             },
             "delete": {
                 "operationId": "SubjectController_remove",
+                "summary": "Delete a subject with id",
                 "parameters": [
                     {
                         "name": "id",
