@@ -30,6 +30,7 @@ export class SubjectController {
       description: 'Created',
     })
     @UsePipes(new ValidationPipe({ transform: true }))
+    @Roles('Dozent', 'KursAdmin')
     create(@Body() createSubjectDto: CreateSubjectDto) {
         return this.subjectService.create(createSubjectDto);
     }
@@ -63,12 +64,15 @@ export class SubjectController {
       status: HttpStatus.OK,
       description: 'Ok',
     })
+    @UsePipes(new ValidationPipe({ transform: true }))
+    @Roles('Dozent', 'KursAdmin')
     update(@Param('id') id: string, @Body() updateSubjectDto: UpdateSubjectDto) {
         return this.subjectService.update(+id, updateSubjectDto);
     }
 
     @Delete(':id')
     @ApiOperation({ summary: 'Delete a subject with id' })
+    @Roles('Dozent', 'KursAdmin')
     remove(@Param('id') id: string) {
         return this.subjectService.remove(+id);
     }
