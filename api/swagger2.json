@@ -1387,6 +1387,10 @@
         {
             "name": "Role",
             "description": "Roles management"
+        },
+        {
+            "name": "Subject",
+            "description": "Subjects management"
         }
     ],
     "servers": [],
