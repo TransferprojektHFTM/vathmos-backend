@@ -1,9 +1,9 @@
-import {IsJSON, IsNotEmpty, IsString} from 'class-validator';
+import {IsNotEmpty, IsObject, IsString} from 'class-validator';
 import {ApiProperty} from '@nestjs/swagger';
 
 export class CreateSubjectDto {
     @IsNotEmpty()
-    @IsJSON()
+    @IsObject()
     @ApiProperty({example: {"de": "Software Engineering"}})
     name: string;
 

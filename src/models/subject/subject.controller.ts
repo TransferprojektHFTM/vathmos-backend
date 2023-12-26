@@ -1,11 +1,11 @@
 import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete, HttpStatus,
+    Controller,
+    Get,
+    Post,
+    Body,
+    Patch,
+    Param,
+    Delete, HttpStatus, UsePipes, ValidationPipe,
 } from '@nestjs/common';
 import {SubjectService} from './subject.service';
 import {CreateSubjectDto} from './dto/create-subject.dto';
@@ -29,6 +29,7 @@ export class SubjectController {
       status: HttpStatus.CREATED,
       description: 'Created',
     })
+    @UsePipes(new ValidationPipe({ transform: true }))
     create(@Body() createSubjectDto: CreateSubjectDto) {
         return this.subjectService.create(createSubjectDto);
     }
