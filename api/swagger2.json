@@ -686,7 +686,17 @@
                 "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "Ok"
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/GetSubjectDto"
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -715,7 +725,14 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Ok"
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetSubjectDto"
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -1636,11 +1653,55 @@
             },
             "CreateSubjectDto": {
                 "type": "object",
-                "properties": {}
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "{\"de\": \"Software Engineering\"}"
+                    },
+                    "shortName": {
+                        "type": "string",
+                        "example": "Q3R421.3a"
+                    }
+                },
+                "required": [
+                    "name",
+                    "shortName"
+                ]
+            },
+            "GetSubjectDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "example": 18
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "{\"de\": \"Programmierung Einführung}"
+                    },
+                    "shortName": {
+                        "type": "string",
+                        "example": "R8S921.3a"
+                    }
+                },
+                "required": [
+                    "id",
+                    "name",
+                    "shortName"
+                ]
             },
             "UpdateSubjectDto": {
                 "type": "object",
-                "properties": {}
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "{\"de\": \"Software Engineering\"}"
+                    },
+                    "shortName": {
+                        "type": "string",
+                        "example": "Q3R421.3a"
+                    }
+                }
             },
             "Subject": {
                 "type": "object",

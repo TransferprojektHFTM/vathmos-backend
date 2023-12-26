@@ -13,6 +13,7 @@ import {UpdateSubjectDto} from './dto/update-subject.dto';
 import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Roles} from '../../auth-guard/vathmos-auth-guard';
 import {Subject} from './entities/subject.entity';
+import {GetSubjectDto} from './dto/get-subject.dto';
 
 @ApiTags('Subject')
 @Roles('Student', 'Dozent', 'KursAdmin')
@@ -37,6 +38,7 @@ export class SubjectController {
     @ApiResponse({
         status: HttpStatus.OK,
         description: 'Ok',
+        type: GetSubjectDto,
         isArray: true,
     })
     findAll(): Promise<Subject[]> {
@@ -48,6 +50,7 @@ export class SubjectController {
     @ApiResponse({
       status: HttpStatus.OK,
       description: 'Ok',
+      type: GetSubjectDto,
     })
     findOne(@Param('id') id: string) {
         return this.subjectService.findOne(+id);
