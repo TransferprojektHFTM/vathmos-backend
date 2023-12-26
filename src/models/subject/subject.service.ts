@@ -14,8 +14,11 @@ export class SubjectService {
     @InjectRepository(Subject)
     private subjectRepository: Repository<Subject>,
   ) {}
-  create(createSubjectDto: CreateSubjectDto) {
-    return 'This action adds a new subject Test';
+  async create(createSubjectDto: CreateSubjectDto): Promise <Subject | Error> {
+    const subject = new Subject();
+    subject.name = createSubjectDto.name;
+    subject.shortName = createSubjectDto.shortName;
+    return this.subjectRepository.save(subject);
   }
 
   findAll() {
@@ -31,6 +34,7 @@ export class SubjectService {
     const entity = await this.subjectRepository.findOne({
       where: { id },
     });
+
     if(!entity) {
       this.logger.warn(`Subject with id ${id} not found`);
       throw new NotFoundException(`Subject with id ${id} not found`);
