@@ -21,13 +21,19 @@ export class SubjectService {
     return this.subjectRepository.save(subject);
   }
 
-  findAll() {
-    return this.subjectRepository
-      .createQueryBuilder('subject')
-      .select('*')
-      .leftJoinAndSelect('subject.coreModule', 'coreModule')
-      .leftJoinAndSelect('subject.lecturer', 'lecturer')
-      .getMany();
+  // @todo refactoring? 26.12.2023 findAll does not work
+  // findAll() {
+  //   return this.subjectRepository
+  //     .createQueryBuilder('subject')
+  //     .select('*')
+  //     .leftJoinAndSelect('subject.coreModule', 'coreModule')
+  //     .leftJoinAndSelect('subject.lecturer', 'lecturer')
+  //     .getMany();
+  // }
+
+  //@Todo only for dev findAll with querybuilder does not work up
+  async findAll(): Promise <Subject[]> {
+    return this.subjectRepository.find();
   }
 
   async findOne(id: number): Promise<Subject | NotFoundException> {
