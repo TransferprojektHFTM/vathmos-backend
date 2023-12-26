@@ -42,8 +42,11 @@ export class SubjectService {
     return entity;
   }
 
-  update(id: number, updateSubjectDto: UpdateSubjectDto) {
-    return `This action updates a #${id} subject`;
+  async update(id: number, updateSubjectDto: UpdateSubjectDto): Promise<Subject | NotFoundException | Error> {
+    const existingSubject = await this.subjectRepository.findOne({where: {id}});
+    existingSubject.name = updateSubjectDto.name;
+    existingSubject.shortName = updateSubjectDto.shortName;
+    return this.subjectRepository.save(existingSubject);
   }
 
   async remove(id: number): Promise<Subject | NotFoundException> {

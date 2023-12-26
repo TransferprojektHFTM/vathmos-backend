@@ -1656,7 +1656,9 @@
                 "properties": {
                     "name": {
                         "type": "string",
-                        "example": "{\"de\": \"Software Engineering\"}"
+                        "example": {
+                            "de": "Software Engineering"
+                        }
                     },
                     "shortName": {
                         "type": "string",
@@ -1677,7 +1679,9 @@
                     },
                     "name": {
                         "type": "string",
-                        "example": "{\"de\": \"Programmierung Einführung}"
+                        "example": {
+                            "de": "Programmierung Einführung"
+                        }
                     },
                     "shortName": {
                         "type": "string",
@@ -1695,13 +1699,19 @@
                 "properties": {
                     "name": {
                         "type": "string",
-                        "example": "{\"de\": \"Software Engineering\"}"
+                        "example": {
+                            "de": "Software Engineering"
+                        }
                     },
                     "shortName": {
                         "type": "string",
                         "example": "Q3R421.3a"
                     }
-                }
+                },
+                "required": [
+                    "name",
+                    "shortName"
+                ]
             },
             "Subject": {
                 "type": "object",
