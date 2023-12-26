@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import {Injectable, NotFoundException} from '@nestjs/common';
 import { CreateSubjectDto } from './dto/create-subject.dto';
 import { UpdateSubjectDto } from './dto/update-subject.dto';
 import { AppCustomLogger } from '../../app.custom.logger';
@@ -27,15 +27,31 @@ export class SubjectService {
       .getMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} subject`;
+  async findOne(id: number): Promise<Subject | NotFoundException> {
+    const entity = await this.subjectRepository.findOne({
+      where: { id },
+    });
+    if(!entity) {
+      this.logger.warn(`Subject with id ${id} not found`);
+      throw new NotFoundException(`Subject with id ${id} not found`);
+    }
+    return entity;
   }
 
   update(id: number, updateSubjectDto: UpdateSubjectDto) {
     return `This action updates a #${id} subject`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} subject`;
+  async remove(id: number): Promise<Subject | NotFoundException> {
+    const findDeletedSubject = await this.subjectRepository.findOne({
+      where: {id},
+    });
+    if (!findDeletedSubject) {
+      this.logger.warn(`Subject with id ${id} not found`);
+      throw new NotFoundException(`Subject with id ${id} not found`);
+    } else {
+      await this.subjectRepository.delete(id);
+      return findDeletedSubject;
+    }
   }
 }

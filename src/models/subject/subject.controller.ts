@@ -1,11 +1,11 @@
 import {
-    Controller,
-    Get,
-    Post,
-    Body,
-    Patch,
-    Param,
-    Delete, HttpStatus,
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete, HttpStatus,
 } from '@nestjs/common';
 import {SubjectService} from './subject.service';
 import {CreateSubjectDto} from './dto/create-subject.dto';
