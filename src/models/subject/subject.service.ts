@@ -56,6 +56,7 @@ export class SubjectService {
     return this.subjectRepository.save(existingSubject);
   }
 
+  // @todo return subject when deleted?
   async remove(id: number): Promise<Subject | NotFoundException> {
     const findDeletedSubject = await this.subjectRepository.findOne({
       where: {id},
