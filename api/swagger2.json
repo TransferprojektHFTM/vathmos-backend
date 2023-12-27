@@ -1707,11 +1707,7 @@
                         "type": "string",
                         "example": "Q3R421.3a"
                     }
-                },
-                "required": [
-                    "name",
-                    "shortName"
-                ]
+                }
             },
             "Subject": {
                 "type": "object",
