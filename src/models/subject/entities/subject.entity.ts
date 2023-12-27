@@ -1,6 +1,6 @@
 import {
   Column,
-  Entity,
+  Entity, JoinColumn,
   JoinTable,
   ManyToMany,
   OneToMany,
@@ -37,6 +37,7 @@ export class Subject {
   })
   coreModules: CoreModule[];
 
-  @OneToMany(() => Exam, (exams) => exams.id)
+  @OneToMany(() => Exam, (exams) => exams.subject)
+  @JoinColumn({ name: 'id', referencedColumnName: 'id' })
   exams: Exam[];
 }

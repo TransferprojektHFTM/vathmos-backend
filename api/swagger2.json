@@ -746,7 +746,7 @@
             },
             "patch": {
                 "operationId": "SubjectController_update",
-                "summary": "Update exam with id",
+                "summary": "Update subject with id",
                 "parameters": [
                     {
                         "name": "id",

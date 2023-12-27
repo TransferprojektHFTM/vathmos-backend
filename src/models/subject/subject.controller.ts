@@ -59,7 +59,7 @@ export class SubjectController {
     }
 
     @Patch(':id')
-    @ApiOperation({ summary: 'Update exam with id' })
+    @ApiOperation({ summary: 'Update subject with id' })
     @ApiResponse({
       status: HttpStatus.OK,
       description: 'Ok',

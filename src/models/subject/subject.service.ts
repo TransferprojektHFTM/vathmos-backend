@@ -33,12 +33,13 @@ export class SubjectService {
 
   //@Todo only for dev findAll with querybuilder does not work up
   async findAll(): Promise <Subject[]> {
-    return this.subjectRepository.find();
+    return this.subjectRepository.find({relations: ['exams']});
   }
 
   async findOne(id: number): Promise<Subject | NotFoundException> {
     const entity = await this.subjectRepository.findOne({
       where: { id },
+      relations: ['exams'],
     });
 
     if(!entity) {
