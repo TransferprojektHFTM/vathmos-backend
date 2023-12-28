@@ -19,6 +19,9 @@ import { RoleModule } from './models/role/role.module';
 import { TaskService } from './services/task/task.service';
 import { TaskModule } from './services/task/task.module';
 import { VathmosAuthGuard } from './auth-guard/vathmos-auth-guard';
+import { LogsController } from './models/logs/logs.controller';
+import { LogsService } from './models/logs/logs.service';
+import { LogsModule } from './models/logs/logs.module';
 
 @Module({
   imports: [
@@ -53,8 +56,8 @@ import { VathmosAuthGuard } from './auth-guard/vathmos-auth-guard';
     DegreeProgramModule,
     RoleModule,
     TaskModule,
+    LogsModule,
   ],
-  controllers: [],
   providers: [
     JwtService,
     AppCustomLogger,
@@ -67,6 +70,7 @@ import { VathmosAuthGuard } from './auth-guard/vathmos-auth-guard';
       useClass: NotFoundExceptionFilter,
     },
     TaskService,
+    LogsService,
   ],
   exports: [],
 })
