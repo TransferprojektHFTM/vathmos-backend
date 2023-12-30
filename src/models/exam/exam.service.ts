@@ -39,6 +39,17 @@ export class ExamService {
     return entity;
   }
 
+  async findBySubject(subjectId: number): Promise<Exam[] | NotFoundException> {
+    console.log('subjectId', subjectId);
+    const entity =  await this.examRepository.find({ where: { subject: { id: subjectId } }, relations: ['subject'] });
+    console.log(entity)
+    if(!entity || entity.length === 0) {
+      this.logger.warn(`Exam with subjectId ${subjectId} not found`);
+      throw new NotFoundException(`Entity with subjectId ${subjectId} not found`);
+    }
+    return entity;
+  }
+
   async update(
     id: number,
     updateExamDto: UpdateExamDto,
