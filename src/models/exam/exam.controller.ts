@@ -37,7 +37,7 @@ export class ExamController {
     type: GetExamDto,
   })
   @UsePipes(new ValidationPipe({ transform: true }))
-  @Roles('Dozent', 'KursAdmin')
+  //@Roles('Dozent', 'KursAdmin')
   create(@Body() createExamDto: CreateExamDto) {
     return this.examService.create(createExamDto);
   }

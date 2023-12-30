@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {BadRequestException, Injectable, NotFoundException} from '@nestjs/common';
 import { CreateExamDto } from './dto/create-exam.dto';
 import { UpdateExamDto } from './dto/update-exam.dto';
 import { Exam } from './entities/exam.entity';
@@ -15,12 +15,24 @@ export class ExamService {
     private readonly examRepository: Repository<Exam>,
   ) {}
 
-  async create(createExamDto: CreateExamDto): Promise<Exam | Error> {
-    const exam = new Exam();
-    exam.name = createExamDto.name;
-    exam.weighting = createExamDto.weighting;
-    exam.subject = createExamDto.subject;
-    return this.examRepository.save(exam);
+  async create(createExamDto: CreateExamDto): Promise<Exam | BadRequestException | Error> {
+    // @todo check if subject exists and fix subjectId type number
+    const subjectId: any = createExamDto.subject;
+    const entity = await this.examRepository.find({
+      where: { subject: {id: subjectId }},
+      relations: ['subject'],
+    });
+    const remainingWeighting: number = this.getRemainingWeighting(entity);
+    const parsedCreateExamDto = parseInt(createExamDto.weighting.replace('%', ''));
+    if(parsedCreateExamDto <= remainingWeighting){
+      const exam = new Exam();
+      exam.name = createExamDto.name;
+      exam.weighting = createExamDto.weighting;
+      exam.subject = createExamDto.subject;
+      return this.examRepository.save(exam);
+    }else{
+      throw new BadRequestException(`You have ${remainingWeighting}% left for exam of subject ${subjectId}`);
+    }
   }
 
   async findAll(): Promise<Exam[]> {
@@ -39,15 +51,23 @@ export class ExamService {
     return entity;
   }
 
-  async findBySubject(subjectId: number): Promise<Exam[] | NotFoundException> {
-    console.log('subjectId', subjectId);
+
+  getRemainingWeighting(exams: Exam[]): number {
+    const maxWeighting: number = 100;
+    let weighting: any = 0;
+    exams.forEach((exam) => {
+      weighting += parseInt(exam.weighting.replace('%', ''));
+    });
+    return maxWeighting - weighting;
+  }
+
+  async findBySubject(subjectId: number): Promise<Exam[] | NotFoundException | BadRequestException> {
     const entity =  await this.examRepository.find({ where: { subject: { id: subjectId } }, relations: ['subject'] });
-    console.log(entity)
     if(!entity || entity.length === 0) {
       this.logger.warn(`Exam with subjectId ${subjectId} not found`);
       throw new NotFoundException(`Entity with subjectId ${subjectId} not found`);
     }
-    return entity;
+    return entity
   }
 
   async update(
