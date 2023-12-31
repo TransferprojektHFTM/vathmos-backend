@@ -5,6 +5,7 @@ import { Exam } from './entities/exam.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AppCustomLogger } from '../../app.custom.logger';
+import {parse} from "ts-jest";
 
 @Injectable()
 export class ExamService {
@@ -24,11 +25,11 @@ export class ExamService {
       relations: ['subject'],
     });
     const remainingWeighting: number = this.getRemainingWeighting(entity);
-    const parsedCreateExamDto = parseInt(createExamDto.weighting.replace('%', ''));
+    const parsedCreateExamDto = parseFloat(createExamDto.weighting.replace('%', ''));
     if(parsedCreateExamDto <= remainingWeighting){
       const exam = new Exam();
       exam.name = createExamDto.name;
-      exam.weighting = createExamDto.weighting;
+      exam.weighting = `${parseFloat(String(parsedCreateExamDto)).toFixed(this.TWO_DECIMAL_PLACES)}%`;
       exam.subject = createExamDto.subject;
       return this.examRepository.save(exam);
     }else{
@@ -55,12 +56,12 @@ export class ExamService {
 
 
   getRemainingWeighting(exams: Exam[]): number {
-    const maxWeighting: number = 100;
-    let weighting: any = 0;
+    const maxWeighting: number = 100.00;
+    let weighting: number = 0;
     exams.forEach((exam) => {
-      weighting += parseInt(exam.weighting.replace('%', ''));
+      weighting += parseFloat(exam.weighting.replace('%', ''));
     });
-    return maxWeighting - weighting;
+    return parseFloat((maxWeighting - weighting).toFixed(this.TWO_DECIMAL_PLACES));
   }
 
   async findBySubject(subjectId: number): Promise<Exam[] | NotFoundException | BadRequestException> {
@@ -70,6 +71,10 @@ export class ExamService {
       throw new NotFoundException(`Entity with subjectId ${subjectId} not found`);
     }
     return entity
+  }
+
+  parseWeighting(weighting: string): number{
+    return parseFloat(weighting.replace('%', '')).toFixed(this.TWO_DECIMAL_PLACES) as unknown as number;
   }
 
   async update(
@@ -82,18 +87,27 @@ export class ExamService {
       relations: ['subject'],
     });
 
+    console.log("######################################################################################################");
     console.log("subjectId");
     console.log(subjectId);
-    // console.log(subjectOfExams);
-    const parsedUpdateExamDto = parseInt(updateExamDto.weighting.replace('%', ''));
-    console.log("Eingabe");
+    const parsedUpdateExamDto: number = this.parseWeighting(updateExamDto.weighting)
+    console.log("Eingabe Weighting");
     console.log(parsedUpdateExamDto);
     const remainingWeighting: number = this.getRemainingWeighting(subjectOfExams);
+    console.log("Reserve bis 100%");
+    console.log(typeof remainingWeighting);
+    const existingExam = await this.examRepository.findOne({ where: { id } });
+    const a = this.parseWeighting(existingExam.weighting);
+    console.log(a);
+    console.log(typeof a);
+    console.log(existingExam.weighting);
+    console.log(typeof existingExam.weighting);
     console.log(remainingWeighting);
+    console.log(typeof remainingWeighting);
+
     if(parsedUpdateExamDto <= remainingWeighting){
-      const existingExam = await this.examRepository.findOne({ where: { id } });
       existingExam.name = updateExamDto.name;
-      existingExam.weighting = updateExamDto.weighting;
+      existingExam.weighting = parsedUpdateExamDto.toString() + '%';
       existingExam.subject = updateExamDto.subject;
       return this.examRepository.save(existingExam);
     }else{
