@@ -86,25 +86,10 @@ export class ExamService {
       where: { subject: {id: subjectId }},
       relations: ['subject'],
     });
-
-    console.log("######################################################################################################");
-    console.log("subjectId");
-    console.log(subjectId);
-    const parsedUpdateExamDto: number = this.parseWeighting(updateExamDto.weighting)
-    console.log("Eingabe Weighting");
-    console.log(parsedUpdateExamDto);
-    const remainingWeighting: number = this.getRemainingWeighting(subjectOfExams);
-    console.log("Reserve bis 100%");
-    console.log(typeof remainingWeighting);
+    const parsedUpdateExamDto: number = this.parseWeighting(updateExamDto.weighting);
+    let remainingWeighting: number = this.getRemainingWeighting(subjectOfExams);
     const existingExam = await this.examRepository.findOne({ where: { id } });
-    const a = this.parseWeighting(existingExam.weighting);
-    console.log(a);
-    console.log(typeof a);
-    console.log(existingExam.weighting);
-    console.log(typeof existingExam.weighting);
-    console.log(remainingWeighting);
-    console.log(typeof remainingWeighting);
-
+    remainingWeighting = parseFloat(existingExam.weighting) + parseFloat(remainingWeighting.toFixed(this.TWO_DECIMAL_PLACES));
     if(parsedUpdateExamDto <= remainingWeighting){
       existingExam.name = updateExamDto.name;
       existingExam.weighting = parsedUpdateExamDto.toString() + '%';
