@@ -9,6 +9,7 @@ import { AppCustomLogger } from '../../app.custom.logger';
 @Injectable()
 export class ExamService {
   private readonly logger = new AppCustomLogger(ExamService.name);
+  private TWO_DECIMAL_PLACES = 2;
 
   constructor(
     @InjectRepository(Exam)
@@ -31,7 +32,8 @@ export class ExamService {
       exam.subject = createExamDto.subject;
       return this.examRepository.save(exam);
     }else{
-      throw new BadRequestException(`You have ${remainingWeighting}% left for exam of subject ${subjectId}`);
+      this.logger.warn(`The exam has ${remainingWeighting}% left in this subject ${subjectId}. Exam not created`);
+      throw new BadRequestException(`The exam has ${remainingWeighting}% left in this subject ${subjectId}. Exam not created!`);
     }
   }
 
@@ -74,11 +76,29 @@ export class ExamService {
     id: number,
     updateExamDto: UpdateExamDto,
   ): Promise<Exam | NotFoundException | Error> {
-    const existingExam = await this.examRepository.findOne({ where: { id } });
-    existingExam.name = updateExamDto.name;
-    existingExam.weighting = updateExamDto.weighting;
-    existingExam.subject = updateExamDto.subject;
-    return this.examRepository.save(existingExam);
+    const subjectId: any = updateExamDto.subject;
+    const subjectOfExams = await this.examRepository.find({
+      where: { subject: {id: subjectId }},
+      relations: ['subject'],
+    });
+
+    console.log("subjectId");
+    console.log(subjectId);
+    // console.log(subjectOfExams);
+    const parsedUpdateExamDto = parseInt(updateExamDto.weighting.replace('%', ''));
+    console.log("Eingabe");
+    console.log(parsedUpdateExamDto);
+    const remainingWeighting: number = this.getRemainingWeighting(subjectOfExams);
+    console.log(remainingWeighting);
+    if(parsedUpdateExamDto <= remainingWeighting){
+      const existingExam = await this.examRepository.findOne({ where: { id } });
+      existingExam.name = updateExamDto.name;
+      existingExam.weighting = updateExamDto.weighting;
+      existingExam.subject = updateExamDto.subject;
+      return this.examRepository.save(existingExam);
+    }else{
+      this.logger.warn(`The exam has ${remainingWeighting}% left in this subject ${subjectId}. Exam not updated`);
+      throw new BadRequestException(`The exam has ${remainingWeighting}% left in this subject ${subjectId}. Exam not updated!`);    }
   }
 
   // @todo return exam when deleted?

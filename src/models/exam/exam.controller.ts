@@ -84,7 +84,7 @@ export class ExamController {
     description: 'Ok',
   })
   @UsePipes(new ValidationPipe({ transform: true }))
-  @Roles('Dozent', 'KursAdmin')
+  // @Roles('Dozent', 'KursAdmin')
   update(@Param('id') id: string, @Body() updateExamDto: UpdateExamDto) {
     return this.examService.update(+id, updateExamDto);
   }
