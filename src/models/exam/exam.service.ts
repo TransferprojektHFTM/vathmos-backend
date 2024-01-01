@@ -5,7 +5,6 @@ import { Exam } from './entities/exam.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AppCustomLogger } from '../../app.custom.logger';
-import {parse} from "ts-jest";
 
 @Injectable()
 export class ExamService {
@@ -24,7 +23,7 @@ export class ExamService {
       where: { subject: {id: subjectId }},
       relations: ['subject'],
     });
-    const remainingWeighting: number = this.getRemainingWeighting(entity);
+    const remainingWeighting: number = parseFloat(this.getRemainingWeighting(entity));
     const parsedCreateExamDto = parseFloat(createExamDto.weighting.replace('%', ''));
     if(parsedCreateExamDto <= remainingWeighting){
       const exam = new Exam();
@@ -33,8 +32,8 @@ export class ExamService {
       exam.subject = createExamDto.subject;
       return this.examRepository.save(exam);
     }else{
-      this.logger.warn(`The exam has ${remainingWeighting}% left in this subject ${subjectId}. Exam not created`);
-      throw new BadRequestException(`The exam has ${remainingWeighting}% left in this subject ${subjectId}. Exam not created!`);
+      this.logger.warn(`The exam has ${remainingWeighting}% left not ${parsedCreateExamDto}% in this subject ${subjectId}. Exam not created`);
+      throw new BadRequestException(`The exam has ${remainingWeighting}% left not ${parsedCreateExamDto}% in this subject ${subjectId}. Exam not created!`);
     }
   }
 
@@ -54,14 +53,17 @@ export class ExamService {
     return entity;
   }
 
-
-  getRemainingWeighting(exams: Exam[]): number {
+  getRemainingWeighting(exams: Exam[]): string {
     const maxWeighting: number = 100.00;
     let weighting: number = 0;
     exams.forEach((exam) => {
       weighting += parseFloat(exam.weighting.replace('%', ''));
     });
-    return parseFloat((maxWeighting - weighting).toFixed(this.TWO_DECIMAL_PLACES));
+    return parseFloat(String(maxWeighting - weighting)).toFixed(this.TWO_DECIMAL_PLACES);
+  }
+
+  parseWeighting(weighting: string): number{
+    return parseFloat(weighting.replace('%', '')).toFixed(this.TWO_DECIMAL_PLACES) as unknown as number;
   }
 
   async findBySubject(subjectId: number): Promise<Exam[] | NotFoundException | BadRequestException> {
@@ -73,31 +75,40 @@ export class ExamService {
     return entity
   }
 
-  parseWeighting(weighting: string): number{
-    return parseFloat(weighting.replace('%', '')).toFixed(this.TWO_DECIMAL_PLACES) as unknown as number;
-  }
-
   async update(
     id: number,
     updateExamDto: UpdateExamDto,
   ): Promise<Exam | NotFoundException | Error> {
     const subjectId: any = updateExamDto.subject;
-    const subjectOfExams = await this.examRepository.find({
+    const subjectOfExams: Exam[] = await this.examRepository.find({
       where: { subject: {id: subjectId }},
       relations: ['subject'],
     });
     const parsedUpdateExamDto: number = this.parseWeighting(updateExamDto.weighting);
-    let remainingWeighting: number = this.getRemainingWeighting(subjectOfExams);
-    const existingExam = await this.examRepository.findOne({ where: { id } });
-    remainingWeighting = parseFloat(existingExam.weighting) + parseFloat(remainingWeighting.toFixed(this.TWO_DECIMAL_PLACES));
-    if(parsedUpdateExamDto <= remainingWeighting){
+    const existingExam: Exam = await this.examRepository.findOne({
+      where: { id },
+      relations: ['subject']
+    });
+    // Sum of all exams by subject plus existingExam weigthing
+    let remainingWeighting: number = parseFloat(this.getRemainingWeighting(subjectOfExams));
+    // when subject id is same like exisingExam subject id
+    const existSubjectId: number = existingExam.subject.id;
+    const updateSubjectId: number = Number(updateExamDto.subject);
+    if(existSubjectId === updateSubjectId){
+      remainingWeighting += parseFloat(existingExam?.weighting);
+    }
+    if(!existingExam){
+      this.logger.warn(`Exam [update] with id ${id} not found`);
+      throw new NotFoundException(`Exam [update] with id ${id} not found`);
+    }else if(parsedUpdateExamDto <= remainingWeighting) {
       existingExam.name = updateExamDto.name;
       existingExam.weighting = parsedUpdateExamDto.toString() + '%';
       existingExam.subject = updateExamDto.subject;
       return this.examRepository.save(existingExam);
     }else{
-      this.logger.warn(`The exam has ${remainingWeighting}% left in this subject ${subjectId}. Exam not updated`);
-      throw new BadRequestException(`The exam has ${remainingWeighting}% left in this subject ${subjectId}. Exam not updated!`);    }
+      this.logger.warn(`The exam has ${remainingWeighting}% left not ${parsedUpdateExamDto}% in this subject ${subjectId}. Exam not updated`);
+      throw new BadRequestException(`The exam has ${remainingWeighting}% left not ${parsedUpdateExamDto}% in this subject ${subjectId}. Exam not updated!`);
+    }
   }
 
   // @todo return exam when deleted?
