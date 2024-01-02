@@ -27,6 +27,7 @@ async function bootstrap() {
     .addTag('Person', 'Student and lecturer management')
     .addTag('Settings', 'optional for course administrators')
     .addTag('Exam', 'Exams management')
+    .addTag('Core Module', 'Core Module management')
     .addTag('Student class', 'Student class management')
     .addTag('Role', 'Roles management')
     .addBearerAuth()

@@ -1,24 +1,25 @@
 import {ModuleType} from "../../module-type/entities/module-type.entity";
 import {ApiProperty} from "@nestjs/swagger";
-import {NoScriptTags} from "../../../common/validators/noScriptTags.validator";
-import {IsNotEmpty, IsObject, isString} from "class-validator";
 
-export class CreateCoreModuleDto {
+
+export class GetCoreModuleDto {
+    @ApiProperty({
+        description: 'id of core module',
+        example: "12"
+    })
+    id: number;
+
     @ApiProperty({
         description: 'name of core module',
         example: {"de":"Naturwissenschaftliche Grundlagen / Konstruktion I"}
     })
-    @IsNotEmpty()
-    @IsObject()
-    @NoScriptTags()
-    name: string;
+    name: object;
 
     @ApiProperty({
         description: 'module type of core module',
         example: {
-            "id": 1,
-            "name": "M"}
+            "id": 3,
+            "name": "D"}
         })
-    @IsNotEmpty()
     moduleType: ModuleType;
 }
