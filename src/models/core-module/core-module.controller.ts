@@ -85,6 +85,7 @@ export class CoreModuleController {
     isArray: false,
   })
   @Roles('KursAdmin')
+  @UsePipes(new ValidationPipe({ transform: true }))
   update(
     @Param('id') id: string,
     @Body() updateCoreModuleDto: UpdateCoreModuleDto,
