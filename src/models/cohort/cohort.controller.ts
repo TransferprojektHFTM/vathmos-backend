@@ -5,7 +5,7 @@ import {
   Body,
   Patch,
   Param,
-  Delete, HttpCode, HttpStatus,
+  Delete, HttpCode, HttpStatus, UsePipes, ValidationPipe,
 } from '@nestjs/common';
 import { CohortService } from './cohort.service';
 import { CreateCohortDto } from './dto/create-cohort.dto';
@@ -31,6 +31,7 @@ export class CohortController {
     isArray: false,
   })
   @Roles('KursAdmin')
+  @UsePipes(new ValidationPipe({ transform: true }))
   create(@Body() createCohortDto: CreateCohortDto) {
     return this.cohortService.create(createCohortDto);
   }
@@ -82,6 +83,7 @@ export class CohortController {
     isArray: false,
   })
   @Roles('KursAdmin')
+  @UsePipes(new ValidationPipe({ transform: true }))
   update(@Param('id') id: string, @Body() updateCohortDto: UpdateCohortDto) {
     return this.cohortService.update(+id, updateCohortDto);
   }
