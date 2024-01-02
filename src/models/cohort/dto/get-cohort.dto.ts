@@ -4,11 +4,9 @@ import {ApiProperty} from "@nestjs/swagger";
 import {NoScriptTags} from "../../../common/validators/noScriptTags.validator";
 import {IsDate, IsNotEmpty} from "class-validator";
 
-export class CreateCohortDto {
+export class GetCohortDto {
 
     @ApiProperty({example: 'BBIN'})
-    @NoScriptTags()
-    @IsNotEmpty()
     name: string;
 
     @ApiProperty({
@@ -18,8 +16,7 @@ export class CreateCohortDto {
                 "oid": "0b1e8c3f-23c8-424f-b909-c67e6f9feef4",
                 "name": "BBWI22.1a"
             }
-    ]})
-    @IsNotEmpty()
+        ]})
     studentClasses: StudentClass[];
 
     @ApiProperty({example:
@@ -34,11 +31,9 @@ export class CreateCohortDto {
                 }
             }
     })
-    @IsNotEmpty()
     degreeProgram: DegreeProgram;
 
-    @ApiProperty({example: '2021-01-01'})
-    @IsNotEmpty()
-    @IsDate()
+    @ApiProperty({example: '2021-01-02T09:03:43.000Z'})
     startYear: Date;
+
 }
