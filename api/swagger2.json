@@ -955,6 +955,7 @@
         "/api/v1/evaluation": {
             "post": {
                 "operationId": "EvaluationController_create",
+                "summary": "Create a new Evaluation",
                 "parameters": [],
                 "requestBody": {
                     "required": true,
@@ -968,7 +969,14 @@
                 },
                 "responses": {
                     "201": {
-                        "description": ""
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetEvaluationDto"
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -982,10 +990,21 @@
             },
             "get": {
                 "operationId": "EvaluationController_findAll",
+                "summary": "Get a list of all Evaluation",
                 "parameters": [],
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/GetEvaluationDto"
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -1001,6 +1020,7 @@
         "/api/v1/evaluation/{id}": {
             "get": {
                 "operationId": "EvaluationController_findOne",
+                "summary": "Get Evaluation with id",
                 "parameters": [
                     {
                         "name": "id",
@@ -1013,7 +1033,14 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetEvaluationDto"
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -1027,6 +1054,7 @@
             },
             "patch": {
                 "operationId": "EvaluationController_update",
+                "summary": "Update Evaluation with id",
                 "parameters": [
                     {
                         "name": "id",
@@ -1049,7 +1077,24 @@
                 },
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetEvaluationDto"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -1063,6 +1108,7 @@
             },
             "delete": {
                 "operationId": "EvaluationController_remove",
+                "summary": "Delete Evaluation with id",
                 "parameters": [
                     {
                         "name": "id",
@@ -1075,7 +1121,24 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetEvaluationDto"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -1375,6 +1438,10 @@
         {
             "name": "Settings",
             "description": "optional for course administrators"
+        },
+        {
+            "name": "Evaluation",
+            "description": "Evaluation management"
         },
         {
             "name": "Exam",
@@ -1721,13 +1788,147 @@
                     }
                 }
             },
-            "CreateEvaluationDto": {
+            "Exam": {
                 "type": "object",
                 "properties": {}
             },
-            "UpdateEvaluationDto": {
+            "Person": {
                 "type": "object",
                 "properties": {}
+            },
+            "CreateEvaluationDto": {
+                "type": "object",
+                "properties": {
+                    "val": {
+                        "type": "number",
+                        "example": "80"
+                    },
+                    "exam": {
+                        "example": {
+                            "id": 1,
+                            "name": "Verteilte Systeme Test 1",
+                            "weighting": "40%"
+                        },
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Exam"
+                            }
+                        ]
+                    },
+                    "student": {
+                        "example": {
+                            "id": 1438,
+                            "oid": "d44614b5-36f9-42e2-9f5a-318c140906fd",
+                            "firstName": "Max",
+                            "surname": "muster",
+                            "email": "max.muster@hftm.ch"
+                        },
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Person"
+                            }
+                        ]
+                    }
+                },
+                "required": [
+                    "val",
+                    "exam",
+                    "student"
+                ]
+            },
+            "GetEvaluationDto": {
+                "type": "object",
+                "properties": {
+                    "val": {
+                        "type": "number",
+                        "example": "80"
+                    },
+                    "exam": {
+                        "example": {
+                            "id": 1,
+                            "name": "Verteilte Systeme Test 1",
+                            "weighting": "40%"
+                        },
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Exam"
+                            }
+                        ]
+                    },
+                    "student": {
+                        "example": {
+                            "id": 1438,
+                            "oid": "d44614b5-36f9-42e2-9f5a-318c140906fd",
+                            "firstName": "Max",
+                            "surname": "muster",
+                            "email": "max.muster@hftm.ch",
+                            "picture": null,
+                            "isActivated": false,
+                            "lastLogin": "2000-01-01T00:00:00.000Z"
+                        },
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Person"
+                            }
+                        ]
+                    }
+                },
+                "required": [
+                    "val",
+                    "exam",
+                    "student"
+                ]
+            },
+            "UpdateEvaluationDto": {
+                "type": "object",
+                "properties": {
+                    "val": {
+                        "type": "number",
+                        "example": "80"
+                    },
+                    "exam": {
+                        "example": {
+                            "id": 1,
+                            "name": "Verteilte Systeme Test 1",
+                            "weighting": "40%"
+                        },
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Exam"
+                            }
+                        ]
+                    },
+                    "student": {
+                        "example": {
+                            "id": 1438,
+                            "oid": "d44614b5-36f9-42e2-9f5a-318c140906fd",
+                            "firstName": "Max",
+                            "surname": "muster",
+                            "email": "max.muster@hftm.ch"
+                        },
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Person"
+                            }
+                        ]
+                    }
+                }
+            },
+            "ErrorResponse": {
+                "type": "object",
+                "properties": {
+                    "statusCode": {
+                        "type": "number",
+                        "description": "error code"
+                    },
+                    "message": {
+                        "type": "string",
+                        "description": "description error code"
+                    }
+                },
+                "required": [
+                    "statusCode"
+                ]
             },
             "CreateModuleTypeDto": {
                 "type": "object",

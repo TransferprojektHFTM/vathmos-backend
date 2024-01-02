@@ -26,6 +26,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .addTag('Person', 'Student and lecturer management')
     .addTag('Settings', 'optional for course administrators')
+    .addTag('Evaluation', 'Evaluation management')
     .addTag('Exam', 'Exams management')
     .addTag('Student class', 'Student class management')
     .addTag('Role', 'Roles management')
