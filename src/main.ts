@@ -29,6 +29,7 @@ async function bootstrap() {
     .addTag('Exam', 'Exams management')
     .addTag('Student class', 'Student class management')
     .addTag('Role', 'Roles management')
+    .addTag('Module Type', 'Module Type management')
     .addBearerAuth()
     .setTitle('Swagger Documentation Vathmos')
     .setDescription('The Vathmos API description')

@@ -1,9 +1,9 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class ErrorResponse {
-  @ApiProperty({ description: 'error code' })
-  statusCode!: number;
+  @ApiProperty({ example: '404' })
+  status!: number;
 
-  @ApiPropertyOptional({ description: 'description error code' })
+  @ApiProperty({ example: 'Entity with id 1 not found' })
   message!: string;
 }

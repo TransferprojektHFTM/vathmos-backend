@@ -11,16 +11,16 @@ INSERT INTO role (id, appRoleId, name) VALUES (2, '6077d010-0aae-4139-8f3c-dcee7
 INSERT INTO role (id, appRoleId, name) VALUES (3, '66d7ddfb-4156-4c5c-9315-196b63c10ceb', 'Kurs-Administrator');
 INSERT INTO role (id, appRoleId, name) VALUES (4, '1e691fa3-6294-4e72-b722-d80b47dc04e1', 'Fachbereichsleiter');
 
-INSERT INTO module_type VALUE (1,"E");
-INSERT INTO module_type VALUE (2,"M");
-INSERT INTO module_type VALUE (3,"D");
-INSERT INTO module_type VALUE (4,"F");
+INSERT INTO module_type VALUE (1,'E');
+INSERT INTO module_type VALUE (2,'M');
+INSERT INTO module_type VALUE (3,'D');
+INSERT INTO module_type VALUE (4,'F');
 
 /*INSERT INTO degree_program_program_part VALUE (1,"Vertiefung Automation 23");
 INSERT INTO degree_program_program_part VALUE (2,"Grundstudium 23");
 INSERT INTO degree_program_program_part VALUE (3,"Fachstudium Systemtechnik 23");*/
 
-INSERT INTO degree_program VALUE (1,'{"de":"Elektrotechnik HF"}',"VZ",'{"de":"Automation"}',NULL);
+INSERT INTO degree_program VALUE (1,'{"de":"Elektrotechnik HF"}','VZ','{"de":"Automation"}',NULL);
 
 # @TODO Zwischentabelle für grundstudium, fachstudium, vertiefung
 

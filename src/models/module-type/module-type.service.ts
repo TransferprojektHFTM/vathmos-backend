@@ -1,26 +1,56 @@
-import { Injectable } from '@nestjs/common';
+import {Injectable, NotFoundException} from '@nestjs/common';
 import { CreateModuleTypeDto } from './dto/create-module-type.dto';
 import { UpdateModuleTypeDto } from './dto/update-module-type.dto';
+import {AppCustomLogger} from "../../app.custom.logger";
+import {InjectRepository} from "@nestjs/typeorm";
+import {Repository} from "typeorm";
+import {ModuleType} from "./entities/module-type.entity";
 
 @Injectable()
 export class ModuleTypeService {
+  private readonly logger = new AppCustomLogger(ModuleTypeService.name);
+
+
+  constructor(
+      @InjectRepository(ModuleType)
+      private modulTypeRepository: Repository<ModuleType>
+  ) {}
+
   create(createModuleTypeDto: CreateModuleTypeDto) {
-    return 'This action adds a new moduleType';
+    return this.modulTypeRepository.save(createModuleTypeDto);
   }
 
-  findAll() {
-    return `This action returns all moduleType`;
+  async findAll() {
+    return await this.modulTypeRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} moduleType`;
+  async findOne(id: number) {
+    const entity = await this.modulTypeRepository.findOne({where: {id: id}});
+    console.log(entity)
+    if (!entity) {
+      this.logger.warn(`Modul-Type with id ${id} not found`);
+      throw new NotFoundException(`Entity with id ${id} not found`);
+    }
+    return entity;
   }
 
-  update(id: number, updateModuleTypeDto: UpdateModuleTypeDto) {
-    return `This action updates a #${id} moduleType`;
+  async update(id: number, updateModuleTypeDto: UpdateModuleTypeDto) {
+    const updateResult = await this.modulTypeRepository.update(id, updateModuleTypeDto);
+    if(updateResult.affected === 1) {
+      this.logger.log(`Modul-Type with id ${id} updated`);
+      return this.findOne(id);
+    } else{
+      throw new NotFoundException(`Modul-Type with id ${id} not found`);
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} moduleType`;
+  async remove(id: number): Promise<{ message: string; status: number }>  {
+    const deleteResult = await this.modulTypeRepository.delete(id);
+    if (deleteResult.affected === 1) {
+      this.logger.log(`ModulType with id ${id} deleted`);
+      return {message: `ModulType with id ${id} deleted`, status: 200};
+    } else {
+      throw new NotFoundException(`ModulType with id ${id} not found`);
+    }
   }
 }

@@ -1089,39 +1089,23 @@
             }
         },
         "/api/v1/module-type": {
-            "post": {
-                "operationId": "ModuleTypeController_create",
-                "parameters": [],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/CreateModuleTypeDto"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": ""
-                    }
-                },
-                "tags": [
-                    "Module Type"
-                ],
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
-            },
             "get": {
                 "operationId": "ModuleTypeController_findAll",
+                "summary": "Get all Modultype`s",
                 "parameters": [],
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/GetModuleTypeDto"
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -1137,6 +1121,7 @@
         "/api/v1/module-type/{id}": {
             "get": {
                 "operationId": "ModuleTypeController_findOne",
+                "summary": "Get Modultype with id",
                 "parameters": [
                     {
                         "name": "id",
@@ -1149,69 +1134,24 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": ""
-                    }
-                },
-                "tags": [
-                    "Module Type"
-                ],
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
-            },
-            "patch": {
-                "operationId": "ModuleTypeController_update",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "required": true,
-                        "in": "path",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/UpdateModuleTypeDto"
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetModuleTypeDto"
+                                }
                             }
                         }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": ""
-                    }
-                },
-                "tags": [
-                    "Module Type"
-                ],
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
-            },
-            "delete": {
-                "operationId": "ModuleTypeController_remove",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "required": true,
-                        "in": "path",
-                        "schema": {
-                            "type": "string"
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
                         }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": ""
                     }
                 },
                 "tags": [
@@ -1387,6 +1327,10 @@
         {
             "name": "Role",
             "description": "Roles management"
+        },
+        {
+            "name": "Module Type",
+            "description": "Module Type management"
         }
     ],
     "servers": [],
@@ -1729,13 +1673,39 @@
                 "type": "object",
                 "properties": {}
             },
-            "CreateModuleTypeDto": {
+            "GetModuleTypeDto": {
                 "type": "object",
-                "properties": {}
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "example": "1"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "E"
+                    }
+                },
+                "required": [
+                    "id",
+                    "name"
+                ]
             },
-            "UpdateModuleTypeDto": {
+            "ErrorResponse": {
                 "type": "object",
-                "properties": {}
+                "properties": {
+                    "status": {
+                        "type": "number",
+                        "example": "404"
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Entity with id 1 not found"
+                    }
+                },
+                "required": [
+                    "status",
+                    "message"
+                ]
             },
             "CreateDegreeProgramDto": {
                 "type": "object",
