@@ -38,6 +38,7 @@ export class ExamController {
   })
   @UsePipes(new ValidationPipe({ transform: true }))
   @Roles('Dozent', 'KursAdmin')
+  @UsePipes(new ValidationPipe({ transform: true }))
   create(@Body() createExamDto: CreateExamDto) {
     return this.examService.create(createExamDto);
   }
@@ -73,6 +74,7 @@ export class ExamController {
   })
   @UsePipes(new ValidationPipe({ transform: true }))
   @Roles('Dozent', 'KursAdmin')
+  @UsePipes(new ValidationPipe({ transform: true }))
   update(@Param('id') id: string, @Body() updateExamDto: UpdateExamDto) {
     return this.examService.update(+id, updateExamDto);
   }
