@@ -1460,6 +1460,10 @@
         {
             "name": "Role",
             "description": "Roles management"
+        },
+        {
+            "name": "Cohort",
+            "description": "Cohort management"
         }
     ],
     "servers": [],
