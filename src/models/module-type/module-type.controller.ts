@@ -5,7 +5,7 @@ import {
   Body,
   Patch,
   Param,
-  Delete, HttpCode, HttpStatus,
+  Delete, HttpCode, HttpStatus, ValidationPipe, UsePipes,
 } from '@nestjs/common';
 import { ModuleTypeService } from './module-type.service';
 import { CreateModuleTypeDto } from './dto/create-module-type.dto';
@@ -33,6 +33,7 @@ export class ModuleTypeController {
   })
   @Roles('KursAdmin')
   @ApiExcludeEndpoint()
+  @UsePipes(new ValidationPipe({ transform: true }))
   create(@Body() createModuleTypeDto: CreateModuleTypeDto) {
     return this.moduleTypeService.create(createModuleTypeDto);
   }
@@ -86,6 +87,7 @@ export class ModuleTypeController {
   })
   @Roles('KursAdmin')
   @ApiExcludeEndpoint()
+  @UsePipes(new ValidationPipe({ transform: true }))
   update(
     @Param('id') id: string,
     @Body() updateModuleTypeDto: UpdateModuleTypeDto,
