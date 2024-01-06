@@ -15,7 +15,7 @@ import {GetCoreModuleDto} from "./dto/get-core-module.dto";
 import {Roles} from "../../auth-guard/vathmos-auth-guard";
 import {ErrorResponse} from "../../common/interfaces/errorResponse.interface";
 
-@ApiTags('Core module')
+@ApiTags('Core Module')
 @ApiBearerAuth()
 @Controller('core-module')
 export class CoreModuleController {
@@ -24,7 +24,7 @@ export class CoreModuleController {
   @Post()
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  @ApiOperation({ summary: 'Create a new Core Module only KursAdmin' })
+  @ApiOperation({ summary: 'Create a new Core Module (only KursAdmin)' })
   @ApiResponse({
     status: HttpStatus.CREATED,
     description: 'Ok',
@@ -71,7 +71,7 @@ export class CoreModuleController {
 
   @Patch(':id')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Update Core Module with id only KursAdmin' })
+  @ApiOperation({ summary: 'Update Core Module with id (only KursAdmin)' })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Ok',
@@ -96,7 +96,7 @@ export class CoreModuleController {
   //@TODO: Change Error Response Type to DeleteResponse from ModuleType Branch
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Delete Core Module with id but only KursAdmin' })
+  @ApiOperation({ summary: 'Delete Core Module with id (only KursAdmin)' })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Ok',
