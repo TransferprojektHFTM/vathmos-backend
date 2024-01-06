@@ -1,8 +1,6 @@
 import {Controller, Get, Query} from '@nestjs/common';
 import { LogsService } from './logs.service';
 import {ApiBearerAuth, ApiOperation, ApiQuery, ApiTags} from "@nestjs/swagger";
-import {isBoolean} from "class-validator";
-import {Role} from "../role/entities/role.entity";
 import {Roles} from "../../auth-guard/vathmos-auth-guard";
 
 @ApiTags('Vathmos Logs')
