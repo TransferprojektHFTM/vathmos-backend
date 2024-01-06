@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import {Injectable, NotAcceptableException, NotFoundException} from '@nestjs/common';
 import { CreateCoreModuleDto } from './dto/create-core-module.dto';
 import { UpdateCoreModuleDto } from './dto/update-core-module.dto';
 import { AppCustomLogger } from '../../app.custom.logger';
@@ -14,23 +14,48 @@ export class CoreModuleService {
     @InjectRepository(CoreModule)
     private coreModulRepository: Repository<CoreModule>,
   ) {}
-  create(createCoreModuleDto: CreateCoreModuleDto) {
-    return 'This action adds a new coreModule';
+  async create(createCoreModuleDto: CreateCoreModuleDto) {
+    try {
+      return await this.coreModulRepository.save(createCoreModuleDto);
+    }catch (e) {
+      throw new NotAcceptableException(`Cannot add or update a child row moduleType id ${createCoreModuleDto.moduleType.id} does not exist`)
+    }
   }
 
-  findAll() {
-    return this.coreModulRepository.find();
+  async findAll() {
+      return await this.coreModulRepository.find({relations: ["moduleType"]});
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} coreModule`;
+  async findOne(id: number) {
+    const entity = await this.coreModulRepository.find({where: {id: id}, relations: ["moduleType"]});
+    if (!entity.length) {
+      this.logger.warn(`Core Module with id ${id} not found`);
+      throw new NotFoundException(`Entity with id ${id} not found`);
+    }
+    return entity;
   }
 
-  update(id: number, updateCoreModuleDto: UpdateCoreModuleDto) {
-    return `This action updates a #${id} coreModule`;
+  async update(id: number, updateCoreModuleDto: UpdateCoreModuleDto) {
+    try {
+      const updateResult = await this.coreModulRepository.update(id, updateCoreModuleDto);
+      if(updateResult.affected === 1) {
+        this.logger.log(`Core Module with id ${id} updated`);
+        return this.findOne(id);
+      } else{
+        throw new NotFoundException(`Core Module with id ${id} not found`);
+      }
+    }catch (e) {
+      throw new NotAcceptableException(`Cannot add or update a child row moduleType id ${updateCoreModuleDto.moduleType.id} does not exist`)
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} coreModule`;
+  async remove(id: number) {
+    const deleteResult = await this.coreModulRepository.delete(id);
+    if (deleteResult.affected === 1) {
+      this.logger.log(`Core Module with id ${id} deleted`);
+      return {message: `ModulType with id ${id} deleted`, status: 200};
+    } else {
+      throw new NotFoundException(`Core Module with id ${id} not found`);
+    }
   }
 }

@@ -518,6 +518,7 @@
         "/api/v1/core-module": {
             "post": {
                 "operationId": "CoreModuleController_create",
+                "summary": "Create a new Core Module only KursAdmin",
                 "parameters": [],
                 "requestBody": {
                     "required": true,
@@ -531,7 +532,14 @@
                 },
                 "responses": {
                     "201": {
-                        "description": ""
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetCoreModuleDto"
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -545,10 +553,21 @@
             },
             "get": {
                 "operationId": "CoreModuleController_findAll",
+                "summary": "Get a list of all Core Modules",
                 "parameters": [],
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/GetCoreModuleDto"
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -564,6 +583,7 @@
         "/api/v1/core-module/{id}": {
             "get": {
                 "operationId": "CoreModuleController_findOne",
+                "summary": "Get Core Module with id",
                 "parameters": [
                     {
                         "name": "id",
@@ -576,7 +596,24 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetCoreModuleDto"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -590,6 +627,7 @@
             },
             "patch": {
                 "operationId": "CoreModuleController_update",
+                "summary": "Update Core Module with id only KursAdmin",
                 "parameters": [
                     {
                         "name": "id",
@@ -612,7 +650,24 @@
                 },
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetCoreModuleDto"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -626,6 +681,7 @@
             },
             "delete": {
                 "operationId": "CoreModuleController_remove",
+                "summary": "Delete Core Module with id but only KursAdmin",
                 "parameters": [
                     {
                         "name": "id",
@@ -638,7 +694,24 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -1381,6 +1454,10 @@
             "description": "Exams management"
         },
         {
+            "name": "Core Module",
+            "description": "Core Module management"
+        },
+        {
             "name": "Student class",
             "description": "Student class management"
         },
@@ -1617,13 +1694,111 @@
                     "cohort"
                 ]
             },
-            "CreateCoreModuleDto": {
+            "ModuleType": {
                 "type": "object",
                 "properties": {}
             },
+            "CreateCoreModuleDto": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "name of core module",
+                        "example": {
+                            "de": "Naturwissenschaftliche Grundlagen / Konstruktion I"
+                        }
+                    },
+                    "moduleType": {
+                        "description": "module type of core module",
+                        "example": {
+                            "id": 1,
+                            "name": "M"
+                        },
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/ModuleType"
+                            }
+                        ]
+                    }
+                },
+                "required": [
+                    "name",
+                    "moduleType"
+                ]
+            },
+            "GetCoreModuleDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "description": "id of core module",
+                        "example": "12"
+                    },
+                    "name": {
+                        "type": "object",
+                        "description": "name of core module",
+                        "example": {
+                            "de": "Naturwissenschaftliche Grundlagen / Konstruktion I"
+                        }
+                    },
+                    "moduleType": {
+                        "description": "module type of core module",
+                        "example": {
+                            "id": 3,
+                            "name": "D"
+                        },
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/ModuleType"
+                            }
+                        ]
+                    }
+                },
+                "required": [
+                    "id",
+                    "name",
+                    "moduleType"
+                ]
+            },
+            "ErrorResponse": {
+                "type": "object",
+                "properties": {
+                    "statusCode": {
+                        "type": "number",
+                        "description": "error code"
+                    },
+                    "message": {
+                        "type": "string",
+                        "description": "description error code"
+                    }
+                },
+                "required": [
+                    "statusCode"
+                ]
+            },
             "UpdateCoreModuleDto": {
                 "type": "object",
-                "properties": {}
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "name of core module",
+                        "example": {
+                            "de": "Naturwissenschaftliche Grundlagen / Konstruktion I"
+                        }
+                    },
+                    "moduleType": {
+                        "description": "module type of core module",
+                        "example": {
+                            "id": 1,
+                            "name": "M"
+                        },
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/ModuleType"
+                            }
+                        ]
+                    }
+                }
             },
             "CreateSubjectDto": {
                 "type": "object",
