@@ -24,7 +24,7 @@ export class ModuleTypeController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  @ApiOperation({ summary: 'Create a new Modultype only KursAdmin' })
+  @ApiOperation({ summary: 'Create a new Modultype (only KursAdmin)' })
   @ApiResponse({
     status: HttpStatus.CREATED,
     description: 'Ok',
@@ -72,7 +72,7 @@ export class ModuleTypeController {
 
   @Patch(':id')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Update Modultype with id' })
+  @ApiOperation({ summary: 'Update Modultype with id (only KursAdmin)' })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Ok',
@@ -97,7 +97,7 @@ export class ModuleTypeController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Delete Modultype with id' })
+  @ApiOperation({ summary: 'Delete Modultype with id (only KursAdmin)' })
   @ApiResponse({
      status: HttpStatus.OK,
      description: 'Ok',
