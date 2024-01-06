@@ -1359,6 +1359,44 @@
                     }
                 ]
             }
+        },
+        "/api/v1/logs": {
+            "get": {
+                "operationId": "LogsController_readLogs",
+                "parameters": [
+                    {
+                        "name": "date",
+                        "required": false,
+                        "in": "query",
+                        "description": "Date to search only for last 30 days. Use format YYYY-MM-DD or empty for today.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "Vathmos Logs"
+                ]
+            }
+        },
+        "/api/v1/logs/error": {
+            "get": {
+                "operationId": "LogsController_readErrorLog",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "Vathmos Logs"
+                ]
+            }
         }
     },
     "info": {
@@ -1387,6 +1425,10 @@
         {
             "name": "Role",
             "description": "Roles management"
+        },
+        {
+            "name": "Vathmos Logs",
+            "description": "Show logs from Vathmos Backend"
         }
     ],
     "servers": [],
