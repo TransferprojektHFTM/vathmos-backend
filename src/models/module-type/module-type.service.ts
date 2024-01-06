@@ -16,8 +16,8 @@ export class ModuleTypeService {
       private modulTypeRepository: Repository<ModuleType>
   ) {}
 
-  create(createModuleTypeDto: CreateModuleTypeDto) {
-    return this.modulTypeRepository.save(createModuleTypeDto);
+  async create(createModuleTypeDto: CreateModuleTypeDto) {
+    return await this.modulTypeRepository.save(createModuleTypeDto);
   }
 
   async findAll() {
