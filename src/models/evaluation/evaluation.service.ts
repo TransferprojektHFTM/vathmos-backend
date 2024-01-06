@@ -14,8 +14,8 @@ export class EvaluationService {
       @InjectRepository(Evaluation)
       private evaluationRepository: Repository<Evaluation>) {
   }
-  create(createEvaluationDto: CreateEvaluationDto) {
-    return this.evaluationRepository.save(createEvaluationDto);
+  async create(createEvaluationDto: CreateEvaluationDto) {
+    return await this.evaluationRepository.save(createEvaluationDto);
   }
 
   findAll() {

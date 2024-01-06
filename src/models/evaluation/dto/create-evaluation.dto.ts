@@ -1,6 +1,6 @@
 import {Exam} from "../../exam/entities/exam.entity";
 import {Person} from "../../person/entities/person.entity";
-import {IsInt, IsNotEmpty} from "class-validator";
+import {IsInt, IsNotEmpty, IsOptional} from "class-validator";
 import {ApiProperty} from "@nestjs/swagger";
 
 export class CreateEvaluationDto {
@@ -15,6 +15,7 @@ export class CreateEvaluationDto {
             "name": "Verteilte Systeme Test 1",
             "weighting": "40%"
         }})
+    @IsOptional()
     exam: Exam;
 
     @IsNotEmpty()

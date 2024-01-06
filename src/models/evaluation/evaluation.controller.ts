@@ -23,7 +23,7 @@ export class EvaluationController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  @ApiOperation({ summary: 'Create a new Evaluation' })
+  @ApiOperation({ summary: 'Create a new Evaluation (only Student, Dozent allowed)' })
   @ApiResponse({
     status: HttpStatus.CREATED,
     description: 'Ok',
@@ -57,13 +57,19 @@ export class EvaluationController {
     type: GetEvaluationDto,
     isArray: false,
   })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'Not Found',
+    type: ErrorResponse,
+    isArray: false,
+  })
   findOne(@Param('id') id: string) {
     return this.evaluationService.findOne(+id);
   }
 
   @Patch(':id')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Update Evaluation with id' })
+  @ApiOperation({ summary: 'Update Evaluation with id (only Student, Dozent allowed)' })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Ok',
@@ -86,7 +92,7 @@ export class EvaluationController {
 
   //@TODO: Change Error Response Type to DeleteResponse from ModuleType Branch
   @Delete(':id')
-  @ApiOperation({ summary: 'Delete Evaluation with id' })
+  @ApiOperation({ summary: 'Delete Evaluation with id (only Student, Dozent allowed)' })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Ok',
