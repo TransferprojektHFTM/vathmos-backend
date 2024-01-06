@@ -3,6 +3,7 @@ import {DegreeProgram} from "../../degree-program/entities/degree-program.entity
 import {ApiProperty} from "@nestjs/swagger";
 import {NoScriptTags} from "../../../common/validators/noScriptTags.validator";
 import {IsDate, IsNotEmpty} from "class-validator";
+import {Type} from "class-transformer";
 
 export class CreateCohortDto {
 
@@ -37,8 +38,9 @@ export class CreateCohortDto {
     @IsNotEmpty()
     degreeProgram: DegreeProgram;
 
-    @ApiProperty({example: '2021-01-01'})
+    @ApiProperty({example: '2021-01-02T09:03:43.000Z'})
     @IsNotEmpty()
     @IsDate()
+    @Type(() => Date)
     startYear: Date;
 }

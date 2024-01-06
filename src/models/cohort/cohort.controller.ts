@@ -23,7 +23,7 @@ export class CohortController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  @ApiOperation({ summary: 'Create a new Cohort only KursAdmin' })
+  @ApiOperation({ summary: 'Create a new Cohort (only KursAdmin)' })
   @ApiResponse({
     status: HttpStatus.CREATED,
     description: 'Ok',
@@ -69,7 +69,7 @@ export class CohortController {
   }
 
   @Patch(':id')
-  @ApiOperation({ summary: 'Update Cohort with id but only KursAdmin' })
+  @ApiOperation({ summary: 'Update Cohort with id (only KursAdmin)' })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Ok',
@@ -91,7 +91,7 @@ export class CohortController {
   //@TODO: Change Error Response Type to DeleteResponse from ModuleType Branch
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Delete Cohort with id but only KursAdmin' })
+  @ApiOperation({ summary: 'Delete Cohort with id (only KursAdmin)' })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Ok',

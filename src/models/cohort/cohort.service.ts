@@ -16,7 +16,7 @@ export class CohortService {
   }
 
   async create(createCohortDto: CreateCohortDto) {
-      await this.cohortRepository.save(createCohortDto);
+     return await this.cohortRepository.save(createCohortDto);
   }
 
   async findAll() {
