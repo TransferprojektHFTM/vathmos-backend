@@ -235,6 +235,7 @@
         "/api/v1/cohort": {
             "post": {
                 "operationId": "CohortController_create",
+                "summary": "Create a new Cohort only KursAdmin",
                 "parameters": [],
                 "requestBody": {
                     "required": true,
@@ -248,7 +249,14 @@
                 },
                 "responses": {
                     "201": {
-                        "description": ""
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetCohortDto"
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -262,10 +270,21 @@
             },
             "get": {
                 "operationId": "CohortController_findAll",
+                "summary": "Get a list of all Cohorts",
                 "parameters": [],
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/GetCohortDto"
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -281,6 +300,7 @@
         "/api/v1/cohort/{id}": {
             "get": {
                 "operationId": "CohortController_findOne",
+                "summary": "Get Cohort with id",
                 "parameters": [
                     {
                         "name": "id",
@@ -293,7 +313,24 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetCohortDto"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -307,6 +344,7 @@
             },
             "patch": {
                 "operationId": "CohortController_update",
+                "summary": "Update Cohort with id but only KursAdmin",
                 "parameters": [
                     {
                         "name": "id",
@@ -329,7 +367,24 @@
                 },
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetCohortDto"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -343,6 +398,7 @@
             },
             "delete": {
                 "operationId": "CohortController_remove",
+                "summary": "Delete Cohort with id but only KursAdmin",
                 "parameters": [
                     {
                         "name": "id",
@@ -355,7 +411,24 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -1387,6 +1460,10 @@
         {
             "name": "Role",
             "description": "Roles management"
+        },
+        {
+            "name": "Cohort",
+            "description": "Cohort management"
         }
     ],
     "servers": [],
@@ -1528,13 +1605,169 @@
                     "name"
                 ]
             },
-            "CreateCohortDto": {
+            "DegreeProgram": {
                 "type": "object",
                 "properties": {}
             },
+            "CreateCohortDto": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "BBIN"
+                    },
+                    "studentClasses": {
+                        "example": [
+                            {
+                                "id": 7,
+                                "oid": "0b1e8c3f-23c8-424f-b909-c67e6f9feef4",
+                                "name": "BBWI22.1a"
+                            }
+                        ],
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "degreeProgram": {
+                        "example": {
+                            "id": 1,
+                            "name": {
+                                "de": "Elektrotechnik HF"
+                            },
+                            "model": "VZ",
+                            "specialisation": {
+                                "de": "Automation"
+                            }
+                        },
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/DegreeProgram"
+                            }
+                        ]
+                    },
+                    "startYear": {
+                        "format": "date-time",
+                        "type": "string",
+                        "example": "2021-01-01"
+                    }
+                },
+                "required": [
+                    "name",
+                    "studentClasses",
+                    "degreeProgram",
+                    "startYear"
+                ]
+            },
+            "GetCohortDto": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "BBIN"
+                    },
+                    "studentClasses": {
+                        "example": [
+                            {
+                                "id": 7,
+                                "oid": "0b1e8c3f-23c8-424f-b909-c67e6f9feef4",
+                                "name": "BBWI22.1a"
+                            }
+                        ],
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "degreeProgram": {
+                        "example": {
+                            "id": 1,
+                            "name": {
+                                "de": "Elektrotechnik HF"
+                            },
+                            "model": "VZ",
+                            "specialisation": {
+                                "de": "Automation"
+                            }
+                        },
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/DegreeProgram"
+                            }
+                        ]
+                    },
+                    "startYear": {
+                        "format": "date-time",
+                        "type": "string",
+                        "example": "2021-01-02T09:03:43.000Z"
+                    }
+                },
+                "required": [
+                    "name",
+                    "studentClasses",
+                    "degreeProgram",
+                    "startYear"
+                ]
+            },
+            "ErrorResponse": {
+                "type": "object",
+                "properties": {
+                    "statusCode": {
+                        "type": "number",
+                        "description": "error code"
+                    },
+                    "message": {
+                        "type": "string",
+                        "description": "description error code"
+                    }
+                },
+                "required": [
+                    "statusCode"
+                ]
+            },
             "UpdateCohortDto": {
                 "type": "object",
-                "properties": {}
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "BBIN"
+                    },
+                    "studentClasses": {
+                        "example": [
+                            {
+                                "id": 7,
+                                "oid": "0b1e8c3f-23c8-424f-b909-c67e6f9feef4",
+                                "name": "BBWI22.1a"
+                            }
+                        ],
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "degreeProgram": {
+                        "example": {
+                            "id": 1,
+                            "name": {
+                                "de": "Elektrotechnik HF"
+                            },
+                            "model": "VZ",
+                            "specialisation": {
+                                "de": "Automation"
+                            }
+                        },
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/DegreeProgram"
+                            }
+                        ]
+                    },
+                    "startYear": {
+                        "format": "date-time",
+                        "type": "string",
+                        "example": "2021-01-01"
+                    }
+                }
             },
             "GetClassesDto": {
                 "type": "object",

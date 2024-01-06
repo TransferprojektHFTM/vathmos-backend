@@ -21,6 +21,10 @@ INSERT INTO degree_program_program_part VALUE (2,"Grundstudium 23");
 INSERT INTO degree_program_program_part VALUE (3,"Fachstudium Systemtechnik 23");*/
 
 INSERT INTO degree_program VALUE (1,'{"de":"Elektrotechnik HF"}',"VZ",'{"de":"Automation"}',NULL);
+INSERT INTO degree_program VALUE (1,'{"de":"Informatik HF"}',"VZ",'{"de":"SoftwareEntiwcklung"}',NULL);
+
+INSERT into cohort value (1, 'BBEL', NOW(), 1);
+INSERT into cohort value (2, 'BBIN', NOW(), 2);
 
 # @TODO Zwischentabelle für grundstudium, fachstudium, vertiefung
 
