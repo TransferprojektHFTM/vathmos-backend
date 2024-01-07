@@ -9,6 +9,6 @@ export class CreateSubjectDto {
 
     @IsNotEmpty()
     @IsString()
-    @ApiProperty({example: 'Q3R421.3a'})
+    @ApiProperty({example: 'Test Unique shortName 1a'})
     shortName: string;
 }

@@ -16,7 +16,6 @@ import {Subject} from './entities/subject.entity';
 import {GetSubjectDto} from './dto/get-subject.dto';
 
 @ApiTags('Subject')
-@Roles('Student', 'Dozent', 'KursAdmin')
 @ApiBearerAuth()
 @Controller('subject')
 export class SubjectController {

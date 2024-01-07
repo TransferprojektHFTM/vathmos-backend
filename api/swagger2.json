@@ -1698,7 +1698,7 @@
                     },
                     "shortName": {
                         "type": "string",
-                        "example": "Q3R421.3a"
+                        "example": "Test Unique shortName 1a"
                     }
                 },
                 "required": [
@@ -1741,7 +1741,7 @@
                     },
                     "shortName": {
                         "type": "string",
-                        "example": "Q3R421.3a"
+                        "example": "Test Unique shortName 1a"
                     }
                 }
             },
