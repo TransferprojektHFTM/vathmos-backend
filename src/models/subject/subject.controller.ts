@@ -24,7 +24,7 @@ export class SubjectController {
     }
 
     @Post()
-    @ApiOperation({ summary: 'Create a new subject' })
+    @ApiOperation({ summary: 'Create a new subject (only Dozent and KursAdmin)' })
     @ApiResponse({
       status: HttpStatus.CREATED,
       description: 'Created',
@@ -59,7 +59,7 @@ export class SubjectController {
     }
 
     @Patch(':id')
-    @ApiOperation({ summary: 'Update subject with id' })
+    @ApiOperation({ summary: 'Update subject with id (only Dozent and KursAdmin)' })
     @ApiResponse({
       status: HttpStatus.OK,
       description: 'Ok',
@@ -71,7 +71,7 @@ export class SubjectController {
     }
 
     @Delete(':id')
-    @ApiOperation({ summary: 'Delete a subject with id' })
+    @ApiOperation({ summary: 'Delete a subject with id (only Dozent and KursAdmin)' })
     @Roles('Dozent', 'KursAdmin')
     remove(@Param('id') id: string) {
         return this.subjectService.remove(+id);

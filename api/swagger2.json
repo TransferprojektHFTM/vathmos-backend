@@ -654,7 +654,7 @@
         "/api/v1/subject": {
             "post": {
                 "operationId": "SubjectController_create",
-                "summary": "Create a new subject",
+                "summary": "Create a new subject (only Dozent and KursAdmin)",
                 "parameters": [],
                 "requestBody": {
                     "required": true,
@@ -746,7 +746,7 @@
             },
             "patch": {
                 "operationId": "SubjectController_update",
-                "summary": "Update subject with id",
+                "summary": "Update subject with id (only Dozent and KursAdmin)",
                 "parameters": [
                     {
                         "name": "id",
@@ -783,7 +783,7 @@
             },
             "delete": {
                 "operationId": "SubjectController_remove",
-                "summary": "Delete a subject with id",
+                "summary": "Delete a subject with id (only Dozent and KursAdmin)",
                 "parameters": [
                     {
                         "name": "id",
@@ -812,7 +812,7 @@
         "/api/v1/exam": {
             "post": {
                 "operationId": "ExamController_create",
-                "summary": "Create a new exam",
+                "summary": "Create a new exam (only Dozent and KursAdmin)",
                 "parameters": [],
                 "requestBody": {
                     "required": true,
@@ -911,7 +911,7 @@
             },
             "patch": {
                 "operationId": "ExamController_update",
-                "summary": "Update exam with id",
+                "summary": "Update exam with id (only Dozent and KursAdmin)",
                 "parameters": [
                     {
                         "name": "id",
@@ -948,7 +948,7 @@
             },
             "delete": {
                 "operationId": "ExamController_remove",
-                "summary": "Delete a exam with id",
+                "summary": "Delete a exam with id (only Dozent and KursAdmin)",
                 "parameters": [
                     {
                         "name": "id",
