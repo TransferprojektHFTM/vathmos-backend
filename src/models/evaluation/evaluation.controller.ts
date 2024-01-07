@@ -5,7 +5,7 @@ import {
   Body,
   Patch,
   Param,
-  Delete, HttpCode, HttpStatus,
+  Delete, HttpCode, HttpStatus, UsePipes, ValidationPipe,
 } from '@nestjs/common';
 import { EvaluationService } from './evaluation.service';
 import { CreateEvaluationDto } from './dto/create-evaluation.dto';
@@ -31,6 +31,7 @@ export class EvaluationController {
     isArray: false,
   })
   @Roles('Student', 'Dozent')
+  @UsePipes(new ValidationPipe({ transform: true }))
   create(@Body() createEvaluationDto: CreateEvaluationDto) {
     return this.evaluationService.create(createEvaluationDto);
   }
@@ -83,6 +84,7 @@ export class EvaluationController {
     isArray: false,
   })
   @Roles('Student', 'Dozent')
+  @UsePipes(new ValidationPipe({ transform: true }))
   update(
     @Param('id') id: string,
     @Body() updateEvaluationDto: UpdateEvaluationDto,

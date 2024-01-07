@@ -1,14 +1,15 @@
 import {
   Column,
-  Entity,
+  Entity, Index,
   JoinColumn,
   ManyToOne,
-  PrimaryGeneratedColumn,
+  PrimaryGeneratedColumn, Unique,
 } from 'typeorm';
 import { Person } from '../../person/entities/person.entity';
 import { Exam } from '../../exam/entities/exam.entity';
 
 @Entity()
+@Index("evaluation_exam_student", ["student.id", "exam.id"], { unique: true })
 export class Evaluation {
   @PrimaryGeneratedColumn()
   id: number;
@@ -16,11 +17,15 @@ export class Evaluation {
   @Column({ nullable: false })
   val: number;
 
-  @ManyToOne(() => Exam, (exam) => exam.id, { nullable: false })
+  @ManyToOne(() => Exam, (exam) => exam.id, {
+    nullable: false , cascade:false
+  })
   @JoinColumn({ name: 'exam_id' })
   exam: Exam;
 
-  @ManyToOne(() => Person, { nullable: false })
+  @ManyToOne(() => Person, {
+    nullable: false, cascade:false
+  })
   @JoinColumn({ name: 'student_id' })
   student: Person;
 }

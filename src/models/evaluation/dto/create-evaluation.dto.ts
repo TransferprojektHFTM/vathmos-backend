@@ -1,12 +1,13 @@
-import {Exam} from "../../exam/entities/exam.entity";
-import {Person} from "../../person/entities/person.entity";
-import {IsInt, IsNotEmpty, IsOptional} from "class-validator";
+import {IsNotEmpty} from "class-validator";
 import {ApiProperty} from "@nestjs/swagger";
+import {MaxFloat} from "../../../common/validators/max-float.validator";
+import {Person} from "../../person/entities/person.entity";
+import {Exam} from "../../exam/entities/exam.entity";
 
 export class CreateEvaluationDto {
     @IsNotEmpty()
-    @IsInt()
-    @ApiProperty({example: '80'})
+    @MaxFloat(6)
+    @ApiProperty({example: 5.6})
     val: number;
 
     @IsNotEmpty()
@@ -15,7 +16,6 @@ export class CreateEvaluationDto {
             "name": "Verteilte Systeme Test 1",
             "weighting": "40%"
         }})
-    @IsOptional()
     exam: Exam;
 
     @IsNotEmpty()

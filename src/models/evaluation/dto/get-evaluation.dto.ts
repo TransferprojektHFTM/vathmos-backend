@@ -4,4 +4,6 @@ import {CreateEvaluationDto} from "./create-evaluation.dto";
 export class GetEvaluationDto extends PartialType(CreateEvaluationDto){
     @ApiProperty({example: '12'})
     id: number;
+    @ApiProperty({example: 92})
+    percent?: number;
 }

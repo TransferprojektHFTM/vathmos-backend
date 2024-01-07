@@ -955,7 +955,7 @@
         "/api/v1/evaluation": {
             "post": {
                 "operationId": "EvaluationController_create",
-                "summary": "Create a new Evaluation",
+                "summary": "Create a new Evaluation (only Student, Dozent allowed)",
                 "parameters": [],
                 "requestBody": {
                     "required": true,
@@ -1041,6 +1041,16 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -1054,7 +1064,7 @@
             },
             "patch": {
                 "operationId": "EvaluationController_update",
-                "summary": "Update Evaluation with id",
+                "summary": "Update Evaluation with id (only Student, Dozent allowed)",
                 "parameters": [
                     {
                         "name": "id",
@@ -1108,7 +1118,7 @@
             },
             "delete": {
                 "operationId": "EvaluationController_remove",
-                "summary": "Delete Evaluation with id",
+                "summary": "Delete Evaluation with id (only Student, Dozent allowed)",
                 "parameters": [
                     {
                         "name": "id",
@@ -1801,7 +1811,7 @@
                 "properties": {
                     "val": {
                         "type": "number",
-                        "example": "80"
+                        "example": 5.6
                     },
                     "exam": {
                         "example": {
@@ -1841,7 +1851,7 @@
                 "properties": {
                     "val": {
                         "type": "number",
-                        "example": "80"
+                        "example": 5.6
                     },
                     "exam": {
                         "example": {
@@ -1861,22 +1871,42 @@
                             "oid": "d44614b5-36f9-42e2-9f5a-318c140906fd",
                             "firstName": "Max",
                             "surname": "muster",
-                            "email": "max.muster@hftm.ch",
-                            "picture": null,
-                            "isActivated": false,
-                            "lastLogin": "2000-01-01T00:00:00.000Z"
+                            "email": "max.muster@hftm.ch"
                         },
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/Person"
                             }
                         ]
+                    },
+                    "id": {
+                        "type": "number",
+                        "example": "12"
+                    },
+                    "percent": {
+                        "type": "number",
+                        "example": 92
                     }
                 },
                 "required": [
-                    "val",
-                    "exam",
-                    "student"
+                    "id",
+                    "percent"
+                ]
+            },
+            "ErrorResponse": {
+                "type": "object",
+                "properties": {
+                    "statusCode": {
+                        "type": "number",
+                        "description": "error code"
+                    },
+                    "message": {
+                        "type": "string",
+                        "description": "description error code"
+                    }
+                },
+                "required": [
+                    "statusCode"
                 ]
             },
             "UpdateEvaluationDto": {
@@ -1884,7 +1914,7 @@
                 "properties": {
                     "val": {
                         "type": "number",
-                        "example": "80"
+                        "example": 5.6
                     },
                     "exam": {
                         "example": {
@@ -1913,22 +1943,6 @@
                         ]
                     }
                 }
-            },
-            "ErrorResponse": {
-                "type": "object",
-                "properties": {
-                    "statusCode": {
-                        "type": "number",
-                        "description": "error code"
-                    },
-                    "message": {
-                        "type": "string",
-                        "description": "description error code"
-                    }
-                },
-                "required": [
-                    "statusCode"
-                ]
             },
             "CreateModuleTypeDto": {
                 "type": "object",
