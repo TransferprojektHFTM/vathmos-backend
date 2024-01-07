@@ -1,4 +1,4 @@
-import {BadRequestException, Injectable, NotFoundException} from '@nestjs/common';
+import { Injectable, NotAcceptableException, NotFoundException } from '@nestjs/common';
 import { CreateExamDto } from './dto/create-exam.dto';
 import { UpdateExamDto } from './dto/update-exam.dto';
 import { Exam } from './entities/exam.entity';
@@ -16,7 +16,7 @@ export class ExamService {
     private readonly examRepository: Repository<Exam>,
   ) {}
 
-  async create(createExamDto: CreateExamDto): Promise<Exam | BadRequestException | Error> {
+  async create(createExamDto: CreateExamDto): Promise<Exam> {
     // @todo check if subject exists and fix subjectId type number
     const subjectId: any = createExamDto.subject;
     const entity = await this.examRepository.find({
@@ -33,7 +33,7 @@ export class ExamService {
       return this.examRepository.save(exam);
     }else{
       this.logger.warn(`The exam has ${remainingWeighting}% left not ${parsedCreateExamDto}% in this subject ${subjectId}. Exam not created`);
-      throw new BadRequestException(`The exam has ${remainingWeighting}% left not ${parsedCreateExamDto}% in this subject ${subjectId}. Exam not created!`);
+      throw new NotAcceptableException(`The exam has ${remainingWeighting}% left not ${parsedCreateExamDto}% in this subject ${subjectId}. Exam not created!`);
     }
   }
 
@@ -41,7 +41,7 @@ export class ExamService {
     return this.examRepository.find({ relations: ['subject'] });
   }
 
-  async findOne(id: number): Promise<Exam | NotFoundException> {
+  async findOne(id: number): Promise<Exam> {
     const entity = await this.examRepository.findOne({
       where: { id },
       relations: ['subject'],
@@ -66,7 +66,7 @@ export class ExamService {
     return parseFloat(weighting.replace('%', '')).toFixed(this.TWO_DECIMAL_PLACES) as unknown as number;
   }
 
-  async findBySubject(subjectId: number): Promise<Exam[] | NotFoundException | BadRequestException> {
+  async findBySubject(subjectId: number): Promise<Exam[]> {
     const entity =  await this.examRepository.find({ where: { subject: { id: subjectId } }, relations: ['subject'] });
     if(!entity || entity.length === 0) {
       this.logger.warn(`Exam with subjectId ${subjectId} not found`);
@@ -107,12 +107,12 @@ export class ExamService {
       return this.examRepository.save(existingExam);
     }else{
       this.logger.warn(`The exam has ${remainingWeighting}% left not ${parsedUpdateExamDto}% in this subject ${subjectId}. Exam not updated`);
-      throw new BadRequestException(`The exam has ${remainingWeighting}% left not ${parsedUpdateExamDto}% in this subject ${subjectId}. Exam not updated!`);
+      throw new NotAcceptableException(`The exam has ${remainingWeighting}% left not ${parsedUpdateExamDto}% in this subject ${subjectId}. Exam not updated!`);
     }
   }
 
   // @todo return exam when deleted?
-  async remove(id: number): Promise<Exam | NotFoundException> {
+  async remove(id: number): Promise<Exam> {
     const findDeletedExam = await this.examRepository.findOne({
       where: { id },
     });
