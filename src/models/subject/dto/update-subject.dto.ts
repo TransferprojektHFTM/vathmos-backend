@@ -1,4 +1,5 @@
-import { PartialType } from '@nestjs/swagger';
-import { CreateSubjectDto } from './create-subject.dto';
+import {CreateSubjectDto} from './create-subject.dto';
+import {PartialType} from '@nestjs/swagger';
 
-export class UpdateSubjectDto extends PartialType(CreateSubjectDto) {}
+export class UpdateSubjectDto extends PartialType(CreateSubjectDto) {
+}

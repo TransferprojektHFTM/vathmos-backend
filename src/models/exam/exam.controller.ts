@@ -15,7 +15,7 @@ import { CreateExamDto } from './dto/create-exam.dto';
 import { UpdateExamDto } from './dto/update-exam.dto';
 import {
   ApiBearerAuth,
-  ApiOperation,
+  ApiOperation, ApiParam,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
@@ -30,7 +30,7 @@ export class ExamController {
   constructor(private readonly examService: ExamService) {}
 
   @Post()
-  @ApiOperation({ summary: 'Create a new exam' })
+  @ApiOperation({ summary: 'Create a new exam (only Dozent and KursAdmin)' })
   @ApiResponse({
     status: HttpStatus.CREATED,
     description: 'Created',
@@ -65,8 +65,20 @@ export class ExamController {
     return this.examService.findOne(+id);
   }
 
+  @Get('subject/:subjectId')
+  @ApiOperation({ summary: 'Get exams with subject id' })
+  @ApiParam({ name: 'subjectId', type: Number })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Ok',
+    type: GetExamDto,
+  })
+  findExamsBySubject(@Param('subjectId') subjectId: string) {
+    return this.examService.findBySubject(+subjectId);
+  }
+
   @Patch(':id')
-  @ApiOperation({ summary: 'Update exam with id' })
+  @ApiOperation({ summary: 'Update exam with id (only Dozent and KursAdmin)' })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Ok',
@@ -78,7 +90,7 @@ export class ExamController {
   }
 
   @Delete(':id')
-  @ApiOperation({ summary: 'Delete a exam with id' })
+  @ApiOperation({ summary: 'Delete a exam with id (only Dozent and KursAdmin)' })
   @Roles('Dozent', 'KursAdmin')
   remove(@Param('id') id: string) {
     return this.examService.remove(+id);

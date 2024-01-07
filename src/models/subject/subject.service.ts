@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import {Injectable, NotAcceptableException, NotFoundException} from '@nestjs/common';
 import { CreateSubjectDto } from './dto/create-subject.dto';
 import { UpdateSubjectDto } from './dto/update-subject.dto';
 import { AppCustomLogger } from '../../app.custom.logger';
@@ -14,28 +14,57 @@ export class SubjectService {
     @InjectRepository(Subject)
     private subjectRepository: Repository<Subject>,
   ) {}
-  create(createSubjectDto: CreateSubjectDto) {
-    return 'This action adds a new subject';
+
+  async create(createSubjectDto: CreateSubjectDto): Promise <Subject> {
+    const subject = new Subject();
+    subject.name = createSubjectDto.name;
+    subject.shortName = createSubjectDto.shortName;
+    const existingSubject = await this.subjectRepository.findOne({
+      where: { shortName: subject.shortName },
+    });
+    if (existingSubject) {
+      console.error(`Subject with shortName ${subject.shortName} already exists.`);
+      throw new NotAcceptableException('Duplicate entry. Please provide a unique shortName.');
+    }else{
+      return await this.subjectRepository.save(subject);
+    }
   }
 
-  findAll() {
-    return this.subjectRepository
-      .createQueryBuilder('subject')
-      .select('*')
-      .leftJoinAndSelect('subject.coreModule', 'coreModule')
-      .leftJoinAndSelect('subject.lecturer', 'lecturer')
-      .getMany();
+  async findAll(): Promise <Subject[]> {
+    return this.subjectRepository.find({relations: ['exams', 'coreModules', 'lecturers']});
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} subject`;
+  async findOne(id: number): Promise<Subject> {
+    const entity = await this.subjectRepository.findOne({
+      where: { id },
+      relations: ['exams', 'coreModules', 'lecturers'],
+    });
+
+    if(!entity) {
+      this.logger.warn(`Subject with id ${id} not found`);
+      throw new NotFoundException(`Subject with id ${id} not found`);
+    }
+    return entity;
   }
 
-  update(id: number, updateSubjectDto: UpdateSubjectDto) {
-    return `This action updates a #${id} subject`;
+  async update(id: number, updateSubjectDto: UpdateSubjectDto): Promise<Subject> {
+    const existingSubject = await this.subjectRepository.findOne({where: {id}});
+    existingSubject.name = updateSubjectDto.name;
+    existingSubject.shortName = updateSubjectDto.shortName;
+    return this.subjectRepository.save(existingSubject);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} subject`;
+  // @todo return subject when deleted?
+  async remove(id: number): Promise<Subject> {
+    const findDeletedSubject = await this.subjectRepository.findOne({
+      where: {id},
+    });
+    if (!findDeletedSubject) {
+      this.logger.warn(`Subject with id ${id} not found`);
+      throw new NotFoundException(`Subject with id ${id} not found`);
+    } else {
+      await this.subjectRepository.delete(id);
+      return findDeletedSubject;
+    }
   }
 }

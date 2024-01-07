@@ -654,6 +654,7 @@
         "/api/v1/subject": {
             "post": {
                 "operationId": "SubjectController_create",
+                "summary": "Create a new subject (only Dozent and KursAdmin)",
                 "parameters": [],
                 "requestBody": {
                     "required": true,
@@ -667,7 +668,7 @@
                 },
                 "responses": {
                     "201": {
-                        "description": ""
+                        "description": "Created"
                     }
                 },
                 "tags": [
@@ -681,10 +682,21 @@
             },
             "get": {
                 "operationId": "SubjectController_findAll",
+                "summary": "Get a list of all subjects",
                 "parameters": [],
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/GetSubjectDto"
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -700,6 +712,7 @@
         "/api/v1/subject/{id}": {
             "get": {
                 "operationId": "SubjectController_findOne",
+                "summary": "Get subject with id",
                 "parameters": [
                     {
                         "name": "id",
@@ -712,7 +725,14 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetSubjectDto"
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -726,6 +746,7 @@
             },
             "patch": {
                 "operationId": "SubjectController_update",
+                "summary": "Update subject with id (only Dozent and KursAdmin)",
                 "parameters": [
                     {
                         "name": "id",
@@ -748,7 +769,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Ok"
                     }
                 },
                 "tags": [
@@ -762,6 +783,7 @@
             },
             "delete": {
                 "operationId": "SubjectController_remove",
+                "summary": "Delete a subject with id (only Dozent and KursAdmin)",
                 "parameters": [
                     {
                         "name": "id",
@@ -790,7 +812,7 @@
         "/api/v1/exam": {
             "post": {
                 "operationId": "ExamController_create",
-                "summary": "Create a new exam",
+                "summary": "Create a new exam (only Dozent and KursAdmin)",
                 "parameters": [],
                 "requestBody": {
                     "required": true,
@@ -889,7 +911,7 @@
             },
             "patch": {
                 "operationId": "ExamController_update",
-                "summary": "Update exam with id",
+                "summary": "Update exam with id (only Dozent and KursAdmin)",
                 "parameters": [
                     {
                         "name": "id",
@@ -926,7 +948,7 @@
             },
             "delete": {
                 "operationId": "ExamController_remove",
-                "summary": "Delete a exam with id",
+                "summary": "Delete a exam with id (only Dozent and KursAdmin)",
                 "parameters": [
                     {
                         "name": "id",
@@ -940,6 +962,42 @@
                 "responses": {
                     "200": {
                         "description": ""
+                    }
+                },
+                "tags": [
+                    "Exam"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/exam/subject/{subjectId}": {
+            "get": {
+                "operationId": "ExamController_findExamsBySubject",
+                "summary": "Get exams with subject id",
+                "parameters": [
+                    {
+                        "name": "subjectId",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetExamDto"
+                                }
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -1387,6 +1445,10 @@
         {
             "name": "Role",
             "description": "Roles management"
+        },
+        {
+            "name": "Subject",
+            "description": "Subjects management"
         }
     ],
     "servers": [],
@@ -1627,11 +1689,61 @@
             },
             "CreateSubjectDto": {
                 "type": "object",
-                "properties": {}
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": {
+                            "de": "Software Engineering"
+                        }
+                    },
+                    "shortName": {
+                        "type": "string",
+                        "example": "Test Unique shortName 1a"
+                    }
+                },
+                "required": [
+                    "name",
+                    "shortName"
+                ]
+            },
+            "GetSubjectDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "example": 18
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": {
+                            "de": "Programmierung Einführung"
+                        }
+                    },
+                    "shortName": {
+                        "type": "string",
+                        "example": "R8S921.3a"
+                    }
+                },
+                "required": [
+                    "id",
+                    "name",
+                    "shortName"
+                ]
             },
             "UpdateSubjectDto": {
                 "type": "object",
-                "properties": {}
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": {
+                            "de": "Software Engineering"
+                        }
+                    },
+                    "shortName": {
+                        "type": "string",
+                        "example": "Test Unique shortName 1a"
+                    }
+                }
             },
             "Subject": {
                 "type": "object",
