@@ -92,7 +92,7 @@ export class ExamService {
     // Sum of all exams by subject plus existingExam weigthing
     let remainingWeighting: number = parseFloat(this.getRemainingWeighting(subjectOfExams));
     // when subject id is same like exisingExam subject id
-    const existSubjectId: number = existingExam.subject.id;
+    const existSubjectId: number | undefined = existingExam?.subject?.id;
     const updateSubjectId: number = Number(updateExamDto.subject);
     if(existSubjectId === updateSubjectId){
       remainingWeighting += parseFloat(existingExam?.weighting);
